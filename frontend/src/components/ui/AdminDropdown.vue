@@ -53,8 +53,7 @@
     z-index="1005"
   >
     <template v-slot:activator="{ props }">
-      <v-btn flat class="text-white" v-bind="props">
-        <span>Anonymous User</span>
+      <v-btn :ripple="false" icon="mdi-account" size="x-large" rounded="xl" color="black" v-bind="props" class="my-7 mx-3">
       </v-btn>
     </template>
     <v-list id="nav-admin-dropdown">
@@ -119,7 +118,7 @@
     z-index="1005"
   >
     <template v-slot:activator="{ props }">
-      <v-list-item v-bind="props" active-class="primary-text list-active">
+      <v-list-item v-bind="props" active-class="primary-text list-active bg-transparent">
         <v-list-item-title class="text-white">
           <span>Anonymous User</span>
         </v-list-item-title>
@@ -160,12 +159,12 @@ const logout = () => {
 }
 
 #nav-admin-dropdown {
-  background-color: #7b1113 !important;
+  background-color: black !important;
   overflow: visible !important;
 }
 
 .v-list-item {
-  background-color: #7b1113 !important;
+  background-color: black !important;
 }
 
 .v-list-item:hover {
