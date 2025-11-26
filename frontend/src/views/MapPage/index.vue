@@ -13,7 +13,7 @@
           :transportMode="detailsStore.transportMode" 
           class="map"
         >
-          <FloatingButton attachedTo="map" @click="toggleSideDrawer" class="btn"/>
+          <FloatingButton attachedTo="map" @click="toggleSideDrawer" color="white" class="btn"/>
         </BigMapView>
       </v-col>
     </v-row>
