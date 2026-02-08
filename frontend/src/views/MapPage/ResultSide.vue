@@ -3,18 +3,18 @@
   <div>
     <!-- headline for describing results -->
     <!-- <p class="title">{{headlineText}}</p> -->
-
-    <v-btn color="#FFFFFF" flat append-icon="mdi-menu-down">
-      Refine your search
-      <v-menu activator="parent">
-        <v-list>
-          <v-list-item> <CategorySelect class="selector"/> </v-list-item>
-          <v-list-item> <SortSelect @change="applyRouteQueries" class="selector"/></v-list-item>
-          <v-list-item> <TagsSelect class="selector"/> </v-list-item>
-        </v-list>
-      </v-menu>
-    </v-btn>
-
+    <v-expansion-panels variant="accordion" class="text-caption">
+      <v-expansion-panel>
+        <v-expansion-panel-title>
+            Refine your search
+        </v-expansion-panel-title>
+        <v-expansion-panel-text>
+          <CategorySelect class="selector"/> 
+          <SortSelect @change="applyRouteQueries" class="selector"/>
+          <TagsSelect class="selector"/>
+        </v-expansion-panel-text>
+      </v-expansion-panel>
+    </v-expansion-panels>
 
     <v-divider></v-divider>
 
@@ -124,6 +124,7 @@ export default {
 .title {
   margin-top: 5px;
   margin-bottom: 5px;
+  color: black;
 }
 
 .subheading {
@@ -175,4 +176,22 @@ v-col {
   padding: 0; /* Remove unnecessary padding */
   text-align: center; /* Optional: Center-align text */
 }
+
+.v-expansion-panel{
+  background-color: white;
+  color: black;
+  padding: 0px 10px;
+}
+.v-expansion-panel-title{
+  min-height: 32px;
+  padding: 0px;
+  color: #737373;
+}
+.v-expansion-panel--active > .v-expansion-panel-title:not(.v-expansion-panel-title--static){
+  min-height: 32px;
+}
+.v-expansion-panel-content>>> .v-expansion-panel-content__wrap {
+  padding: 0 !important;
+}
+
 </style>

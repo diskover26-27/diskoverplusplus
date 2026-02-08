@@ -53,5 +53,10 @@
     border-radius: 50%;
     display: flex;
     box-shadow: 0px 0px 5px rgba(51, 49, 49, 0.663);
+    color:#333;
 }
 
+.easy-button-button{
+    background-color: transparent;
+    border: none;
+}

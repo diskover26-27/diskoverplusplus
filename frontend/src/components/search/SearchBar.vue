@@ -3,7 +3,6 @@
       <v-text-field
         density="compact"
         placeholder="Search away!"
-        append-inner-icon="mdi-magnify"
         variant="outlined"
         flat
         hide-details
@@ -13,6 +12,7 @@
         rounded
       >
         <template #append-inner>
+          <v-icon color="#424242">mdi-magnify</v-icon>
         </template>
       </v-text-field>
   </div>
@@ -90,17 +90,10 @@ export default {
   display: flex;
   align-items: center;
   gap: 8px; /* Adds space between search bar and button */
+  color: black;
 }
-
 .nav-search {
   flex: 1;
   margin: 0;
-}
-
-.search-btn {
-  padding: 8px 16px;
-  background-color: #7b1113; /* Updated button color */
-  color: white;
-  font-weight: bold;
 }
 </style>

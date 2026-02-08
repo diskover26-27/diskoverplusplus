@@ -10,7 +10,7 @@
       class="floating-button"
     />
     <div class="search-drawer" v-show="isVisible">
-      <div class="px-2 pt-3 scrollable-content">
+      <div class="px-2 pt-3 pl-5 pr-5 scrollable-content">
         <div class="search-bar-container">
           <SearchBar/>
         </div>
