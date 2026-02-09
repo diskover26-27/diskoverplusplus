@@ -22,7 +22,7 @@
 
     <!-- Carousel Modal for showing a bigger view of the images -->
         <CenterModal :isVisible="isCarouselVisible" @close="setCarouselModal(false)">
-            <v-card class="pa-4" max-width="1200px" max-height="90vh">
+            <v-card flat theme="light" class="pa-4" max-width="1200px" max-height="90vh">
             <v-carousel :cycle="false" v-model="carouselIndex" height="80vh">
                 <v-carousel-item v-for="(url, i) in fullImageUrls" :key="i">
                 <v-img :src="url" height="100%" contain />
