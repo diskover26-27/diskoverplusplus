@@ -86,6 +86,8 @@
       </v-expansion-panels>
     </v-col>
 
+     <v-divider class="mt-2 divider" :thickness="2"></v-divider>
+
     <!-- Main Building -->
     <v-col v-if="hasMainBuilding" class="mt-2">
       <v-tabs grow center-active>
@@ -101,7 +103,7 @@
       </v-window>
     </v-col>
 
-    <v-divider class="mt-2 divider" :thickness="2"></v-divider>
+  
 
     <!-- Nearby Locations -->
     <v-col class="mt-2">

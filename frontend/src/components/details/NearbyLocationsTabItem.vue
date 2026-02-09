@@ -10,7 +10,7 @@
         :to="`/map/details/${near.id}`"
         link
       >
-        <v-list-item-title class="list-item">{{ near.name }}</v-list-item-title>
+        <v-list-item-title class="text-small">{{ near.name }}</v-list-item-title>
       </v-list-item>
     </v-list>
     <!-- Display indicator if no nearby locations are found -->
@@ -30,7 +30,7 @@ defineProps({
 </script>
 
 <style scoped>
-.list-item{
-  font-size: small;
+.text-small{
+	font-size: small;
 }
 </style>
