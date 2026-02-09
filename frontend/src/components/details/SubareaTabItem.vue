@@ -1,6 +1,6 @@
 <template>
   <!-- Tab item for displaying the inside rooms or outer building of the current location -->
-  <v-card color="#7b1113">
+  <v-card flat color="#7b1113">
     <!-- Display rooms if current location has inside rooms -->
     <v-list v-if="subareas && subareas.length">
       <v-list-item
@@ -15,8 +15,8 @@
       </v-list-item>
     </v-list>
     <!-- Display indicator if no subareas are found -->
-    <v-container v-else>
-      <span class="body-2">No {{ label }} Found</span>
+    <v-container v-else color="white" class="pa-0 text-black" style="background-color: white;" >
+      <span class="note">No {{ label }} found.</span>
     </v-container>
   </v-card>
 </template>
@@ -35,4 +35,8 @@ defineProps({
 </script>
 
 <style scoped>
+.note{
+  font-size: small;
+  color: grey;
+}
 </style>

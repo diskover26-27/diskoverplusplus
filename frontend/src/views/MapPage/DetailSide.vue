@@ -3,7 +3,7 @@
     <!-- Thumbnail/Cover Image -->
     <v-col cols="12">
         <v-img :src="thumbnailUrl" /> 
-        <v-card theme="light" flat>
+        <v-card theme="light" flat class="pt-2">
           <v-card-title class="text-wrap">{{ locationName }}</v-card-title>
           <v-card-text>{{ locationDescription }}</v-card-text>
         </v-card>
@@ -35,7 +35,7 @@
           :key="i"
           :to="{ path: '/map/search', query: { tag } }"
         >
-          <v-chip color="primary" class="ma-1" label dark>{{ tag }}</v-chip>
+          <v-chip color="primary" class="ma-1" label>{{ tag }}</v-chip>
         </RouterLink>
       </div>
     </v-col>
@@ -44,6 +44,7 @@
     <v-col class="mt-3">
       <v-tabs v-model="primaryTabIndex" grow center-active>
         <v-tab
+          class="text-black"
           v-for="(tab, i) in tabList1"
           :key="i"
           :value="i"
@@ -71,7 +72,7 @@
 
     <!-- Subareas -->
     <v-col v-if="hasSubareas" class="my-3">
-      <v-expansion-panels v-model="subareaTabIndex" multiple>
+      <v-expansion-panels theme="light" v-model="subareaTabIndex" multiple>
         <v-expansion-panel
           v-for="(subs, category, i) in subareas"
           :key="i"
@@ -88,7 +89,7 @@
     <!-- Main Building -->
     <v-col v-if="hasMainBuilding" class="mt-2">
       <v-tabs grow center-active>
-        <v-tab>
+        <v-tab class="text-black">
           <v-icon>location_city</v-icon>
           Main Building
         </v-tab>
@@ -103,7 +104,7 @@
     <!-- Nearby Locations -->
     <v-col class="mt-2">
       <v-tabs grow center-active>
-        <v-tab>
+        <v-tab class="text-black">
           <v-icon>directions_walk</v-icon>
           Nearby Locations
         </v-tab>
@@ -190,12 +191,12 @@ const tabList1 = computed(() => [
     component: ImagesTabItem,
     props: { imageUrls: imageUrls.value },
   },
-  {
-    label: 'Description',
-    icon: 'mdi-file-document',
-    component: DescriptionTabItem,
-    props: { description: description.value },
-  },
+  // {
+  //   label: 'Description',
+  //   icon: 'mdi-file-document',
+  //   component: DescriptionTabItem,
+  //   props: { description: description.value },
+  // },
 ]);
 
 const hasSubareas = computed(() => {
