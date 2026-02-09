@@ -101,6 +101,8 @@
       </v-window>
     </v-col>
 
+    <v-divider class="mt-2 divider" :thickness="2"></v-divider>
+
     <!-- Nearby Locations -->
     <v-col class="mt-2">
       <v-tabs grow center-active>
@@ -110,7 +112,7 @@
         </v-tab>
       </v-tabs>
       <v-window>
-        <v-window-item>
+        <v-window-item theme="light">
           <NearbyLocationsTabItem :nearbyLocations="nearbyLocations" />
         </v-window-item>
       </v-window>
