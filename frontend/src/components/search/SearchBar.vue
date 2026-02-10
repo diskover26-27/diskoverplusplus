@@ -3,7 +3,6 @@
     <v-text-field
       class="nav-search"
       label="Where to?"
-      placeholder="Search away!"
       hide-details
       v-model="searchText"
       @keyup.enter="emitSearch"
@@ -100,8 +99,6 @@ export default {
   flex: 1;
   margin: 0;
   padding: 1px 1px;
-  border: 1px solid #606060;
-  border-radius: 999px;
   overflow: hidden;
 }
 

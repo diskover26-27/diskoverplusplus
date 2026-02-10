@@ -7,7 +7,7 @@
 
 <script>
 // import default background image
-import bgImg from '@/assets/backgrounds/bgimg_light.jpg'
+import bgImg from '@/assets/backgrounds/bgimg.png'
 
 export default {
   // set the background image
@@ -22,10 +22,9 @@ export default {
 <style scoped>
 /* expand the background image to 100% page height and anchor at the center */
 .up-background {
-  background-size: auto;
-  background-position: center center;
-  background-repeat: repeat-y;
-  overflow: auto;
-  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
 }
 </style>
