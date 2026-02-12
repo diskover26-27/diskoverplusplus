@@ -7,20 +7,22 @@
           <div class="title">Search an image to delete via its location</div>
           <div class="maroon-chips">
             <v-autocomplete
-              v-model="locationSearchId"
-              :items="locationSearchItemsWithUnbinded"
-              :search-input.sync="locationSearchQuery"
-              @input="apiGetLocationSearchImages"
-              cache-items
-              hide-selected
-              auto-select-first
-              clearable
-              label="Location Search"
-              placeholder="Search images from a location"
-              :menu-props="{zIndex:'1001'}"
-              item-title="text"
-              item-value="value"
-            />
+            v-model="locationSearchId"
+            :items="locationSearchItemsWithUnbinded"
+            
+            v-model:search="locationSearchQuery"
+            
+            item-title="text"
+            item-value="value"
+            
+            @update:model-value="apiGetLocationSearchImages"
+            
+            label="Location Search"
+            placeholder="Search images from a location"
+            auto-select-first
+            clearable
+            hide-selected
+          />
           </div>
           <v-radio-group v-model="selectedDeleteImageId" class="mt-4">
             <div v-for="image in locationSearchImages" :key="image.id">
