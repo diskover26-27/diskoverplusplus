@@ -1,41 +1,65 @@
 <template>
-  <v-container class="grey lighten-4 fill-height d-flex align-center justify-center">
+  <v-container
+    class="grey lighten-4 fill-height d-flex align-center justify-center"
+  >
     <v-row justify="center">
-      <v-col cols="12" md="10" lg="8"> <!-- Adjusted width -->
+      <v-col cols="12" md="10" lg="8">
+        <!-- Adjusted width -->
         <!-- Form Container with White Background -->
         <div class="form-container">
           <div class="title">Search an image to delete via its location</div>
           <div class="maroon-chips">
             <v-autocomplete
-            v-model="locationSearchId"
-            :items="locationSearchItemsWithUnbinded"
-            
-            v-model:search="locationSearchQuery"
-            
-            item-title="text"
-            item-value="value"
-            
-            @update:model-value="apiGetLocationSearchImages"
-            
-            label="Location Search"
-            placeholder="Search images from a location"
-            auto-select-first
-            clearable
-            hide-selected
-          />
+              v-model="locationSearchId"
+              :items="locationSearchItemsWithUnbinded"
+              v-model:search="locationSearchQuery"
+              item-title="text"
+              item-value="value"
+              @update:model-value="apiGetLocationSearchImages"
+              label="Location Search"
+              placeholder="Search images from a location"
+              auto-select-first
+              clearable
+              hide-selected
+            />
           </div>
-          <v-radio-group v-model="selectedDeleteImageId" class="mt-4">
-            <div v-for="image in locationSearchImages" :key="image.id">
-              <v-radio :value="image.id" color="primary">
-                <div slot="label">
-                  <div>{{ image.img_url }}</div>
-                  <v-img :src="getFullImageUrl(image.img_url)" height="150px" contain />
-                </div>
-              </v-radio>
-            </div>
-          </v-radio-group>
+<v-row class="mt-4 justify-center">
+  <v-col
+    v-for="image in locationSearchImages"
+    :key="image.id"
+    cols="12" sm="6" md="4" 
+  >
+    <v-card
+      @click="selectedDeleteImageId = image.id"
+      class="cursor-pointer"
+      height="250" 
+    >
+      <v-img
+        :src="getFullImageUrl(image.img_url)"
+        height="100%"
+        cover
+      >
+        <div 
+          v-if="selectedDeleteImageId === image.id"
+          class="d-flex fill-height align-center justify-center bg-black-transparent"
+        >
+          <v-icon color="white" size="64" icon="mdi-check-circle"></v-icon>
+        </div>
+      </v-img>
+    </v-card>
+    
+    <div class="text-center mt-2 text-body-1 text-truncate">
+      {{ image.img_url }}
+    </div>
+  </v-col>
+</v-row>
           <v-row justify="end" class="mt-4">
-            <v-btn color="error" class="mr-2" @click="handleDeleteClick()" :disabled="isSubmitting || !selectedDeleteImageId">
+            <v-btn
+              color="black"
+              class="mr-2"
+              @click="handleDeleteClick()"
+              :disabled="isSubmitting || !selectedDeleteImageId"
+            >
               Delete Image
             </v-btn>
             <v-btn @click="handleCancelClick()">Cancel</v-btn>
@@ -43,17 +67,26 @@
         </div>
       </v-col>
     </v-row>
-    <CenterModal :isVisible="isDeleteConfirmVisible" @close="isDeleteConfirmVisible=false">
+    <CenterModal
+      :isVisible="isDeleteConfirmVisible"
+      @close="isDeleteConfirmVisible = false"
+    >
       <v-row class="red lighten-4 text-xs-center">
         <v-col cols="12" class="headline py-3">
           Are you sure you want to delete {{ selectedDeleteImageName }}?
         </v-col>
         <v-col cols="12" class="title pt-2">
-          <v-img :src="getFullImageUrl(selectedDeleteImageName)" height="200px" contain />
+          <v-img
+            :src="getFullImageUrl(selectedDeleteImageName)"
+            height="200px"
+            contain
+          />
         </v-col>
         <v-row justify="center">
           <v-btn color="blue" dark @click="handleDeleteConfirm">Yes</v-btn>
-          <v-btn color="red" dark @click="isDeleteConfirmVisible=false">No</v-btn>
+          <v-btn color="red" dark @click="isDeleteConfirmVisible = false"
+            >No</v-btn
+          >
         </v-row>
       </v-row>
     </CenterModal>
@@ -61,7 +94,7 @@
 </template>
 
 <script>
-import AdminVerifierMixin from "@/mixins/AdminVerifierMixin"
+import AdminVerifierMixin from "@/mixins/AdminVerifierMixin";
 import CenterModal from "@/components/ui/CenterModal.vue"; // Adjust the path as needed
 
 export default {
@@ -80,7 +113,7 @@ export default {
       locationSearchImages: [],
       selectedDeleteImageId: "",
       isDeleteConfirmVisible: false,
-      isSubmitting: false
+      isSubmitting: false,
     };
   },
   computed: {
@@ -95,10 +128,10 @@ export default {
     },
     selectedDeleteImageName() {
       let image = this.locationSearchImages.find(
-        item => item.id == this.selectedDeleteImageId
-      )
-      return image? image.img_url : null;
-    }
+        (item) => item.id == this.selectedDeleteImageId,
+      );
+      return image ? image.img_url : null;
+    },
   },
   methods: {
     handleRouteChange() {
@@ -108,21 +141,21 @@ export default {
       this.$http
         .get(`/admin/locations/`, {
           params: {
-            search: searchValue
+            search: searchValue,
           },
-          paramsSerializer: params => {
+          paramsSerializer: (params) => {
             return this.$qs.stringify(params, { indices: false });
-          }
+          },
         })
-        .then(response => {
-          this.locationSearchItems = response.data.map(loc => {
+        .then((response) => {
+          this.locationSearchItems = response.data.map((loc) => {
             return {
               text: loc.name,
-              value: loc.id
+              value: loc.id,
             };
           });
         })
-        .catch(error => {
+        .catch((error) => {
           alert("error receiving queried results from API: ");
           console.log(error);
         });
@@ -136,21 +169,21 @@ export default {
       this.$http
         .get(`/admin/images/`, {
           params: {
-            location_id: this.locationSearchId
+            location_id: this.locationSearchId,
           },
-          paramsSerializer: params => {
+          paramsSerializer: (params) => {
             return this.$qs.stringify(params, { indices: false });
-          }
+          },
         })
-        .then(response => {
+        .then((response) => {
           console.log(
             "successful retrieved location search images data from API: ",
-            response.data
+            response.data,
           );
           this.locationSearchImages = response.data;
         })
         // alert an error if unsuccessful GET
-        .catch(error => {
+        .catch((error) => {
           alert("error receiving queried results from API: ");
           console.log(error);
         });
@@ -162,25 +195,25 @@ export default {
       this.isDeleteConfirmVisible = true;
     },
     handleDeleteConfirm() {
-      this.isSubmitting = true
+      this.isSubmitting = true;
       this.$http
         .delete(`/admin/images/${this.selectedDeleteImageId}/`)
-        .then(response => {
+        .then((response) => {
           console.log("successfully deleted location from API", response);
           this.$router.go();
         })
-        .catch(function(error) {
+        .catch(function (error) {
           alert("error deleting location to API", error);
         })
         .finally(() => {
-          this.isSubmitting = false
+          this.isSubmitting = false;
         });
     },
     handleCancelClick() {
       console.log("cancel");
       this.$router.go(-1);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -191,5 +224,9 @@ export default {
   border-radius: 8px; /* Rounded corners */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional shadow for better visibility */
   width: 100%; /* Ensure it takes the full width of the column */
+}
+
+.bg-black-transparent {
+  background-color: rgba(0, 0, 0, 0.4);
 }
 </style>
