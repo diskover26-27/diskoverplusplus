@@ -4,8 +4,6 @@
   >
     <v-row justify="center">
       <v-col cols="12" md="10" lg="8">
-        <!-- Adjusted width -->
-        <!-- Form Container with White Background -->
         <div class="form-container">
           <div class="title">Search an image to delete via its location</div>
           <div class="maroon-chips">
@@ -23,37 +21,7 @@
               hide-selected
             />
           </div>
-<v-row class="mt-4 justify-center">
-  <v-col
-    v-for="image in locationSearchImages"
-    :key="image.id"
-    cols="12" sm="6" md="4" 
-  >
-    <v-card
-      @click="selectedDeleteImageId = image.id"
-      class="cursor-pointer"
-      height="250" 
-    >
-      <v-img
-        :src="getFullImageUrl(image.img_url)"
-        height="100%"
-        cover
-      >
-        <div 
-          v-if="selectedDeleteImageId === image.id"
-          class="d-flex fill-height align-center justify-center bg-black-transparent"
-        >
-          <v-icon color="white" size="64" icon="mdi-check-circle"></v-icon>
-        </div>
-      </v-img>
-    </v-card>
-    
-    <div class="text-center mt-2 text-body-1 text-truncate">
-      {{ image.img_url }}
-    </div>
-  </v-col>
-</v-row>
-          <v-row justify="end" class="mt-4">
+          <v-row class="justify-end">
             <v-btn
               color="black"
               class="mr-2"
@@ -63,6 +31,42 @@
               Delete Image
             </v-btn>
             <v-btn @click="handleCancelClick()">Cancel</v-btn>
+          </v-row>
+          <v-row class="mt-4 justify-center">
+            <v-col
+              v-for="image in locationSearchImages"
+              :key="image.id"
+              cols="12"
+              sm="6"
+              md="4"
+            >
+              <v-card
+                @click="selectedDeleteImageId = image.id"
+                class="cursor-pointer"
+                height="250"
+              >
+                <v-img
+                  :src="getFullImageUrl(image.img_url)"
+                  height="100%"
+                  cover
+                >
+                  <div
+                    v-if="selectedDeleteImageId === image.id"
+                    class="d-flex fill-height align-center justify-center bg-black-transparent"
+                  >
+                    <v-icon
+                      color="white"
+                      size="64"
+                      icon="mdi-check-circle"
+                    ></v-icon>
+                  </div>
+                </v-img>
+              </v-card>
+
+              <div class="text-center mt-2 text-body-1 text-truncate">
+                {{ image.img_url }}
+              </div>
+            </v-col>
           </v-row>
         </div>
       </v-col>
@@ -118,13 +122,19 @@ export default {
   },
   computed: {
     locationSearchItemsWithUnbinded() {
-      const items = [
-        ...this.locationSearchItems,
+      const sortedApiItems = this.locationSearchItems.slice().sort((a, b) => {
+        const textA = (a.text || "").toLowerCase();
+        const textB = (b.text || "").toLowerCase();
+
+        if (textA < textB) return -1;
+        if (textA > textB) return 1;
+        return 0;
+      });
+      return [
         { text: "Unbinded", value: 0 },
+        ...sortedApiItems,
         { text: "None", value: -1 },
       ];
-      console.log("locationSearchItemsWithUnbinded:", items); // Debugging
-      return items;
     },
     selectedDeleteImageName() {
       let image = this.locationSearchImages.find(
