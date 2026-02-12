@@ -35,7 +35,7 @@
             </div>
           </v-radio-group>
           <v-row justify="end" class="mt-4">
-            <v-btn color="error" class="mr-2" @click="handleDeleteClick()" :disabled="isSubmitting">
+            <v-btn color="error" class="mr-2" @click="handleDeleteClick()" :disabled="isSubmitting || !selectedDeleteImageId">
               Delete Image
             </v-btn>
             <v-btn @click="handleCancelClick()">Cancel</v-btn>
