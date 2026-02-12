@@ -5,7 +5,7 @@
     <v-row justify="center">
       <v-col cols="12" md="10" lg="8">
         <div class="form-container">
-          <div class="title">Search an image to delete via its location</div>
+          <div class="text-h6">Choose an image to delete</div>
           <div class="maroon-chips">
             <v-autocomplete
               v-model="locationSearchId"
@@ -23,7 +23,7 @@
           </div>
           <v-row class="justify-end">
             <v-btn
-              color="black"
+              color="error"
               class="mr-2"
               @click="handleDeleteClick()"
               :disabled="isSubmitting || !selectedDeleteImageId"
