@@ -72,28 +72,69 @@
       </v-col>
     </v-row>
     <CenterModal
-      :isVisible="isDeleteConfirmVisible"
-      @close="isDeleteConfirmVisible = false"
+  :isVisible="isDeleteConfirmVisible"
+  @close="isDeleteConfirmVisible = false"
+>
+  <v-container class="bg-white pa-6 text-center rounded-lg">
+    
+    <v-icon 
+      icon="mdi-alert-circle-outline" 
+      color="red-lighten-1" 
+      size="64" 
+      class="mb-4"
+    ></v-icon>
+
+    <div class="text-h5 font-weight-bold text-red-darken-2 mb-2">
+      Delete Image?
+    </div>
+
+    <div class="text-body-1 text-medium-emphasis mb-6">
+      Are you sure you want to delete <br>
+      <span class="font-weight-bold text-black">{{ selectedDeleteImageName }}</span>?
+    </div>
+
+    <v-sheet 
+      class="mx-auto mb-6 border rounded overflow-hidden bg-grey-lighten-4"
+      max-width="500"
+      elevation="2"
     >
-      <v-row class="red lighten-4 text-xs-center">
-        <v-col cols="12" class="headline py-3">
-          Are you sure you want to delete {{ selectedDeleteImageName }}?
-        </v-col>
-        <v-col cols="12" class="title pt-2">
-          <v-img
-            :src="getFullImageUrl(selectedDeleteImageName)"
-            height="200px"
-            contain
-          />
-        </v-col>
-        <v-row justify="center">
-          <v-btn color="blue" dark @click="handleDeleteConfirm">Yes</v-btn>
-          <v-btn color="red" dark @click="isDeleteConfirmVisible = false"
-            >No</v-btn
-          >
-        </v-row>
-      </v-row>
-    </CenterModal>
+      <v-img
+        :src="getFullImageUrl(selectedDeleteImageName)"
+        height="300"
+        cover
+      ></v-img>
+    </v-sheet>
+
+    <v-row justify="center" no-gutters>
+      
+
+      <v-col cols="12" sm="auto" class="ma-1">
+        <v-btn 
+          color="red-darken-1" 
+          variant="flat" 
+          height="45"
+          width="120"
+          class="text-white"
+          @click="handleDeleteConfirm"
+        >
+          Yes, Delete
+        </v-btn>
+      </v-col>
+      <v-col cols="12" sm="auto" class="ma-1">
+        <v-btn 
+          color="grey-lighten-3" 
+          variant="flat" 
+          height="45"
+          width="120"
+          @click="isDeleteConfirmVisible = false"
+        >
+          Cancel
+        </v-btn>
+      </v-col>
+    </v-row>
+
+  </v-container>
+</CenterModal>
   </v-container>
 </template>
 
