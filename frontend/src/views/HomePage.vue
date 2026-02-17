@@ -7,7 +7,7 @@
       <v-container class="pa-0 mt-10">
         <v-row  justify="center" class="column">
           <v-col cols="12" class="text-center">
-            <p class="caption text-white">
+            <p class="caption text-black">
               Ready to diskover something new today?
             </p>
               <SearchBar class="search-bar" />
@@ -15,24 +15,30 @@
         </v-row>
 
       </v-container>
+    <v-container :class="[mdAndUp ? 'py-2' : 'py-16', 'flex-grow-1']" fluid></v-container>
+      <v-container fluid class="crescent">
+        <div class="curve-buffer"></div>
+        <!-- Quick Home page links and widgets -->
+        <v-container fluid class = crescent-elements-container>
+          <v-container fluid class="carousel-container">
+              <v-container fluid>
+                  <v-slide-group show-arrows>
+                    <v-slide-group-item
+                      v-for="(item, i) in categories"
+                      :key="i"
+                    >
+                      <CategoryCard :category="item" />
+                    </v-slide-group-item>
+                  </v-slide-group>
+              </v-container>
+          </v-container>
+            <p class="footer text-grey">
+              Diskover++ is a project from students of the Department of Computer Science in UP Diliman. Please help us by reporting broken links or providing comments and suggestions through this form. We need your feedback to help us improve the site.
+            </p>
+          </v-container>
+      </v-container>
 
-    <v-container fluid class="base-container">
-      <v-img :src="crescent"></v-img>
-    </v-container>
 
-    <!-- Quick Home page links and widgets -->
-    <v-container fluid class="carousel-container">
-        <v-container fluid>
-            <v-slide-group show-arrows>
-              <v-slide-group-item
-                v-for="(item, i) in categories"
-                :key="i"
-              >
-                <CategoryCard :category="item" />
-              </v-slide-group-item>
-            </v-slide-group>
-        </v-container>
-    </v-container>
     </div>
   </div>
 </template>
@@ -68,8 +74,8 @@ const homeLayout = computed(() => {
 
 /* Full-page container */
 .homepage-container {
-  position: relative;
-  width: 100%;
+  width: 100vw;
+  height: 100vh;
   overflow: hidden; /* Allow content to overflow */
 }
 
@@ -79,41 +85,86 @@ const homeLayout = computed(() => {
 
 /* Background image */
 .bg-image {
-  position: fixed; /* Fix the background image to the viewport */
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
 }
 
 /* Content overlay */
 .content-overlay {
-  position: relative;
   z-index: 2;
   width: 100%;
   height: 100vh;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
-  padding-top: 175px;
-  padding-bottom: 175px;
+  box-sizing: border-box;
+  padding-top: 10vh;
+  padding-bottom: 0; 
 }
 
 .search-bar {
-  padding: 0 30%;
+  padding: 0 10%;
 }
 
-.base-container {
+.crescent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: white;
+  width: 100vw;
+  height: 600px;
+  overflow: hidden;
   padding: 0;
-  margin-top: auto;
+
+  --r: 110vw;
+  --y: -95vw;
+  --mask-height: calc(var(--r) + var(--y));
+  --content-height: calc(82% - var(--mask-height));
+
+  -webkit-mask-image:
+    radial-gradient(
+      circle var(--r) at 49.5% var(--y),
+      transparent 100%,
+      black 100%
+    );
+  mask-image:
+    radial-gradient(
+      circle var(--r) at 50% var(--y),
+      transparent 100%,
+      black 100%
+    );
+}
+
+.curve-buffer {
+  height: var(--mask-height);
+  flex-shrink: 0;
+}
+
+
+.crescent-elements-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: var(--content-height);
+  align-items: center;
+  padding: 15px;
+  width: 100%;
 }
 
 .carousel-container {
-  position: absolute;
-  margin-top: 18%;
-  padding: 0 20%;
-  z-index: 3;
+  padding: 0 5%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.v-slide-group {
+  justify-content: center;
+  width: 100%;
+}
+
+.footer {
+  margin: 0 25%;
+  font-size: 0.55rem;
 }
 
 /* Title styling */

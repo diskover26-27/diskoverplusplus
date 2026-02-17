@@ -22,9 +22,10 @@ export default {
 <style scoped>
 /* expand the background image to 100% page height and anchor at the center */
 .up-background {
+  width: 100vw;
+  height: 100vh;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  overflow: hidden;
 }
 </style>

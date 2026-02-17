@@ -103,7 +103,7 @@ const openGpsModal = () => {
 #nav-bar {
   z-index: 1001 !important;
   padding-left: 0px !important;
-  background-color: transparent;
+  background-color: var(--nav-bg, transparent);
 }
 
 #nav-bar-button {
