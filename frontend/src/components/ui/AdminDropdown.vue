@@ -11,7 +11,7 @@
     z-index="1005"
   >
     <template v-slot:activator="{ props }">
-      <v-btn flat class="text-white" v-bind="props">
+      <v-btn density="compact" id="nav-bar-button" class="text-white rounded-xl elevated-24 px-5 py-2 my-7 mx-4" v-bind="props">
         <span>Logged in as {{ loggedInUser.name }}</span>
       </v-btn>
     </template>
@@ -178,5 +178,9 @@ const logout = () => {
 
 .text-white {
   color: white !important;
+}
+
+#nav-bar-button {
+  background-color: black;
 }
 </style>
