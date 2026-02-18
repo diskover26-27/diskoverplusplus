@@ -1,37 +1,59 @@
 <template>
-  <v-container>
-    <!-- Add New Tag Button -->
-    <v-btn class="text-white mb-2" @click="onClickNewTag" style="background-color: #7b1113;">
-      ADD NEW TAG
-    </v-btn>
+  <v-container class="fill-height d-flex align-top justify-center py-8">
+    
+    <v-sheet class="pa-4 pa-sm-8 rounded-xl" elevation="2" width="100%" max-width="1000">
+      
+      <div class="d-flex flex-column flex-sm-row justify-space-between align-sm-center mb-6">
+        <div class="text-h5 font-weight-bold mb-4 mb-sm-0">Tags</div>
+        <v-btn
+          color="black"
+          class="text-white px-4"
+          prepend-icon="mdi-plus"
+          @click="onClickNewTag"
+        >
+          Add New Tag
+        </v-btn>
+      </div>
 
-    <!-- Tags Card -->
-    <v-card>
-      <v-card-title class="text-white" style="background-color: #7b1113;">
-        <h1>Tags</h1>
-      </v-card-title>
-      <v-layout>
-        <v-col>
-          <TagTable v-on:delete-item="onDeleteItem" v-on:edit-item="onEditItem" :tags="tags" />
-        </v-col>
-      </v-layout>
-    </v-card>
+      <v-divider class="mb-6"></v-divider>
+
+      <TagTable 
+        @edit-item="onEditItem" 
+        @delete-item="prepareDelete" 
+        :tags="tags" 
+      />
+      
+    </v-sheet>
+
+    <ConfirmDeleteModal
+      :isVisible="isDeleteModalVisible"
+      :isSubmitting="isSubmitting"
+      :itemName="tagToDelete?.name"
+      itemType="Tag"
+      @confirm="handleDeleteConfirm"
+      @cancel="isDeleteModalVisible = false"
+    />
+
   </v-container>
 </template>
 
 <script>
-import axios from "axios"; // Import Axios
+import axios from "axios";
 import AdminVerifierMixin from "@/mixins/AdminVerifierMixin";
 import TagTable from "@/components/admin/TagTable.vue";
-
+import ConfirmDeleteModal from "@/components/admin/ConfirmDeleteModal.vue";
 export default {
   mixins: [AdminVerifierMixin],
   components: {
-    TagTable, // Register TagTable
+    TagTable,
+    ConfirmDeleteModal,
   },
   data() {
     return {
-      tags: null,
+      tags: [],
+      isDeleteModalVisible: false,
+      isSubmitting: false,
+      tagToDelete: null,
     };
   },
   mounted() {
@@ -40,20 +62,11 @@ export default {
   methods: {
     async getTags() {
       try {
-        const response = await axios.get("/admin/tags/"); // Use Axios to fetch tags
+        const response = await axios.get("/admin/tags/");
         this.tags = response.data;
         console.log("Tags successfully retrieved");
       } catch (error) {
         console.error("Failed to GET tags", error);
-      }
-    },
-    async onDeleteItem(id) {
-      try {
-        const response = await axios.delete(`/admin/tags/${id}/`); // Use Axios to delete a tag
-        console.log("Successfully deleted item", response);
-        this.getTags(); // Refresh the tags list
-      } catch (error) {
-        console.error("Failed to delete item", error);
       }
     },
     onClickNewTag() {
@@ -62,19 +75,26 @@ export default {
     onEditItem(id) {
       this.$router.push(`/tagform/update/${id}`);
     },
+    prepareDelete(id) {
+      this.tagToDelete = this.tags.find(t => t.id === id);
+      this.isDeleteModalVisible = true;
+    },
+    async handleDeleteConfirm() {
+      if (!this.tagToDelete) return;
+
+      this.isSubmitting = true;
+      try {
+        await axios.delete(`/admin/tags/${this.tagToDelete.id}/`);
+        await this.getTags();
+        this.isDeleteModalVisible = false;
+        this.tagToDelete = null;
+      } catch (error) {
+        console.error("Failed to delete item", error);
+        alert("Error deleting tag. Please try again.");
+      } finally {
+        this.isSubmitting = false;
+      }
+    },
   },
 };
 </script>
-
-<style scoped>
-/* Optional: Add reusable CSS classes */
-.button-maroon {
-  background-color: #7b1113 !important;
-  color: white !important;
-}
-
-.title-maroon {
-  background-color: #7b1113 !important;
-  color: white !important;
-}
-</style>
