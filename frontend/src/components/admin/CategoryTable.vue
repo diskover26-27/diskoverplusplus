@@ -1,24 +1,40 @@
 <template>
   <v-data-table
-    v-if="categories instanceof Array"
+    v-if="categories && categories.length >= 0"
     :headers="headers"
     :items="categories"
-    class="elevation-1"
+    class="elevation-0 border rounded-lg"
+    hover
+    hide-default-footer
+    mobile-breakpoint="sm" 
   >
-    <!-- Body Slot -->
-    <template v-slot:body="{ items }">
-      <tr v-for="category in items" :key="category.id">
-        <td class="text-black text-center">{{ category.name }}</td>
-        <td class="text-black text-center">{{ category.url }}</td>
-        <td class="text-center">
-          <!-- Rectangle for Route Color -->
-          <v-icon small :style="{ color: category.route_color }">mdi-map-marker</v-icon>
-        </td>
-        <td class="text-center">
-          <v-icon small class="mr-2 text-blue" @click="$emit('edit-item', category.id)">mdi-pencil</v-icon>
-          <v-icon small class="mr-2 text-red" @click="$emit('delete-item', category.id)">mdi-delete</v-icon>
-        </td>
-      </tr>
+    <template v-slot:item.route_color="{ item }">
+      <v-icon 
+        :color="item.route_color || item.raw?.route_color" 
+        size="large"
+      >
+        mdi-map-marker
+      </v-icon>
+    </template>
+
+    <template v-slot:item.actions="{ item }">
+      <div class="d-flex justify-end justify-sm-center align-center">
+        <v-btn
+          icon="mdi-pencil"
+          variant="text"
+          color="primary"
+          size="small"
+          class="mr-2"
+          @click="$emit('edit-item', item.id || item.raw?.id)"
+        ></v-btn>
+        <v-btn
+          icon="mdi-delete"
+          variant="text"
+          color="error"
+          size="small"
+          @click="$emit('delete-item', item.id || item.raw?.id)"
+        ></v-btn>
+      </div>
     </template>
   </v-data-table>
 </template>
@@ -27,43 +43,19 @@
 export default {
   props: {
     categories: {
-      type: [Array],
+      type: Array,
       default: () => [],
     },
   },
   data() {
     return {
       headers: [
-        { title: 'Name', key: 'name', align: 'center' },
-        { title: 'URL', key: 'url', align: 'center' },
-        { title: 'Route Color', key: 'route_color', align: 'center' },
-        { title: 'Actions', key: 'actions', align: 'center' },
+        { title: 'Name', key: 'name', align: 'start' },
+        { title: 'URL', key: 'url', align: 'start' },
+        { title: 'Route Color', key: 'route_color', align: 'center', sortable: false },
+        { title: 'Actions', key: 'actions', align: 'center', sortable: false },
       ],
     };
   },
 };
 </script>
-
-<style scoped>
-.text-black {
-  color: black !important;
-}
-.text-bold {
-  font-weight: bold !important;
-}
-.text-blue {
-  color: #1976d2 !important; /* Vuetify primary blue */
-}
-.text-red {
-  color: #e53935 !important; /* Vuetify error red */
-}
-.route-color-box {
-  width: 24px;
-  height: 24px;
-  border-radius: 4px;
-  display: inline-block;
-}
-.text-center {
-  text-align: center !important;
-}
-</style>
