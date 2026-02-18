@@ -8,6 +8,7 @@
       v-if="isVisible"
       attachedTo="drawer"
       @click="handleToggleSideDrawer"
+      color="white"
       class="floating-button"
     />
     <div class="search-drawer" v-show="isVisible">
@@ -91,7 +92,7 @@ export default {
 .search-drawer {
   height: 100%;
   width: 100%;
-  background-color: #ed9a9c;
+  background-color: white;
   overflow-x: visible !important;
   padding: 0;
 }
@@ -102,7 +103,7 @@ export default {
 }
 
 .search-bar-container {
-  background-color: white; /* Set the background color of the search bar container to white */
+  /*background-color: white; /* Set the background color of the search bar container to white */
   padding: 0px;
   margin: 0px;
 }

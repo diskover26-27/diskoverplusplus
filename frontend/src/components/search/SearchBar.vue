@@ -3,14 +3,17 @@
     <v-text-field
       class="nav-search"
       label="Where to?"
-      placeholder="Search away!"
-      solo
       hide-details
       v-model="searchText"
       @keyup.enter="emitSearch"
+      rounded
+      bg-color = "white"
+      variant="solo"
+      density="compact"
+      e
     >
       <template #append-inner>
-        <v-btn @click="emitSearch" class="search-btn" icon>
+        <v-btn variant ="plain" @click="emitSearch" class="search-btn" icon>
           <v-icon>mdi-magnify</v-icon>
         </v-btn>
       </template>
@@ -95,12 +98,14 @@ export default {
 .nav-search {
   flex: 1;
   margin: 0;
+  padding: 1px 1px;
+  overflow: hidden;
 }
 
 .search-btn {
-  padding: 8px 16px;
-  background-color: #7b1113; /* Updated button color */
-  color: white;
+  padding: 8px 8px;
+	  /* background-color: #7b1113; Updated button color */
+  color: black;
   font-weight: bold;
 }
 </style>

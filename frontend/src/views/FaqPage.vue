@@ -1,11 +1,9 @@
 <template>
-  <v-container class="grey lighten-4">
-    <v-row justify="center">
-      <v-col cols="12" md="8">
-        <h1 class="my-3 text-center">Help Page</h1>
-        <v-card color="#7b1113" class="mb-3" elevation="0">
+  <v-container fluid class="content-overlay">
+      <v-container>
+        <v-card color="white" class="mb-3" elevation="0">
           <v-card-title>
-            <h2 class="text-white">Frequently Asked Questions</h2>
+            <h2 class="text-black">Frequently Asked Questions</h2>
           </v-card-title>
         </v-card>
         <v-expansion-panels>
@@ -52,19 +50,7 @@
             </v-expansion-panel-text>
           </v-expansion-panel>
         </v-expansion-panels>
-        <v-card color="#7b1113" class="mt-3" elevation="0">
-          <v-card-title>
-            <h2 class="text-white">Other Helpful Sites</h2>
-          </v-card-title>
-          <v-card-text class="text-white">
-            <ul>
-              <li><a href="http://sakay.ph" class="link">Sakay.ph</a></li>
-              <li>UPD Mobile - <a href="https://itunes.apple.com/ph/app/upd-mobile/id1443763130?mt=8" class="link">iOS</a> or <a href="https://play.google.com/store/apps/details?id=com.upmobile" class="link">Android</a></li>
-            </ul>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
+      </v-container>
   </v-container>
 </template>
 
@@ -75,6 +61,17 @@ export default {
 </script>
 
 <style scoped>
+
+.content-overlay {
+  z-index: -2;
+  background: white;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 10%; 
+}
+
 #faq .v-expansion-panel-title {
   background-color: var(--v-primary-base) !important;
   color: white;

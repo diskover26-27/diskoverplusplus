@@ -1,24 +1,14 @@
 <template>
   <!-- Home page category card with huge icon picture and link to filtered search -->
   <v-hover v-slot:default="{ isHovering }">
-    <v-card
-      ripple
-      color="#7b1113" 
+    <v-btn
+      :color="isSelected ? 'primary' : undefined"
+      class="ma-2"
+      rounded
       :to="{ path: '/map/search', query: { category: category.name } }"
-      :class="`elevation-${isHovering ? 12 : 2}`"
-      class="category-card"
     >
-      <!-- Category Name -->
-      <div class="body-2 text-center text-white pa-3">{{ category.name }}</div>
-      <!-- Category Icon -->
-      <v-img
-        :src="imageUrl"
-        :alt="category.name"
-        height="100%"
-        width="100%"
-        class="full-width"
-    />
-    </v-card>
+      {{ category.name }}
+    </v-btn>
   </v-hover>
 </template>
 
