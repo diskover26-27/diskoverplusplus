@@ -8,6 +8,12 @@ html, body, .v-application {
   font-family: 'Inter', sans-serif !important;
 }
 
+.text-h1, .text-h2, .text-h3, .text-h4, .text-h5, .text-h6, 
+.text-subtitle-1, .text-subtitle-2, .text-body-1, .text-body-2, 
+.text-button, .text-caption, .text-overline, .v-btn {
+  font-family: 'Inter', sans-serif !important;
+}
+
 .primary-bg {
 	background-color: var(--v-primary-base) !important;
 }

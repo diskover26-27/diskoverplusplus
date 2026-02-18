@@ -1,61 +1,62 @@
 <template>
-  <!-- Basic Navbar with important links -->
-  <v-toolbar app id="nav-bar" height="128px">
-    <!-- Left Side -->
-    <v-toolbar-items>
-      <!-- Homepage link -->
-      <v-btn to="/" class="text-h4" variant="tonal" density="compact" rounded="xl" flat color="transparent">
-        <span class="text-black">dIskover</span>
-      </v-btn>
-      <!-- Button for displaying GPS configuration modals -->
-    </v-toolbar-items>
+  <v-app-bar app id="nav-bar" height="96" color="transparent" flat>
+    
+<v-btn 
+  to="/" 
+  variant="text" 
+  :ripple="false" 
+  class="text-h4 ml-4 px-0"
+  style="--v-hover-opacity: 0; --v-activated-opacity: 0; --v-focus-opacity: 0;"
+>
+  <span class="text-black font-weight-bold">dIskover</span>
+</v-btn>
+
     <v-spacer></v-spacer>
 
-    <!-- Right Side -->
-    <!-- Desktop Version -->
-    <v-toolbar-items v-if="mdAndUp">
-      <!-- Map link -->
-      <v-btn to="/map" density="compact" id="nav-bar-button" variant="elevated" rounded="xl" class="text-white px-5 py-2 my-7" @click="showFullMap">
+    <div v-if="mdAndUp" class="d-flex align-center mr-4">
+      <v-btn to="/map" variant="elevated" id="nav-bar-button" :ripple="false" class="rounded-xl text-white px-5" @click="showFullMap">
         Map
       </v-btn>
-      <!-- FAQs link -->
-      <v-btn to="/faq" density="compact" id="nav-bar-button" variant="elevated" rounded="xl" class="text-white px-5 my-7 ml-4">
+      <v-btn to="/faq" variant="elevated" id="nav-bar-button" :ripple="false" class="rounded-xl text-white px-5 ml-4">
         Help
       </v-btn>
-      <!-- TODO: About Page About link -->
-      <v-btn to="/about" density="compact" id="nav-bar-button" variant="elevated" rounded="xl" class="text-white px-5 my-7 ml-4"> 
+      <v-btn to="/about" variant="elevated" id="nav-bar-button" :ripple="false" class="rounded-xl text-white px-5 ml-4"> 
         About
       </v-btn>
-      <AdminDropdown/>
-    </v-toolbar-items>
+      <AdminDropdown class="ml-4" />
+    </div>
 
-    <!-- Mobile Version -->
-    <v-toolbar-items v-else>
+    <div v-else class="mr-2 d-flex align-center">
+      
+      <v-btn to="/map" variant="elevated" id="nav-bar-button" :ripple="false" class="rounded-xl text-white px-3" @click="showFullMap">
+        Map
+      </v-btn>
+      <v-btn to="/faq" variant="elevated" id="nav-bar-button" :ripple="false" class="rounded-xl text-white px-3 ml-2">
+        Help
+      </v-btn>
+      <v-btn to="/about" variant="elevated" id="nav-bar-button" :ripple="false" class="rounded-xl text-white px-3 ml-2"> 
+        About
+      </v-btn>
+
       <v-menu
         attach="#nav-bar"
-        location="bottom left"
-        min-width="300px"
+        location="bottom end"
+        min-width="250px"
         z-index="1003"
         :close-on-content-click="false"
       >
         <template v-slot:activator="{ props }">
-          <v-btn flat color="black" icon dark v-bind="props" id="nav-dropdown-activator">
+          <v-btn icon color="black" variant="text" v-bind="props" id="nav-dropdown-activator" class="ml-1">
             <v-icon>mdi-menu</v-icon>
           </v-btn>
-        </template>
-        <v-list id="nav-dropdown">
-          <v-list-item to="/map" active-class="primary-text list-active">
-              <v-list-item-title class="text-white" @click="showFullMap">Map</v-list-item-title>
-          </v-list-item>
-          <!-- FAQs link -->
-          <v-list-item to="/faq" active-class="primary-text list-active">
-              <v-list-item-title class="text-white">Help</v-list-item-title>
-          </v-list-item>
-          <AdminDropdown/>
+        </template>       
+        
+        <v-list id="nav-dropdown" bg-color="black">
+          <AdminDropdown />
         </v-list>
       </v-menu>
-    </v-toolbar-items>
-  </v-toolbar>
+    </div>
+  </v-app-bar>
 </template>
 
 <script setup>
@@ -85,10 +86,6 @@ const openGpsModal = () => {
 
 <style scoped>
 @import "@/assets/stylesheets/style.css";
-
-* {
-  font-family: roboto, sans-serif;
-}
 
 #nav-dropdown {
   background-color: black !important;

@@ -2,9 +2,13 @@
   <v-app>
     <Background>
       <NavBar/>
-      <v-container class="full-vwidth full-vheight no-padding">
-        <router-view></router-view>
-      </v-container>
+      
+      <v-main>
+        <v-container class="full-vwidth full-vheight no-padding">
+          <router-view></router-view>
+        </v-container>
+      </v-main>
+      
       <GpsMapHidden mapId="hidden-map"/>
     </Background>
   </v-app>
@@ -66,7 +70,8 @@ const isLoggedIn = computed(() => authStore.isLoggedIn);
 }
 
 .full-vheight {
-  height: calc(100vh - 64px); /* Adjust the height to fill the screen under the navbar */
+  min-height: 100%; 
+  height: 100%;
 }
 
 .no-padding {
