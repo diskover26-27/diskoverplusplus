@@ -1,82 +1,116 @@
 <template>
-  <v-container class="fill-height d-flex align-center justify-center">
-    <v-card class="pa-5 login-bg" max-width="500">
-      <v-card-text>
-        <div v-if="!isLoggedIn" class="d-flex flex-column align-center">
-          <h1 class="mb-4 font-weight-light">Log in to your superuser account</h1>
-          <!-- Wrap the login fields and button in a form -->
-          <form @submit.prevent="attemptLogIn" class="w-100">
-            <v-text-field
-              v-model="username"
-              label="Username"
-              :error-messages="invalidLogInAttempt ? 'username does not match with password' : null"
-              class="mb-4 w-100"
-            />
-            <v-text-field
-              v-model="password"
-              type="password"
-              label="Password"
-              :error-messages="invalidLogInAttempt ? 'password does not match with username' : null"
-              class="mb-4 w-100"
-            />
-            <v-btn
-              type="submit"
-              color="primary"
-              class="text-white w-100"
-              :loading="isProcessing" 
-              :disabled="isProcessing" 
+  <v-container class="fill-height">
+    <v-row align="center" justify="center">
+      <v-col cols="12" md="6" class="d-flex justify-center">
+        <v-card
+          class="rounded-xl pa-5 login-bg"
+          elevation="24"
+          max-width="500"
+          width="100%"
+        >
+          <v-card-text>
+            <div
+              v-if="!isLoggedIn"
+              class="d-flex flex-column align-center w-100"
             >
-              Log In
-            </v-btn>
-          </form>
-        </div>
-        <div v-else class="d-flex flex-column align-center">
-          <div class="mb-4">
-            Currently logged in as 
-            <span class="primary--text font-weight-bold">{{ loggedInUser }}</span>
-          </div>
-          <div class="mb-4">Logout?</div>
-          <div class="d-flex">
-            <v-btn color="blue" @click="logOut" class="text-white mr-2">Yes</v-btn>
-            <v-btn color="red" @click="backPage" class="text-white">No</v-btn>
-          </div>
-        </div>
-      </v-card-text>
-    </v-card>
+              <h1 class="mb-4">Login</h1>
+              <form @submit.prevent="attemptLogIn" class="w-100">
+                <v-text-field
+                  rounded
+                  variant="outlined"
+                  v-model="username"
+                  label="Username"
+                  :error-messages="
+                    invalidLogInAttempt ? 'Invalid Username' : null
+                  "
+                  class="mb-4 w-100"
+                />
+                <v-text-field
+                  rounded
+                  variant="outlined"
+                  v-model="password"
+                  type="password"
+                  label="Password"
+                  :error-messages="
+                    invalidLogInAttempt ? 'Invalid Password' : null
+                  "
+                  class="mb-4 w-100"
+                />
+                <v-btn
+                  rounded="xl"
+                  size="large"
+                  type="submit"
+                  color="black"
+                  class="text-white w-100"
+                  :loading="isProcessing"
+                  :disabled="isProcessing"
+                >
+                  Login
+                </v-btn>
+              </form>
+            </div>
+
+            <div v-else class="d-flex flex-column align-center">
+              <div class="mb-4">
+                Currently logged in as
+                <span class="text-primary font-weight-bold">{{
+                  loggedInUser
+                }}</span>
+              </div>
+              <div class="mb-4">Logout?</div>
+              <div class="d-flex">
+                <v-btn color="blue" @click="logOut" class="text-white mr-2"
+                  >Yes</v-btn
+                >
+                <v-btn color="red" @click="backPage" class="text-white"
+                  >No</v-btn
+                >
+              </div>
+            </div>
+          </v-card-text>
+        </v-card>
+      </v-col>
+
+      <v-col cols="12" md="6" class="d-none d-md-block">
+        <v-card class="elevation-24 rounded-xl border-lg overflow-hidden">
+          <v-img :src="upImage" height="500" cover />
+        </v-card>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import { useRouter } from 'vue-router';
-import { useAuthStore } from '@/stores/auth';
-import { useMainStore } from '@/stores/index';
+import { ref, computed } from "vue";
+import { useRouter } from "vue-router";
+import { useAuthStore } from "@/stores/auth";
+import { useMainStore } from "@/stores/index";
+import upImage from "@/assets/images/upimg.jpg";
 
 const authStore = useAuthStore();
 const mainStore = useMainStore();
 const router = useRouter();
 
-const username = ref('');
-const password = ref('');
+const username = ref("");
+const password = ref("");
 const isProcessing = ref(false);
 
 const attemptLogIn = async () => {
   isProcessing.value = true;
   try {
-    await authStore.logIn({ username: username.value, password: password.value });
+    await authStore.logIn({
+      username: username.value,
+      password: password.value,
+    });
     // Determine redirect target
     const prev = mainStore.previousPage;
-    if (
-      prev === '/admin/unauthenticated' ||
-      prev === '/404' ||
-      !prev
-    ) {
-      router.push('/'); // or router.push('/admin') if you want to go to admin dashboard
+    if (prev === "/admin/unauthenticated" || prev === "/404" || !prev) {
+      router.push("/"); // or router.push('/admin') if you want to go to admin dashboard
     } else {
       router.push(prev);
     }
   } catch (error) {
-    console.error('Login failed:', error);
+    console.error("Login failed:", error);
   } finally {
     isProcessing.value = false;
   }
@@ -115,7 +149,9 @@ const loggedInUser = computed(() => authStore.user);
 }
 
 .fill-height {
-  height: calc(100vh - 64px); /* Adjust the height to fill the screen under the navbar */
+  height: calc(
+    100vh - 64px
+  ); /* Adjust the height to fill the screen under the navbar */
 }
 
 .v-card-text {
