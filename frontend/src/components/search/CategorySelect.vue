@@ -10,6 +10,9 @@
       @change="applyCategoryFilter"
       clearable
       hide-details
+      density="compact"
+      variant="solo"
+      theme="light"
     />
   </div>
 </template>
@@ -44,6 +47,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-</style>

@@ -93,8 +93,8 @@ export default {
   display: flex;
   align-items: center;
   gap: 8px; /* Adds space between search bar and button */
+  color: black;
 }
-
 .nav-search {
   flex: 1;
   margin: 0;

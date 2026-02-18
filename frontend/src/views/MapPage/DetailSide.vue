@@ -1,27 +1,29 @@
 <template>
-  <v-container class="pb-4">
+  <v-container class="mt-3">
     <!-- Thumbnail/Cover Image -->
     <v-col cols="12">
-      <v-card :image="thumbnailUrl" height="200">
-        <v-card-title class="d-block semi-dark-bg">
-          <div class="headline text-white text-center">{{ locationName }}</div>
-        </v-card-title>
-      </v-card>
+        <v-img :src="thumbnailUrl" /> 
+        <v-card theme="light" flat class="pt-2">
+          <v-card-title class="text-wrap">{{ locationName }}</v-card-title>
+          <v-card-text>{{ locationDescription }}</v-card-text>
+        </v-card>
+        <v-divider class="mt-2 divider" :thickness="2"></v-divider>
     </v-col>
+
 
     <!-- Transport Mode Buttons -->
     <v-col class="mt-3">
       <v-row justify="center">
-        <v-btn small class="mr-1" @click="switchToDriving" :color="transportMode === 'driving' ? '#7b1113' : 'grey'">Drive</v-btn>
-        <v-btn small class="ml-1" @click="switchToWalking" :color="transportMode === 'foot' ? '#7b1113' : 'grey'">Walk</v-btn>
+        <v-col cols="6"> <v-btn prepend-icon="mdi-car" block @click="switchToDriving" :color="transportMode === 'driving' ? '#7b1113' : 'grey'">Drive</v-btn> </v-col>
+        <v-col cols="6"> <v-btn prepend-icon="mdi-walk" block @click="switchToWalking" :color="transportMode === 'foot' ? '#7b1113' : 'grey'">Walk</v-btn> </v-col>
       </v-row>
     </v-col>
 
     <!-- Category -->
-    <v-col class="mt-2 title text-center">
+    <!-- <v-col class="mt-2 title text-center">
       Category:
       <RouterLink :to="{ path: '/map/search', query: { category } }">{{ category }}</RouterLink>
-    </v-col>
+    </v-col> -->
 
     <!-- Tags -->
     <v-col class="mt-2 title text-left">
@@ -33,7 +35,7 @@
           :key="i"
           :to="{ path: '/map/search', query: { tag } }"
         >
-          <v-chip color="primary" class="ma-1" label dark>{{ tag }}</v-chip>
+          <v-chip color="primary" class="ma-1" label>{{ tag }}</v-chip>
         </RouterLink>
       </div>
     </v-col>
@@ -42,6 +44,7 @@
     <v-col class="mt-3">
       <v-tabs v-model="primaryTabIndex" grow center-active>
         <v-tab
+          class="text-black"
           v-for="(tab, i) in tabList1"
           :key="i"
           :value="i"
@@ -69,7 +72,7 @@
 
     <!-- Subareas -->
     <v-col v-if="hasSubareas" class="my-3">
-      <v-expansion-panels v-model="subareaTabIndex" multiple>
+      <v-expansion-panels theme="light" v-model="subareaTabIndex" multiple>
         <v-expansion-panel
           v-for="(subs, category, i) in subareas"
           :key="i"
@@ -83,10 +86,12 @@
       </v-expansion-panels>
     </v-col>
 
+     <v-divider class="mt-2 divider" :thickness="2"></v-divider>
+
     <!-- Main Building -->
     <v-col v-if="hasMainBuilding" class="mt-2">
       <v-tabs grow center-active>
-        <v-tab>
+        <v-tab class="text-black">
           <v-icon>location_city</v-icon>
           Main Building
         </v-tab>
@@ -98,16 +103,18 @@
       </v-window>
     </v-col>
 
+  
+
     <!-- Nearby Locations -->
     <v-col class="mt-2">
       <v-tabs grow center-active>
-        <v-tab>
+        <v-tab class="text-black">
           <v-icon>directions_walk</v-icon>
           Nearby Locations
         </v-tab>
       </v-tabs>
       <v-window>
-        <v-window-item>
+        <v-window-item theme="light">
           <NearbyLocationsTabItem :nearbyLocations="nearbyLocations" />
         </v-window-item>
       </v-window>
@@ -155,6 +162,7 @@ const mainStore = useMainStore();
 
 const locationId = computed(() => Number(route.params.id));
 const locationName = ref('');
+const locationDescription = ref('');
 const category = ref('');
 const tags = ref([]);
 const imageUrls = ref([]);
@@ -187,12 +195,12 @@ const tabList1 = computed(() => [
     component: ImagesTabItem,
     props: { imageUrls: imageUrls.value },
   },
-  {
-    label: 'Description',
-    icon: 'mdi-file-document',
-    component: DescriptionTabItem,
-    props: { description: description.value },
-  },
+  // {
+  //   label: 'Description',
+  //   icon: 'mdi-file-document',
+  //   component: DescriptionTabItem,
+  //   props: { description: description.value },
+  // },
 ]);
 
 const hasSubareas = computed(() => {
@@ -219,6 +227,7 @@ const fetchLocationData = async () => {
     }
 
     locationName.value = data.name;
+    locationDescription.value = data.description;
     category.value = data.category;
     tags.value = data.tags;
     imageUrls.value = data.img_urls;
@@ -285,5 +294,11 @@ watch(() => route.params.id, () => {
 #subarea-panels .v-expansion-panel-title {
   background-color: var(--v-primary-base);
   color: white;
+}
+.v-container, .v-card-title, .v-card-text{
+  padding:0;
+}
+.divider{
+  border-color: black;
 }
 </style>

@@ -1,12 +1,9 @@
 <template>
   <v-container fluid class="map-page-container">
-    <v-row class="map-row">
-      <v-col v-if="mapStore.isSideDrawerVisible" cols="3" class="side-drawer-col">
-        <SideDrawer @toggle-side-drawer="toggleSideDrawer">
+    
+        <SideDrawer v-if="mapStore.isSideDrawerVisible" @toggle-side-drawer="toggleSideDrawer" class="side-drawer">
           <router-view></router-view>
         </SideDrawer>
-      </v-col>
-      <v-col :cols="mapStore.isSideDrawerVisible ? 9 : 12" class="map-col">
         <BigMapView 
           :height="mapExactHeight" 
           :isOnDetailsPage="isOnDetailsPage" 
@@ -15,8 +12,7 @@
         >
           <FloatingButton attachedTo="map" @click="toggleSideDrawer" color="white" class="btn"/>
         </BigMapView>
-      </v-col>
-    </v-row>
+
   </v-container>
 </template>
 
@@ -45,6 +41,7 @@ const isOnDetailsPage = computed(() => {
 
 const toggleSideDrawer = () => {
   mapStore.setSideDrawer(!mapStore.isSideDrawerVisible);
+
 };
 
 // Open the side drawer by default on results or details page
@@ -64,30 +61,13 @@ onMounted(() => {
   overflow: hidden;
   padding: 0;
 }
-
-.map-row {
-  flex: 1;
-  display: flex;
+.side-drawer{
+  z-index: 1000 !important;
+  position: fixed;
+  left: 0;
   height: 100%;
-  width: 100%;
-  margin: 0;
-}
-
-.side-drawer-col {
-  height: 100%;
-  padding: 0;
-  margin: 0;
-  transition: width 0.3s ease-in-out;
-}
-
-.map-col {
-  height: 100%;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: width 0.3s ease-in-out;
+  width: 25%;
+  box-shadow: 5px 0px 5px 0px rgba(106, 96, 96, 0.53);
 }
 
 .map {

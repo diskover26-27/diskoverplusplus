@@ -1,41 +1,36 @@
 <template>
-  <!-- Tab Item for displaying the images of the current location -->
-  <div class="mb-3">
-    <v-card color="#7b1113">
-      <v-container>
-        <v-row justify="start" align="start">
-          <v-col v-for="(url, i) in fullImageUrls" :key="url" cols="4">
+   <v-container>
+        <v-infinite-scroll
+            direction="horizontal"
+            @load="load"
+        >
+        <div v-for="(url, i) in fullImageUrls" :key="url">
             <v-hover v-slot="{ isHovering }">
               <v-card
                 :class="`elevation-${isHovering ? 12 : 2}`"
                 @click="openCarouselModalAt(i)"
                 tile
               >
-                <v-img :src="url" :aspect-ratio="1" />
+                <v-img cover width="100" height="100" :src="url" :aspect-ratio="1" />
               </v-card>
             </v-hover>
-          </v-col>
-        </v-row>
-      </v-container>
-      <v-card-text>
-        <div v-if="!fullImageUrls || !fullImageUrls.length" class="body-2">
-          No images found for this location
         </div>
-        <div v-else class="body-2">Click an image for a bigger view</div>
-      </v-card-text>
-    </v-card>
+        <template v-slot:empty>
+        </template>
+
+        </v-infinite-scroll>
 
     <!-- Carousel Modal for showing a bigger view of the images -->
-    <CenterModal :isVisible="isCarouselVisible" @close="setCarouselModal(false)">
-      <v-card class="pa-4" max-width="1200px" max-height="90vh">
-        <v-carousel :cycle="false" v-model="carouselIndex" height="80vh">
-          <v-carousel-item v-for="(url, i) in fullImageUrls" :key="i">
-            <v-img :src="url" height="100%" contain />
-          </v-carousel-item>
-        </v-carousel>
-      </v-card>
-    </CenterModal>
-  </div>
+        <CenterModal :isVisible="isCarouselVisible" @close="setCarouselModal(false)">
+            <v-card flat theme="light" class="pa-4" max-width="1200px" max-height="90vh">
+            <v-carousel :cycle="false" v-model="carouselIndex" height="80vh">
+                <v-carousel-item v-for="(url, i) in fullImageUrls" :key="i">
+                <v-img :src="url" height="100%" contain />
+                </v-carousel-item>
+            </v-carousel>
+            </v-card>
+        </CenterModal>
+   </v-container>
 </template>
 
 <script setup>
@@ -71,7 +66,10 @@ const openCarouselModalAt = (index) => {
   carouselIndex.value = index;
   setCarouselModal(true);
 };
-</script>
 
-<style scoped>
-</style>
+function load ({ done }) {
+    setTimeout(() => {
+      done('empty')
+    }, 1000)
+  }
+</script>

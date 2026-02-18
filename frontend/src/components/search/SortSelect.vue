@@ -10,6 +10,9 @@
     item-value="value"
     hide-details
     class="selector"
+    density="compact"
+    variant="solo"
+    theme="light"
   />
 </template>
 

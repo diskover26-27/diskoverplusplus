@@ -147,16 +147,16 @@ export default {
       if (this.map) {
         this.map.remove();
       }
-      this.map = L.map('map').setView([14.5995, 120.9842], 13); // Default to Manila
+      this.map = L.map('map',{zoomControl: false}).setView([14.5995, 120.9842], 13); // Default to Manila
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap contributors'
       }).addTo(this.map);
 
-      this.initGpsButton();
-      this.initResetButton();
       this.initJeepRoutes();
       this.initJeepRoutesControl();
+      this.initGpsButton();
+      this.initResetButton();
       this.handleMapChange();
       this.listenForInstructionCircles();
 

@@ -1,7 +1,6 @@
 <template>
   <!-- Side Drawer for showing results and details alongside map anchored left -->
   <div
-    class="side-drawer-container"
     v-show="isSideDrawerVisible" 
   >
     <FloatingButton
@@ -12,7 +11,7 @@
       class="floating-button"
     />
     <div class="search-drawer" v-show="isVisible">
-      <div class="px-2 pt-3 scrollable-content">
+      <div class="px-2 pt-3 pl-5 pr-5 scrollable-content">
         <div class="search-bar-container">
           <SearchBar/>
         </div>
@@ -82,12 +81,7 @@ export default {
 </script>
 
 <style scoped>
-.side-drawer-container {
-  position: relative;
-  height: 100%;
-  width: 100%;
-  padding: 0;
-}
+
 
 .search-drawer {
   height: 100%;

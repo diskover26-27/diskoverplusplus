@@ -2,15 +2,17 @@
   <!-- selection input with multiple category chips -->
   <div id="tag-select">
     <v-select
+      theme="light"
       v-model="tagsFilter"
       :items="tags"
       attach
-      small-chips
       label="Tags"
       multiple
       clearable
       hide-details
-
+      chips
+      density="compact"
+      variant="solo"
     />
   </div>
 </template>
@@ -43,7 +45,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-
-</style>

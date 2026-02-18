@@ -2,13 +2,21 @@
   <!-- renders the location results of a search/filter query on the side drawer -->
   <div>
     <!-- headline for describing results -->
-    <p class="title">{{headlineText}}</p>
+    <!-- <p class="title">{{headlineText}}</p> -->
+    <v-expansion-panels variant="accordion" class="text-caption">
+      <v-expansion-panel>
+        <v-expansion-panel-title>
+            Refine your search
+        </v-expansion-panel-title>
+        <v-expansion-panel-text>
+          <CategorySelect class="selector"/> 
+          <SortSelect @change="applyRouteQueries" class="selector"/>
+          <TagsSelect class="selector"/>
+        </v-expansion-panel-text>
+      </v-expansion-panel>
+    </v-expansion-panels>
 
-    <CategorySelect class="selector"/>
-
-    <SortSelect @change="applyRouteQueries" class="selector"/>
-
-    <TagsSelect class="selector"/>
+    <v-divider></v-divider>
 
     <p class="subheading">{{resultCount}} results found</p>
     <!-- show 10 results a result cards in a column -->
@@ -116,6 +124,7 @@ export default {
 .title {
   margin-top: 5px;
   margin-bottom: 5px;
+  color: black;
 }
 
 .subheading {
@@ -167,4 +176,22 @@ v-col {
   padding: 0; /* Remove unnecessary padding */
   text-align: center; /* Optional: Center-align text */
 }
+
+.v-expansion-panel{
+  background-color: white;
+  color: black;
+  padding: 0px 10px;
+}
+.v-expansion-panel-title{
+  min-height: 32px;
+  padding: 0px;
+  color: #737373;
+}
+.v-expansion-panel--active > .v-expansion-panel-title:not(.v-expansion-panel-title--static){
+  min-height: 32px;
+}
+.v-expansion-panel-content>>> .v-expansion-panel-content__wrap {
+  padding: 0 !important;
+}
+
 </style>

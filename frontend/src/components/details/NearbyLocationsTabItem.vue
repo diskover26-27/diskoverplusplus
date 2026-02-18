@@ -1,6 +1,6 @@
 <template>
   <!-- Tab item for displaying nearby locations to the current location -->
-  <v-card color="#7b1113">
+  <v-card theme="light" color="#7b1113">
     <!-- Only display if nearby locations are found -->
     <v-list v-if="nearbyLocations && nearbyLocations.length">
       <!-- Add hyperlinks to nearby locations that navigate to their details page -->
@@ -10,7 +10,7 @@
         :to="`/map/details/${near.id}`"
         link
       >
-        <v-list-item-title>{{ near.name }}</v-list-item-title>
+        <v-list-item-title class="text-small">{{ near.name }}</v-list-item-title>
       </v-list-item>
     </v-list>
     <!-- Display indicator if no nearby locations are found -->
@@ -30,4 +30,7 @@ defineProps({
 </script>
 
 <style scoped>
+.text-small{
+	font-size: small;
+}
 </style>
