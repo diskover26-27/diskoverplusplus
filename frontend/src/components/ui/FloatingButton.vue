@@ -1,18 +1,17 @@
 <template>
   <!-- Floating Button used to control sideDrawer visibility -->
-  <v-btn
+   <v-btn
     v-show="checkSideDrawer"
-    absolute
-    dark
-    fab
-    small
     :style="extraStyle"
-    color="#7b1113" 
+    color="#FFFFFF" 
     class="floating-btn"
     @click="toggleSideDrawer"
+    elevation="7"
+    :icon="icon"
   >
-    <v-icon>{{ icon }}</v-icon> <!-- Use mdi-arrow-right for the right-pointing icon -->
+    <v-icon size="large">{{ icon }}</v-icon> <!-- Use mdi-arrow-right for the right-pointing icon -->
   </v-btn>
+
 </template>
 
 <script>
@@ -84,6 +83,6 @@ export default {
   border-radius: 50%; /* Make the button circular */
   width: 70px; /* Set a fixed width */
   height: 70px; /* Set a fixed height */
-  scale: 0.75;
+  scale: 0.60;
 }
 </style>

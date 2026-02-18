@@ -1,6 +1,6 @@
 <template>
   <!-- Basic Navbar with important links -->
-  <v-toolbar color="#7b1113" app id="nav-bar">
+  <v-toolbar app id="nav-bar">
     <!-- Left Side -->
     <v-toolbar-items>
       <!-- Homepage link -->
@@ -99,6 +99,6 @@ const openGpsModal = () => {
 #nav-bar {
   z-index: 1001 !important;
   padding-left: 0px !important;
-  background-color: #7b1113 !important; /* Set the background color to maroon */
+  background-color: #7b1113 !important; /*Set the background color to maroon */
 }
 </style>

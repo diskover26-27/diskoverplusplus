@@ -1,20 +1,20 @@
 <template>
   <div class="search-bar-container">
-    <v-text-field
-      class="nav-search"
-      label="Where to?"
-      placeholder="Search away!"
-      solo
-      hide-details
-      v-model="searchText"
-      @keyup.enter="emitSearch"
-    >
-      <template #append-inner>
-        <v-btn @click="emitSearch" class="search-btn" icon>
-          <v-icon>mdi-magnify</v-icon>
-        </v-btn>
-      </template>
-    </v-text-field>
+      <v-text-field
+        density="compact"
+        placeholder="Search away!"
+        append-inner-icon="mdi-magnify"
+        variant="outlined"
+        flat
+        hide-details
+        single-line
+        v-model="searchText"
+        @keyup.enter="emitSearch"
+        rounded
+      >
+        <template #append-inner>
+        </template>
+      </v-text-field>
   </div>
 </template>
 

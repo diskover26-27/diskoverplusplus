@@ -1,7 +1,6 @@
 <template>
   <!-- Side Drawer for showing results and details alongside map anchored left -->
   <div
-    class="side-drawer-container"
     v-show="isSideDrawerVisible" 
   >
     <FloatingButton
@@ -81,17 +80,12 @@ export default {
 </script>
 
 <style scoped>
-.side-drawer-container {
-  position: relative;
-  height: 100%;
-  width: 100%;
-  padding: 0;
-}
+
 
 .search-drawer {
   height: 100%;
   width: 100%;
-  background-color: #ed9a9c;
+  background-color: white;
   overflow-x: visible !important;
   padding: 0;
 }

@@ -2,13 +2,21 @@
   <!-- renders the location results of a search/filter query on the side drawer -->
   <div>
     <!-- headline for describing results -->
-    <p class="title">{{headlineText}}</p>
+    <!-- <p class="title">{{headlineText}}</p> -->
 
-    <CategorySelect class="selector"/>
+    <v-btn color="#FFFFFF" flat append-icon="mdi-menu-down">
+      Refine your search
+      <v-menu activator="parent">
+        <v-list>
+          <v-list-item> <CategorySelect class="selector"/> </v-list-item>
+          <v-list-item> <SortSelect @change="applyRouteQueries" class="selector"/></v-list-item>
+          <v-list-item> <TagsSelect class="selector"/> </v-list-item>
+        </v-list>
+      </v-menu>
+    </v-btn>
 
-    <SortSelect @change="applyRouteQueries" class="selector"/>
 
-    <TagsSelect class="selector"/>
+    <v-divider></v-divider>
 
     <p class="subheading">{{resultCount}} results found</p>
     <!-- show 10 results a result cards in a column -->
