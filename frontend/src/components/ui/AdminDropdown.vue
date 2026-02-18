@@ -1,120 +1,90 @@
 <template>
-  <!-- logged in and desktop -->
-  <v-menu
-    v-if="isLoggedIn && mdAndUp"
-    v-model="menuVisible"
-    attach="#nav-bar"
-    location="bottom start"
-    offset="15"
-    min-width="300px"
-    z-index="1005"
-  >
-    <template v-slot:activator="{ props }">
-      <v-btn id="nav-bar-button" :ripple="false" class="text-white rounded-xl px-5 py-2 my-7 ml-4" v-bind="props">
-        <span>Logged in as {{ loggedInUser.name }}</span>
-      </v-btn>
-    </template>
-    <v-list id="nav-admin-dropdown">
-      <v-list-item :to="{name: 'location_crud_form', params: {mode: 'create'}}" active-class="primary-text list-active">
-        <v-list-item-title class="text-white">Create new location</v-list-item-title>
-      </v-list-item>
-      <v-list-item :to="{name: 'upload_images_form'}" active-class="primary-text list-active">
-        <v-list-item-title class="text-white">Upload new images</v-list-item-title>
-      </v-list-item>
-      <v-list-item :to="{name: 'delete_images_form'}" active-class="primary-text list-active">
-        <v-list-item-title class="text-white">Delete images</v-list-item-title>
-      </v-list-item>
-      <v-list-item :to="{name: 'categorytable'}" active-class="primary-text list-active">
-        <v-list-item-title class="text-white">Browse categories</v-list-item-title>
-      </v-list-item>
-      <v-list-item :to="{name: 'tagtable'}" active-class="primary-text list-active">
-        <v-list-item-title class="text-white">Browse tags</v-list-item-title>
-      </v-list-item>
-      <v-list-item @click="logout" active-class="primary-text list-active">
-        <v-list-item-title class="text-white">Log out</v-list-item-title>
-      </v-list-item>
-    </v-list>
-  </v-menu>
-
-  <!-- desktop and not logged in -->
-  <v-menu
-    v-else-if="!isLoggedIn && mdAndUp"
-    v-model="menuVisible"
-    attach="#nav-bar"
-    location="bottom start"
-    min-width="300px"
-    offset="15"
-    z-index="1005"
-  >
-    <template v-slot:activator="{ props }">
-      <v-btn :ripple="false" icon="mdi-account" size="x-large" rounded="xl" color="black" v-bind="props" class="my-7 mx-3">
-      </v-btn>
-    </template>
-    <v-list id="nav-admin-dropdown">
-      <v-list-item :to="{name: 'login'}" active-class="primary-text list-active">
-        <v-list-item-title class="text-white">Log in</v-list-item-title>
-      </v-list-item>
-    </v-list>
-  </v-menu>
-<!--logged in and in mobile-->
-  <v-menu
-    v-else-if="isLoggedIn && !mdAndUp"
-    v-model="menuVisible"
-    attach="#nav-bar"
-    min-width="300px"
-    location="end"
-    z-index="1005"
-  >
-    <template v-slot:activator="{ props }">
-      <v-list-item v-bind="props" active-class="primary-text list-active" id="nav-admin-button">
-        <v-list-item-title class="text-white">
+  <template v-if="mdAndUp">
+    
+    <v-menu
+      v-if="isLoggedIn"
+      v-model="menuVisible"
+      attach="#nav-bar"
+      location="bottom end"
+      offset="15"
+      z-index="1005"
+    >
+      <template v-slot:activator="{ props }">
+        <v-btn id="nav-bar-button" :ripple="false" class="text-white rounded-xl px-5 py-2 my-7 ml-4" v-bind="props">
           <span>Logged in as {{ loggedInUser.name }}</span>
+        </v-btn>
+      </template>
+      <v-list id="nav-admin-dropdown" bg-color="black">
+        <v-list-item :to="{name: 'location_crud_form', params: {mode: 'create'}}" active-class="list-active">
+          <v-list-item-title class="text-white">Create new location</v-list-item-title>
+        </v-list-item>
+        <v-list-item :to="{name: 'upload_images_form'}" active-class="list-active">
+          <v-list-item-title class="text-white">Upload new images</v-list-item-title>
+        </v-list-item>
+        <v-list-item :to="{name: 'delete_images_form'}" active-class="list-active">
+          <v-list-item-title class="text-white">Delete images</v-list-item-title>
+        </v-list-item>
+        <v-list-item :to="{name: 'categorytable'}" active-class="list-active">
+          <v-list-item-title class="text-white">Browse categories</v-list-item-title>
+        </v-list-item>
+        <v-list-item :to="{name: 'tagtable'}" active-class="list-active">
+          <v-list-item-title class="text-white">Browse tags</v-list-item-title>
+        </v-list-item>
+        <v-list-item @click="logout" active-class="list-active">
+          <v-list-item-title class="text-white">Log out</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
+
+    <v-btn
+      v-else
+      :to="{name: 'login'}"
+      :ripple="false"
+      id="nav-bar-button"
+      class="rounded-xl text-white px-5 ml-4"
+    >
+      Log in
+    </v-btn>
+
+  </template>
+
+
+  <template v-else>
+    
+    <template v-if="isLoggedIn">
+      <v-list-item class="bg-grey-darken-4">
+        <v-list-item-title class="text-grey-lighten-1 font-weight-light">
+          Logged in as {{ loggedInUser.name }}
         </v-list-item-title>
       </v-list-item>
-    </template>
-    <v-list id="nav-admin-dropdown">
-      <v-list-item :to="{name: 'location_crud_form', params: {mode: 'create'}}" active-class="primary-text list-active">
+      
+      <v-divider color="grey-darken-2"></v-divider>
+
+      <v-list-item :to="{name: 'location_crud_form', params: {mode: 'create'}}" active-class="list-active">
         <v-list-item-title class="text-white">Create new location</v-list-item-title>
       </v-list-item>
-      <v-list-item :to="{name: 'upload_images_form'}" active-class="primary-text list-active">
+      <v-list-item :to="{name: 'upload_images_form'}" active-class="list-active">
         <v-list-item-title class="text-white">Upload new images</v-list-item-title>
       </v-list-item>
-      <v-list-item :to="{name: 'delete_images_form'}" active-class="primary-text list-active">
+      <v-list-item :to="{name: 'delete_images_form'}" active-class="list-active">
         <v-list-item-title class="text-white">Delete images</v-list-item-title>
       </v-list-item>
-      <v-list-item :to="{name: 'categorytable'}" active-class="primary-text list-active">
+      <v-list-item :to="{name: 'categorytable'}" active-class="list-active">
         <v-list-item-title class="text-white">Browse categories</v-list-item-title>
       </v-list-item>
-      <v-list-item :to="{name: 'tagtable'}" active-class="primary-text list-active">
+      <v-list-item :to="{name: 'tagtable'}" active-class="list-active">
         <v-list-item-title class="text-white">Browse tags</v-list-item-title>
       </v-list-item>
-      <v-list-item @click="logout" active-class="primary-text list-active">
-        <v-list-item-title class="text-white">Log out</v-list-item-title>
-      </v-list-item>
-    </v-list>
-  </v-menu>
- <!--not logged in and in mobile-->
-  <v-menu
-    v-else
-    v-model="menuVisible"
-    attach="#nav-bar"
-    location="end"
-    min-width="300px"
-    z-index="1005"
-  >
-    <template v-slot:activator="{ props }">
-      <v-list-item v-bind="props" active-class="primary-text list-active bg-transparent">
-        <v-list-item-title class="text-white">
-          <span>Anonymous User</span>
-        </v-list-item-title>
+      <v-list-item @click="logout" active-class="list-active">
+        <v-list-item-title class="text-red-lighten-1">Log out</v-list-item-title>
       </v-list-item>
     </template>
-    <v-list id="nav-admin-dropdown">
-      <v-list-item :to="{name: 'login'}" active-class="primary-text list-active">
-        <v-list-item-title class="text-white">Log in</v-list-item-title>
-      </v-list-item>
-    </v-list>
-  </v-menu>
+
+    <v-list-item v-else :to="{name: 'login'}" active-class="list-active">
+      <v-list-item-title class="text-white">Log in</v-list-item-title>
+    </v-list-item>
+
+  </template>
 </template>
 
 <script setup>

@@ -26,27 +26,32 @@
       <AdminDropdown class="ml-4" />
     </div>
 
-    <div v-else class="mr-2">
+    <div v-else class="mr-2 d-flex align-center">
+      
+      <v-btn to="/map" variant="elevated" id="nav-bar-button" :ripple="false" class="rounded-xl text-white px-3" @click="showFullMap">
+        Map
+      </v-btn>
+      <v-btn to="/faq" variant="elevated" id="nav-bar-button" :ripple="false" class="rounded-xl text-white px-3 ml-2">
+        Help
+      </v-btn>
+      <v-btn to="/about" variant="elevated" id="nav-bar-button" :ripple="false" class="rounded-xl text-white px-3 ml-2"> 
+        About
+      </v-btn>
+
       <v-menu
         attach="#nav-bar"
         location="bottom end"
-        min-width="300px"
+        min-width="250px"
         z-index="1003"
         :close-on-content-click="false"
       >
         <template v-slot:activator="{ props }">
-          <v-btn icon color="black" variant="text" v-bind="props" id="nav-dropdown-activator">
+          <v-btn icon color="black" variant="text" v-bind="props" id="nav-dropdown-activator" class="ml-1">
             <v-icon>mdi-menu</v-icon>
           </v-btn>
-        </template>
+        </template>       
         
         <v-list id="nav-dropdown" bg-color="black">
-          <v-list-item to="/map" active-class="list-active">
-              <v-list-item-title class="text-white" @click="showFullMap">Map</v-list-item-title>
-          </v-list-item>
-          <v-list-item to="/faq" active-class="list-active">
-              <v-list-item-title class="text-white">Help</v-list-item-title>
-          </v-list-item>
           <AdminDropdown />
         </v-list>
       </v-menu>
