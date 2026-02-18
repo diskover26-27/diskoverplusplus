@@ -15,15 +15,15 @@
     <!-- Desktop Version -->
     <v-toolbar-items v-if="mdAndUp">
       <!-- Map link -->
-      <v-btn to="/map" density="compact" id="nav-bar-button" variant="elevated" rounded="xl" class="text-white px-5 py-2 my-7" @click="showFullMap">
+      <v-btn to="/map" density="compact" id="nav-bar-button" class="rounded-xl elevated-24 text-white px-5 py-2 my-7" @click="showFullMap">
         Map
       </v-btn>
       <!-- FAQs link -->
-      <v-btn to="/faq" density="compact" id="nav-bar-button" variant="elevated" rounded="xl" class="text-white px-5 my-7 ml-4">
+      <v-btn to="/faq" density="compact" id="nav-bar-button" class="rounded-xl elevated-24 text-white px-5 my-7 ml-4">
         Help
       </v-btn>
       <!-- TODO: About Page About link -->
-      <v-btn to="/about" density="compact" id="nav-bar-button" variant="elevated" rounded="xl" class="text-white px-5 my-7 ml-4"> 
+      <v-btn to="/about" density="compact" id="nav-bar-button" class="rounded-xl elevated-24 text-white px-5 my-7 ml-4"> 
         About
       </v-btn>
       <AdminDropdown/>
