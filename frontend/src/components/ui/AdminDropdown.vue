@@ -10,7 +10,7 @@
     z-index="1005"
   >
     <template v-slot:activator="{ props }">
-      <v-btn density="compact" id="nav-bar-button" class="text-white rounded-xl px-5 py-2 my-7 mx-4" v-bind="props">
+      <v-btn id="nav-bar-button" :ripple="false" class="text-white rounded-xl px-5 py-2 my-7 ml-4" v-bind="props">
         <span>Logged in as {{ loggedInUser.name }}</span>
       </v-btn>
     </template>
@@ -93,7 +93,7 @@
       </v-list-item>
     </v-list>
   </v-menu>
-  
+ <!--not logged in and in mobile-->
   <v-menu
     v-else
     v-model="menuVisible"
@@ -137,10 +137,6 @@ const logout = () => {
 
 <style scoped>
 @import "@/assets/stylesheets/style.css";
-
-* {
-  font-family: roboto, sans-serif;
-}
 
 #nav-admin-dropdown {
   background-color: black !important;
