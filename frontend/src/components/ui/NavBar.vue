@@ -1,6 +1,5 @@
 <template>
-  <v-app-bar app id="nav-bar" color="transparent" flat density="compact">
-      
+  <v-app-bar absolute id="nav-bar" color="transparent" flat density="compact">
   <v-btn 
     to="/" 
     variant="text" 
@@ -101,6 +100,8 @@ const openGpsModal = () => {
   z-index: 1001 !important;
   padding-left: 0px !important;
   background-color: var(--nav-bg, transparent);
+  position: absolute;
+  top: 0;
 }
 
 #nav-bar-button {

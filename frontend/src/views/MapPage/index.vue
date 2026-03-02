@@ -56,14 +56,14 @@ onMounted(() => {
 .map-page-container {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 64px);
+  height: 100vh;
   width: 100%;
   overflow: hidden;
   padding: 0;
 }
 .side-drawer{
-  z-index: 1000 !important;
-  position: fixed;
+  z-index: 1002 !important;
+  position: absolute;
   left: 0;
   height: 100%;
   width: 25%;
