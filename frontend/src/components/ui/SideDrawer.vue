@@ -118,7 +118,7 @@ export default {
 }
 
 .scrollable-content {
-  max-height: calc(100vh - 50px); /* Adjust the height as needed */
+  max-height: 100%; /* Adjust the height as needed */
   overflow-y: auto; /* Enable vertical scrolling */
 }
 
