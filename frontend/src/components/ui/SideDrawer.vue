@@ -1,8 +1,10 @@
 <template>
+  
   <!-- Side Drawer for showing results and details alongside map anchored left -->
   <div
     v-show="isSideDrawerVisible" 
-  >
+    v-if="mdAndUp"
+    >
     <FloatingButton
       v-if="isVisible"
       attachedTo="drawer"
@@ -11,6 +13,24 @@
       class="floating-button"
     />
     <div class="search-drawer" v-show="isVisible">
+      <div class="px-2 pt-3 pl-5 pr-5 scrollable-content">
+        <div class="search-bar-container">
+          <SearchBar/>
+        </div>
+        <slot></slot>
+      </div>
+    </div>
+  </div>
+
+  <div v-else>
+    <FloatingButton
+      v-if="isVisible"
+      attachedTo="drawer"
+      @click="handleToggleSideDrawer"
+      color="white"
+      class="floating-button-mobile"
+    />
+     <div class="search-drawer-mobile" v-show="isVisible">
       <div class="px-2 pt-3 pl-5 pr-5 scrollable-content">
         <div class="search-bar-container">
           <SearchBar/>
@@ -83,16 +103,22 @@ export default {
 <style scoped>
 
 
-.search-drawer {
+.search-drawer, .search-drawer-mobile{
   height: 100%;
   width: 100%;
   background-color: white;
   overflow-x: visible !important;
   padding: 0;
+  box-shadow: 5px 0px 5px 0px rgba(106, 96, 96, 0.53);
+}
+
+.search-drawer-mobile{
+  border-radius: 5% 5% 0 0;
+  box-shadow: 0px -2px 10px 0px rgba(106, 96, 96, 0.53);
 }
 
 .scrollable-content {
-  max-height: calc(100vh - 50px); /* Adjust the height as needed */
+  max-height: 100%; /* Adjust the height as needed */
   overflow-y: auto; /* Enable vertical scrolling */
 }
 
@@ -106,5 +132,11 @@ export default {
   position: absolute;
   right: 0%; /* Adjust this value to position the button slightly outside the drawer */
   top: 50%; /* Center the button vertically */
+}
+.floating-button-mobile{
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  transform: translate(-50%, -50%)
 }
 </style>

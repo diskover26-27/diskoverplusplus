@@ -1,15 +1,14 @@
 <template>
-  <v-app-bar app id="nav-bar" height="96" color="transparent" flat>
-    
-<v-btn 
-  to="/" 
-  variant="text" 
-  :ripple="false" 
-  class="text-h4 ml-4 px-0"
-  style="--v-hover-opacity: 0; --v-activated-opacity: 0; --v-focus-opacity: 0;"
->
-  <span class="text-black font-weight-bold">dIskover</span>
-</v-btn>
+  <v-app-bar absolute id="nav-bar" color="transparent" flat density="compact">
+  <v-btn 
+    to="/" 
+    variant="text" 
+    :ripple="false" 
+    class="text-h4 ml-4 px-0"
+    style="--v-hover-opacity: 0; --v-activated-opacity: 0; --v-focus-opacity: 0;"
+  >
+    <span class="text-black font-weight-bold">dIskover</span>
+  </v-btn>
 
     <v-spacer></v-spacer>
 
@@ -101,6 +100,8 @@ const openGpsModal = () => {
   z-index: 1001 !important;
   padding-left: 0px !important;
   background-color: var(--nav-bg, transparent);
+  position: absolute;
+  top: 0;
 }
 
 #nav-bar-button {

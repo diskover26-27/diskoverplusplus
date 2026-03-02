@@ -1,14 +1,12 @@
 <template>
   <v-app>
     <Background>
-      <NavBar/>
-      
-      <v-main>
+      <NavBar />
+  
         <v-container class="full-vwidth full-vheight no-padding">
           <router-view></router-view>
         </v-container>
-      </v-main>
-      
+  
       <GpsMapHidden mapId="hidden-map"/>
     </Background>
   </v-app>
