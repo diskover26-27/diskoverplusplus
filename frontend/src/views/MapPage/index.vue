@@ -1,16 +1,24 @@
 <template>
   <v-container fluid class="map-page-container">
     
-        <SideDrawer v-if="mapStore.isSideDrawerVisible" @toggle-side-drawer="toggleSideDrawer" class="side-drawer">
-          <router-view></router-view>
-        </SideDrawer>
+        <div v-if="mapStore.isSideDrawerVisible">
+          <SideDrawer v-if="mdAndUp" @toggle-side-drawer="toggleSideDrawer" class="side-drawer">
+            <router-view></router-view>
+          </SideDrawer>
+
+          <SideDrawer v-else @toggle-side-drawer="toggleSideDrawer" class="side-drawer-mobile">
+            <router-view></router-view>
+          </SideDrawer>
+        </div>
+
         <BigMapView 
           :height="mapExactHeight" 
           :isOnDetailsPage="isOnDetailsPage" 
           :transportMode="detailsStore.transportMode" 
           class="map"
         >
-          <FloatingButton attachedTo="map" @click="toggleSideDrawer" color="white" class="btn"/>
+          <FloatingButton  v-if="mdAndUp" attachedTo="map" @click="toggleSideDrawer" color="white" class="search-btn-mdAndUp"/>
+          <FloatingButton  v-else attachedTo="map" @click="toggleSideDrawer" color="white" class="search-btn"/>
         </BigMapView>
 
   </v-container>
@@ -61,13 +69,20 @@ onMounted(() => {
   overflow: hidden;
   padding: 0;
 }
-.side-drawer{
+.side-drawer, .side-drawer-mobile{
   z-index: 1002 !important;
   position: absolute;
   left: 0;
   height: 100%;
   width: 25%;
-  box-shadow: 5px 0px 5px 0px rgba(106, 96, 96, 0.53);
+
+}
+.side-drawer-mobile{
+  height: 50%;
+  width: 100%;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 0%);
 }
 
 .map {
@@ -76,10 +91,15 @@ onMounted(() => {
   width: 100%;
 }
 
-.btn {
+.search-btn-mdAndUp{
   position: absolute;
   top: 50%;
   left: 5%; /* Adjust this value to position the button on the left side */
   transform: translateY(-50%);
+}
+.search-btn{
+  position: absolute;
+  z-index: 1002;
+  top: 95%;
 }
 </style>

@@ -8,8 +8,21 @@
     @click="toggleSideDrawer"
     elevation="7"
     :icon="icon"
+    v-if="mdAndUp"
   >
     <v-icon size="large">{{ icon }}</v-icon> <!-- Use mdi-arrow-right for the right-pointing icon -->
+  </v-btn>
+
+  <v-btn
+    v-show="checkSideDrawer"
+    color="#FFFFFF" 
+    class="floating-btn"
+    @click="toggleSideDrawer"
+    elevation="7"
+    :icon="iconMobile"
+    v-else
+  >
+    <v-icon size="large">{{ iconMobile }}</v-icon> <!-- Use mdi-arrow-right for the right-pointing icon -->
   </v-btn>
 
 </template>
@@ -57,6 +70,11 @@ export default {
       return isOnMap.value ? "mdi-arrow-right" : "mdi-arrow-left";
     });
 
+     const iconMobile = computed(() => {
+      return isOnMap.value ? "mdi-arrow-up" : "mdi-arrow-down";
+    });
+
+
     const toggleSideDrawer = () => {
       eventBus.emit("toggle-side-drawer");
     };
@@ -69,6 +87,7 @@ export default {
       checkSideDrawer,
       extraStyle,
       icon,
+      iconMobile,
       toggleSideDrawer
     };
   }
