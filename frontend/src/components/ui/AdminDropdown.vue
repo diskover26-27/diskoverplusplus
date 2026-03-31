@@ -14,7 +14,7 @@
           <span>Logged in as {{ loggedInUser.name }}</span>
         </v-btn>
       </template>
-      <v-list id="nav-admin-dropdown" bg-color="black">
+      <v-list id="nav-admin-dropdown" bg-color="maroon">
         <v-list-item :to="{name: 'location_crud_form', params: {mode: 'create'}}" active-class="list-active">
           <v-list-item-title class="text-white">Create new location</v-list-item-title>
         </v-list-item>
@@ -76,7 +76,7 @@
         <v-list-item-title class="text-white">Browse tags</v-list-item-title>
       </v-list-item>
       <v-list-item @click="logout" active-class="list-active">
-        <v-list-item-title class="text-red-lighten-1">Log out</v-list-item-title>
+        <v-list-item-title class="text-white">Log out</v-list-item-title>
       </v-list-item>
     </template>
 
@@ -109,12 +109,12 @@ const logout = () => {
 @import "@/assets/stylesheets/style.css";
 
 #nav-admin-dropdown {
-  background-color: black !important;
+  background-color: maroon !important;
   overflow: visible !important;
 }
 
 .v-list-item {
-  background-color: black !important;
+  background-color: maroon !important;
 }
 
 .v-list-item:hover {
@@ -131,6 +131,6 @@ const logout = () => {
 }
 
 #nav-bar-button {
-  background-color: black;
+  background-color: maroon;
 }
 </style>
