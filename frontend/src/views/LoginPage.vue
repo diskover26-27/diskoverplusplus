@@ -13,7 +13,7 @@
               v-if="!isLoggedIn"
               class="d-flex flex-column align-center w-100"
             >
-              <h1 class="mb-4">Login</h1>
+              <h1 class="mb-4 text-maroon">Login</h1>
               <form @submit.prevent="attemptLogIn" class="w-100">
                 <v-text-field
                   rounded
@@ -40,7 +40,7 @@
                   rounded="xl"
                   size="large"
                   type="submit"
-                  color="black"
+                  color="maroon"
                   class="text-white w-100"
                   :loading="isProcessing"
                   :disabled="isProcessing"
@@ -72,7 +72,7 @@
       </v-col>
 
       <v-col cols="12" md="6" class="d-none d-md-block">
-        <v-card class="elevation-24 rounded-xl border-lg overflow-hidden">
+        <v-card color="maroon" class="elevation-24 rounded-xl border-lg overflow-hidden">
           <v-img :src="upImage" height="500" cover />
         </v-card>
       </v-col>
@@ -131,10 +131,6 @@ const loggedInUser = computed(() => authStore.user);
 
 <style scoped>
 @import "@/assets/stylesheets/style.css";
-
-* {
-  font-family: roboto, sans-serif;
-}
 
 .login-bg {
   background-color: white !important;
