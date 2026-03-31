@@ -23,12 +23,23 @@
           <v-container fluid class="carousel-container">
               <v-container fluid>
                   <v-slide-group show-arrows>
+                    <template v-slot:prev>
+                      <v-btn color="black" icon>
+                        <v-icon>mdi-chevron-left</v-icon>
+                      </v-btn>
+                    </template>
                     <v-slide-group-item
                       v-for="(item, i) in categories"
                       :key="i"
                     >
                       <CategoryCard :category="item" />
                     </v-slide-group-item>
+
+                    <template v-slot:next>
+                      <v-btn color="black" icon>
+                        <v-icon>mdi-chevron-right</v-icon>
+                      </v-btn>
+                    </template>
                   </v-slide-group>
               </v-container>
           </v-container>
@@ -152,7 +163,7 @@ const homeLayout = computed(() => {
 
 .carousel-container {
   padding: 0 5%;
-  width: 100%;
+  width: 80%;
   display: flex;
   justify-content: center;
 }

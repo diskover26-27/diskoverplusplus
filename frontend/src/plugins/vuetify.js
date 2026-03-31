@@ -9,7 +9,7 @@ const vuetify = createVuetify({
       light: {
         dark: false, // Explicitly define as a light theme
         colors: {  // ✅ Colors should be inside `colors`
-          primary: "#D32F2F", // Darkish red
+          primary: "#7b1113", // UP Maroon red
           secondary: "#FFEBEE", // Light pink
           accent: "#FFCDD2", // Pink
         },
