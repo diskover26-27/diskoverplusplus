@@ -4,7 +4,7 @@
     to="/" 
     variant="text" 
     :ripple="false" 
-    class="text-h5 ml-4 px-0"
+    class="text-h5 ml-5 px-0"
     style="--v-hover-opacity: 0; --v-activated-opacity: 0; --v-focus-opacity: 0;"
   >
     <span class="text-maroon font-weight-bold">dIskover</span>
