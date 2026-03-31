@@ -69,6 +69,10 @@ color: white !important;
 color: black !important;
 }
 
+.text-maroon {
+color: maroon !important;
+}
+
 html, body {
   margin: 0;
   padding: 0;
@@ -84,6 +88,6 @@ html, body {
 }
 
 .bg-maroon {
-	background-color: #7b1113 !important; /* Set the background color to maroon */
-	color: #7b1113
+  background-color: #7b1113 !important; /* Set the background color to maroon */
+  color: #7b1113
 }

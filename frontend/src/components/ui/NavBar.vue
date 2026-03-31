@@ -1,13 +1,13 @@
 <template>
-  <v-app-bar absolute id="nav-bar" color="transparent" flat density="compact">
+  <v-app-bar absolute id="nav-bar" color="white">
   <v-btn 
     to="/" 
     variant="text" 
     :ripple="false" 
-    class="text-h4 ml-4 px-0"
+    class="text-h5 ml-4 px-0"
     style="--v-hover-opacity: 0; --v-activated-opacity: 0; --v-focus-opacity: 0;"
   >
-    <span class="text-black font-weight-bold">dIskover</span>
+    <span class="text-maroon font-weight-bold">dIskover</span>
   </v-btn>
 
     <v-spacer></v-spacer>
@@ -87,13 +87,13 @@ const openGpsModal = () => {
 @import "@/assets/stylesheets/style.css";
 
 #nav-dropdown {
-  background-color: black !important;
+  background-color: maroon !important;
   overflow: visible !important;
 }
 
 .list-active {
   color: white !important;
-  background-color: black !important;
+  background-color: maroon !important;
 }
 
 #nav-bar {
@@ -105,6 +105,6 @@ const openGpsModal = () => {
 }
 
 #nav-bar-button {
-  background-color: black;
+  background-color: maroon;
 }
 </style>
