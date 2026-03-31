@@ -10,7 +10,6 @@
         <v-divider class="mt-2 divider" :thickness="2"></v-divider>
     </v-col>
 
-
     <!-- Transport Mode Buttons -->
     <v-col class="mt-3">
       <v-row justify="center">
