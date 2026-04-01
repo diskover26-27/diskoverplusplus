@@ -7,10 +7,9 @@
       <v-container class="pa-0 mt-10">
         <v-row  justify="center" class="column">
           <v-col cols="12" class="text-center">
-            <p class="caption text-black">
-              Ready to diskover something new today?
-            </p>
-              <SearchBar class="search-bar" />
+            <p class="text-outline-black font-weight-bold text-h4 text-green">Diskover your way around</p>
+            <p class="text-outline-black diskover-title font-weight-bold text-h2 text-maroon">UP Diliman</p>
+            <SearchBar class="search-bar" />
           </v-col>
         </v-row>
 
@@ -21,11 +20,11 @@
         <!-- Quick Home page links and widgets -->
         <v-container fluid class = crescent-elements-container>
           <v-container fluid class="carousel-container">
-              <v-container fluid>
+            <div class="carousel-container">
                   <v-slide-group show-arrows>
                     <template v-slot:prev>
-                      <v-btn color="black" icon>
-                        <v-icon>mdi-chevron-left</v-icon>
+                      <v-btn color="maroon" icon>
+                        <v-icon color="white">mdi-chevron-left</v-icon>
                       </v-btn>
                     </template>
                     <v-slide-group-item
@@ -36,12 +35,12 @@
                     </v-slide-group-item>
 
                     <template v-slot:next>
-                      <v-btn color="black" icon>
-                        <v-icon>mdi-chevron-right</v-icon>
+                      <v-btn color="maroon" icon>
+                        <v-icon color="white">mdi-chevron-right</v-icon>
                       </v-btn>
                     </template>
                   </v-slide-group>
-              </v-container>
+            </div>
           </v-container>
             <p class="footer text-grey">
               Diskover++ is a project from students of the Department of Computer Science in UP Diliman. Please help us by reporting broken links or providing comments and suggestions through this form. We need your feedback to help us improve the site.
@@ -61,9 +60,9 @@ import { useMainStore } from '@/stores/index.js';
 import bgImage from '@/assets/backgrounds/bgimg.png';
 import crescent from '@/assets/backgrounds/crescent.png';
 import miniMapImage from '@/assets/images/mini_map.png';
-import SearchBar from '@/components/search/SearchBar.vue'; // Import the SearchBar component
-import InfoCard from '@/components/ui/InfoCard.vue'; // Import the InfoCard component
-import CategoryCard from '@/components/home/CategoryCard.vue'; // Import the CategoryCard component
+import SearchBar from '@/components/search/SearchBar.vue';
+import InfoCard from '@/components/ui/InfoCard.vue';
+import CategoryCard from '@/components/home/CategoryCard.vue';
 
 const { mdAndUp } = useDisplay();
 const mainStore = useMainStore();
@@ -178,11 +177,6 @@ const homeLayout = computed(() => {
   font-size: 0.55rem;
 }
 
-/* Title styling */
-.diskover-title {
-  text-shadow: 0px 1px 3px #000000;
-}
-
 .no-underline {
   text-decoration: none;
 }
@@ -197,5 +191,9 @@ const homeLayout = computed(() => {
 
 .full-width {
   width: 100%;
+}
+
+.text-green {
+  color: #014421 !important;
 }
 </style>

@@ -2,8 +2,8 @@
   <!-- Home page category card with huge icon picture and link to filtered search -->
   <v-hover v-slot:default="{ isHovering }">
     <v-btn
-      :color="isSelected ? 'primary' : undefined"
-      class="ma-2"
+      color="maroon"
+      class="ma-2 text-white"
       rounded
       :to="{ path: '/map/search', query: { category: category.name } }"
     >
@@ -63,6 +63,8 @@ export default {
 </script>
 
 <style scoped>
+@import "@/assets/stylesheets/style.css";
+
 .text-white {
   color: white !important;
 }
