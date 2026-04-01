@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
 :root {
   --v-font-family: 'Inter', sans-serif !important;
 }
@@ -70,9 +69,16 @@ color: black !important;
 }
 
 .text-maroon {
-color: maroon !important;
+color: #7b1113 !important;
 }
 
+.text-yellow {
+color: #f3aa2c
+}
+
+.text-green {
+color: #014421
+}
 html, body {
   margin: 0;
   padding: 0;
