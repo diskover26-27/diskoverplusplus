@@ -1,5 +1,5 @@
 <template>
-  <v-container class="fill-height d-flex align-center justify-center">
+  <v-container class="mt-16 fill-height d-flex align-center justify-center">
     
     <v-sheet
       class="pa-8 rounded-xl"
@@ -47,8 +47,8 @@
 
       <div class="mt-6 d-flex justify-end">
         <v-btn 
-          color="black" 
-          class="mr-3" 
+          color="maroon" 
+          class="mr-3 text-white"
           @click="handleUploadClick()" 
           :disabled="isSubmitting || uploadedImageFiles.length === 0"
         >
@@ -134,6 +134,8 @@ export default {
 </script>
 
 <style scoped>
+@import "@/assets/stylesheets/style.css";
+
 .form-container {
   background-color: white; 
   padding: 30px; 

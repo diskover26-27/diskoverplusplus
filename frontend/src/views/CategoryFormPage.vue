@@ -65,7 +65,8 @@
 
           <v-col cols="12" sm="auto">
             <v-btn 
-              color="black" 
+              color="maroon"
+              class="text-white"
               block
               @click="onCancelClick"
               :disabled="isSubmitting"
@@ -76,7 +77,8 @@
 
           <v-col cols="12" sm="auto">
             <v-btn 
-              color="black" 
+              color="maroon"
+              class="text-white"
               block
               type="submit"
               :loading="isSubmitting"
@@ -184,6 +186,8 @@ const onColorSelected = (event) => {
 </script>
 
 <style scoped>
+@import "@/assets/stylesheets/style.css";
+
 .color-picker {
   -webkit-appearance: none;
   -moz-appearance: none;

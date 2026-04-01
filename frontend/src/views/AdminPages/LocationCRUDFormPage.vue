@@ -1,5 +1,5 @@
 <template>
-  <v-container class="mt-md-10">
+  <v-container class="mt-12">
     <v-card
       :class="$vuetify.display.mdAndUp ? 'elevation-24' : 'elevation-4'"
       class="mt-5 rounded-xl"
@@ -16,7 +16,7 @@
             />
             <v-btn
               @click="resetMapView"
-              class="reset-map-btn"
+              class="text-white reset-map-btn"
               size="small"
               elevation="2"
             >
@@ -48,7 +48,7 @@
               deletable-chips
               label="Subareas"
               placeholder="Search a subarea"
-              color="black"
+              color="maroon"
               :menu-props="{ zIndex: '1001' }"
               :readonly="isReadOnly"
               :error="isReadOnly"
@@ -66,7 +66,7 @@
               clearable
               label="Main Building"
               placeholder="Search a main building"
-              color="black"
+              color="maroon"
               :menu-props="{ zIndex: '1001' }"
               :readonly="isReadOnly"
               :error="isReadOnly"
@@ -84,7 +84,7 @@
             <label>Name</label>
             <v-text-field
               placeholder="Name"
-              color="black"
+              color="maroon"
               v-model="name"
               :readonly="isReadOnly"
               :error="isReadOnly"
@@ -134,8 +134,8 @@
             <div class="d-flex align-center justify-center">
               <v-btn
                 v-if="mode === 'create'"
-                color="black"
-                class="mr-2"
+                color="maroon"
+                class="mr-2 text-white"
                 @click="handleCreateClick"
                 :disabled="isSubmitting"
               >
@@ -395,8 +395,10 @@ export default {
 </script>
 
 <style scoped>
+@import "@/assets/stylesheets/style.css";
+
 .form-container {
-  background-color: white;
+  background-color: maroon;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -418,5 +420,6 @@ label {
   bottom: 10px;
   right: 10px;
   z-index: 1000;
+  background-color: maroon;
 }
 </style>

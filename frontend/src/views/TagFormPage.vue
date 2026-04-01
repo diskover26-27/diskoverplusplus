@@ -51,7 +51,8 @@
 
           <v-col cols="12" sm="auto">
             <v-btn 
-              color="black" 
+              color="maroon"
+              class="text-white"
               block
               type="submit"
               :loading="isSubmitting"
@@ -147,3 +148,7 @@ const onDeleteConfirm = async () => {
 
 const onCancelClick = () => router.push('/admin/browse/tags');
 </script>
+
+<style scoped>
+@import "@/assets/stylesheets/style.css";
+</style>

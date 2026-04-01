@@ -1,6 +1,6 @@
 <template>
   <v-container
-    class="grey lighten-4 fill-height d-flex align-center justify-center"
+    class="mt-16 lighten-4 fill-height d-flex align-center justify-center"
   >
     <v-row justify="center">
       <v-col cols="12" md="10" lg="8">
@@ -23,8 +23,8 @@
           </div>
           <v-row class="justify-end">
             <v-btn
-              color="error"
-              class="mr-2"
+              color="maroon"
+              class="mr-2 text-white"
               @click="handleDeleteClick()"
               :disabled="isSubmitting || !selectedDeleteImageId"
             >
@@ -269,6 +269,8 @@ export default {
 </script>
 
 <style scoped>
+@import "@/assets/stylesheets/style.css";
+
 .form-container {
   background-color: white; /* White background for the form */
   padding: 20px; /* Add padding inside the form */

@@ -1,12 +1,12 @@
 <template>
-  <v-container class="fill-height d-flex align-top justify-center py-8">
+  <v-container class="mt-16 fill-height d-flex align-top justify-center py-8">
     <v-sheet class="pa-4 pa-sm-8 rounded-xl" elevation="2" width="100%" max-width="1000">
       
       <div class="d-flex flex-column flex-sm-row justify-space-between align-sm-center mb-6">
         <div class="text-h5 font-weight-bold mb-4 mb-sm-0">Categories</div>
         
         <v-btn
-          color="black"
+          color="maroon"
           class="text-white px-4"
           prepend-icon="mdi-plus"
           @click="onClickNewCategory"
@@ -102,3 +102,7 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+@import "@/assets/stylesheets/style.css";
+</style>
