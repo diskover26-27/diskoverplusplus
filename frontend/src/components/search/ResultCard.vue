@@ -12,7 +12,7 @@
       <v-col cols="5">
         <v-img height="100%" cover aspect-ratio="1/1" :src="thumbnailUrl" />
       </v-col>
-      <v-col cols="7" class="pr-2 pt-2 pb-2 card-content">
+      <v-col cols="7" class="pl-2 pr-2 pt-2 pb-2 card-content">
         <v-card-title class ="card-title">{{ result.name }}</v-card-title>
         <v-card-text class="card-text">
           <div ref="desc">{{ result.description }}</div>
