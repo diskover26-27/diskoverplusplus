@@ -51,6 +51,7 @@ htmlcov/
 local_settings.py
 .env
 .env.*
+!.env.example
 
 # =========================
 # JavaScript/Node.js (Frontend)
