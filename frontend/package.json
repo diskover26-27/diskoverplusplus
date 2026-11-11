@@ -29,8 +29,13 @@
     "vuex": "^4.0.2"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/qs": "^6.9.18",
     "@vitejs/plugin-vue": "^6.0.10",
+    "eslint": "^10.14.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-vue": "^10.12.1",
+    "prettier": "^3.9.10",
     "vite": "^8.3.8",
     "vite-plugin-inspect": "^12.1.0",
     "vite-plugin-vue-devtools": "^8.2.1"
