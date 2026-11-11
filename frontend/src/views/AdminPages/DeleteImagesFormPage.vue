@@ -9,24 +9,24 @@
           <div class="maroon-chips">
             <v-autocomplete
               v-model="locationSearchId"
-              :items="locationSearchItemsWithUnbinded"
               v-model:search="locationSearchQuery"
+              :items="locationSearchItemsWithUnbinded"
               item-title="text"
               item-value="value"
-              @update:model-value="apiGetLocationSearchImages"
               label="Location Search"
               placeholder="Search images from a location"
               auto-select-first
               clearable
               hide-selected
+              @update:model-value="apiGetLocationSearchImages"
             />
           </div>
           <v-row class="justify-end">
             <v-btn
               color="maroon"
               class="mr-2 text-white"
-              @click="handleDeleteClick()"
               :disabled="isSubmitting || !selectedDeleteImageId"
+              @click="handleDeleteClick()"
             >
               Delete Image
             </v-btn>
@@ -41,9 +41,9 @@
               md="4"
             >
               <v-card
-                @click="selectedDeleteImageId = image.id"
                 class="cursor-pointer"
                 height="250"
+                @click="selectedDeleteImageId = image.id"
               >
                 <v-img
                   :src="getFullImageUrl(image.img_url)"
@@ -72,91 +72,87 @@
       </v-col>
     </v-row>
     <CenterModal
-  :isVisible="isDeleteConfirmVisible"
-  @close="isDeleteConfirmVisible = false"
->
-  <v-container class="bg-white pa-6 text-center rounded-lg">
-    
-    <v-icon 
-      icon="mdi-alert-circle-outline" 
-      color="red-lighten-1" 
-      size="64" 
-      class="mb-4"
-    ></v-icon>
-
-    <div class="text-h5 font-weight-bold text-red-darken-2 mb-2">
-      Delete Image?
-    </div>
-
-    <div class="text-body-1 text-medium-emphasis mb-6">
-      Are you sure you want to delete <br>
-      <span class="font-weight-bold text-black">{{ selectedDeleteImageName }}</span>?
-    </div>
-
-    <v-sheet 
-      class="mx-auto mb-6 border rounded overflow-hidden bg-grey-lighten-4"
-      max-width="500"
-      elevation="2"
+      :is-visible="isDeleteConfirmVisible"
+      @close="isDeleteConfirmVisible = false"
     >
-      <v-img
-        :src="getFullImageUrl(selectedDeleteImageName)"
-        height="300"
-        cover
-      ></v-img>
-    </v-sheet>
+      <v-container class="bg-white pa-6 text-center rounded-lg">
+        <v-icon
+          icon="mdi-alert-circle-outline"
+          color="red-lighten-1"
+          size="64"
+          class="mb-4"
+        ></v-icon>
 
-    <v-row justify="center" no-gutters>
-      
+        <div class="text-h5 font-weight-bold text-red-darken-2 mb-2">
+          Delete Image?
+        </div>
 
-      <v-col cols="12" sm="auto" class="ma-1">
-        <v-btn 
-          color="red-darken-1" 
-          variant="flat" 
-          height="45"
-          width="120"
-          class="text-white"
-          @click="handleDeleteConfirm"
+        <div class="text-body-1 text-medium-emphasis mb-6">
+          Are you sure you want to delete <br />
+          <span class="font-weight-bold text-black">{{
+            selectedDeleteImageName
+          }}</span
+          >?
+        </div>
+
+        <v-sheet
+          class="mx-auto mb-6 border rounded overflow-hidden bg-grey-lighten-4"
+          max-width="500"
+          elevation="2"
         >
-          Yes, Delete
-        </v-btn>
-      </v-col>
-      <v-col cols="12" sm="auto" class="ma-1">
-        <v-btn 
-          color="grey-lighten-3" 
-          variant="flat" 
-          height="45"
-          width="120"
-          @click="isDeleteConfirmVisible = false"
-        >
-          Cancel
-        </v-btn>
-      </v-col>
-    </v-row>
+          <v-img
+            :src="getFullImageUrl(selectedDeleteImageName)"
+            height="300"
+            cover
+          ></v-img>
+        </v-sheet>
 
-  </v-container>
-</CenterModal>
+        <v-row justify="center" no-gutters>
+          <v-col cols="12" sm="auto" class="ma-1">
+            <v-btn
+              color="red-darken-1"
+              variant="flat"
+              height="45"
+              width="120"
+              class="text-white"
+              @click="handleDeleteConfirm"
+            >
+              Yes, Delete
+            </v-btn>
+          </v-col>
+          <v-col cols="12" sm="auto" class="ma-1">
+            <v-btn
+              color="grey-lighten-3"
+              variant="flat"
+              height="45"
+              width="120"
+              @click="isDeleteConfirmVisible = false"
+            >
+              Cancel
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-container>
+    </CenterModal>
   </v-container>
 </template>
 
 <script>
-import AdminVerifierMixin from "@/mixins/AdminVerifierMixin";
-import CenterModal from "@/components/ui/CenterModal.vue"; // Adjust the path as needed
+import AdminVerifierMixin from '@/mixins/AdminVerifierMixin';
+import CenterModal from '@/components/ui/CenterModal.vue'; // Adjust the path as needed
 
 export default {
-  mixins: [AdminVerifierMixin],
   components: {
     CenterModal, // Register CenterModal
   },
-  mounted() {
-    this.handleRouteChange();
-  },
+  mixins: [AdminVerifierMixin],
   data() {
     return {
       locationSearchId: -1,
-      locationSearchQuery: "",
+      locationSearchQuery: '',
       locationSearchItems: [],
       locationSearchImages: [],
-      selectedDeleteImageId: "",
+      selectedDeleteImageId: '',
       isDeleteConfirmVisible: false,
       isSubmitting: false,
     };
@@ -164,29 +160,32 @@ export default {
   computed: {
     locationSearchItemsWithUnbinded() {
       const sortedApiItems = this.locationSearchItems.slice().sort((a, b) => {
-        const textA = (a.text || "").toLowerCase();
-        const textB = (b.text || "").toLowerCase();
+        const textA = (a.text || '').toLowerCase();
+        const textB = (b.text || '').toLowerCase();
 
         if (textA < textB) return -1;
         if (textA > textB) return 1;
         return 0;
       });
       return [
-        { text: "Unbinded", value: 0 },
+        { text: 'Unbinded', value: 0 },
         ...sortedApiItems,
-        { text: "None", value: -1 },
+        { text: 'None', value: -1 },
       ];
     },
     selectedDeleteImageName() {
       let image = this.locationSearchImages.find(
-        (item) => item.id == this.selectedDeleteImageId,
+        (item) => item.id == this.selectedDeleteImageId
       );
       return image ? image.img_url : null;
     },
   },
+  mounted() {
+    this.handleRouteChange();
+  },
   methods: {
     handleRouteChange() {
-      this.apiGetLocationSearchItems("");
+      this.apiGetLocationSearchItems('');
     },
     apiGetLocationSearchItems(searchValue) {
       this.$http
@@ -207,7 +206,7 @@ export default {
           });
         })
         .catch((error) => {
-          alert("error receiving queried results from API: ");
+          alert('error receiving queried results from API: ');
           console.log(error);
         });
     },
@@ -228,14 +227,14 @@ export default {
         })
         .then((response) => {
           console.log(
-            "successful retrieved location search images data from API: ",
-            response.data,
+            'successful retrieved location search images data from API: ',
+            response.data
           );
           this.locationSearchImages = response.data;
         })
         // alert an error if unsuccessful GET
         .catch((error) => {
-          alert("error receiving queried results from API: ");
+          alert('error receiving queried results from API: ');
           console.log(error);
         });
     },
@@ -250,18 +249,18 @@ export default {
       this.$http
         .delete(`/admin/images/${this.selectedDeleteImageId}/`)
         .then((response) => {
-          console.log("successfully deleted location from API", response);
+          console.log('successfully deleted location from API', response);
           this.$router.go();
         })
         .catch(function (error) {
-          alert("error deleting location to API", error);
+          alert('error deleting location to API', error);
         })
         .finally(() => {
           this.isSubmitting = false;
         });
     },
     handleCancelClick() {
-      console.log("cancel");
+      console.log('cancel');
       this.$router.go(-1);
     },
   },
@@ -269,7 +268,7 @@ export default {
 </script>
 
 <style scoped>
-@import "@/assets/stylesheets/style.css";
+@import '@/assets/stylesheets/style.css';
 
 .form-container {
   background-color: white; /* White background for the form */

@@ -8,8 +8,8 @@
             <v-hover v-slot="{ isHovering }">
               <v-card
                 :class="`elevation-${isHovering ? 12 : 2}`"
-                @click="openCarouselModalAt(i)"
                 tile
+                @click="openCarouselModalAt(i)"
               >
                 <v-img :src="url" :aspect-ratio="1" />
               </v-card>
@@ -26,9 +26,12 @@
     </v-card>
 
     <!-- Carousel Modal for showing a bigger view of the images -->
-    <CenterModal :isVisible="isCarouselVisible" @close="setCarouselModal(false)">
+    <CenterModal
+      :is-visible="isCarouselVisible"
+      @close="setCarouselModal(false)"
+    >
       <v-card class="pa-4" max-width="1200px" max-height="90vh">
-        <v-carousel :cycle="false" v-model="carouselIndex" height="80vh">
+        <v-carousel v-model="carouselIndex" :cycle="false" height="80vh">
           <v-carousel-item v-for="(url, i) in fullImageUrls" :key="i">
             <v-img :src="url" height="100%" contain />
           </v-carousel-item>
@@ -73,5 +76,4 @@ const openCarouselModalAt = (index) => {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

@@ -7,16 +7,16 @@
 
 <script>
 // import default background image
-import bgImg from '@/assets/backgrounds/bgimg.png'
+import bgImg from '@/assets/backgrounds/bgimg.png';
 
 export default {
   // set the background image
   data: () => ({
     backgroundImageStyle: {
-      backgroundImage: `url(${bgImg})`
+      backgroundImage: `url(${bgImg})`,
     },
   }),
-}
+};
 </script>
 
 <style scoped>

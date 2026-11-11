@@ -1,16 +1,16 @@
 <template>
   <div class="search-bar-container">
     <v-text-field
+      v-model="searchText"
       class="nav-search"
       label="Where to?"
       placeholder="Search away!"
       solo
       hide-details
-      v-model="searchText"
       @keyup.enter="emitSearch"
     >
       <template #append-inner>
-        <v-btn @click="emitSearch" class="search-btn" icon>
+        <v-btn class="search-btn" icon @click="emitSearch">
           <v-icon>mdi-magnify</v-icon>
         </v-btn>
       </template>
@@ -28,7 +28,7 @@ export default {
   setup() {
     const mapStore = useMapStore();
     const searchStore = useSearchStore();
-    const searchText = ref(""); // Define searchText as a ref
+    const searchText = ref(''); // Define searchText as a ref
     const router = useRouter(); // Use useRouter to get the router instance
     const route = useRoute(); // Use useRoute to access the current route
 
@@ -43,11 +43,11 @@ export default {
 
     const emitSearch = () => {
       if (!searchText.value.trim()) {
-        console.warn("Search query is empty!");
+        console.warn('Search query is empty!');
         return; // Prevent empty search
       }
 
-      console.log("Search submitted:", searchText.value);
+      console.log('Search submitted:', searchText.value);
 
       mapStore.setSideDrawer(true); // Open the side drawer for results
       searchStore.setSearchFilter(searchText.value); // Update the search filter in the store
@@ -55,11 +55,11 @@ export default {
 
       // Navigate to the search results page with the updated query
       router.push({
-        path: "/map/search",
+        path: '/map/search',
         query: {
           ...apiQuery.value, // Include any existing query parameters
-          search: searchText.value // Add the search parameter explicitly
-        }
+          search: searchText.value, // Add the search parameter explicitly
+        },
       });
     };
 
@@ -67,21 +67,21 @@ export default {
     watch(
       () => route.query.search,
       (newSearch) => {
-        searchText.value = newSearch || ""; // Update searchText when the query changes
+        searchText.value = newSearch || ''; // Update searchText when the query changes
       }
     );
 
     // Debugging: Log changes to apiQuery
     watch(apiQuery, (newQuery) => {
-      console.log("Updated apiQuery:", newQuery);
+      console.log('Updated apiQuery:', newQuery);
     });
 
     return {
       searchText,
       apiQuery,
-      emitSearch
+      emitSearch,
     };
-  }
+  },
 };
 </script>
 

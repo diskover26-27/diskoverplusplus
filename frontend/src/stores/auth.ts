@@ -39,7 +39,7 @@ export const useAuthStore = defineStore('auth', {
       this.invalidLogInAttempt = newInvalid;
     },
     verifyToken() {
-      return new Promise((resolve) => {
+      return new Promise<void>((resolve) => {
         if (this.jwt) {
           resolve();
         } else {
@@ -51,48 +51,60 @@ export const useAuthStore = defineStore('auth', {
       });
     },
     logIn({ username, password }) {
-      console.log("Axios Base URL:", axios.defaults.baseURL);
-      return axios.post(`/token/`, {
-        username: username,
-        password: password,
-      }).then(response => {
-        this.setToken(response.data.access); // Save the access token
-        this.setRefreshToken(response.data.refresh); // Save the refresh token
-        this.setUser({ name: username }); // Update the user state with the username
-        console.log("User set in authStore:", this.user); // Debugging
-        this.invalidLogInAttempt = false;
-        console.log("Successfully authenticated token: You are now logged in\n", response);
-        this.startSilentRefresh(); // Start the silent refresh timer
-      }).catch(error => {
-        console.log("Invalid username and password for authentication, you remain logged out\n", error);
-        this.invalidLogInAttempt = true;
-        throw error;
-      });
+      console.log('Axios Base URL:', axios.defaults.baseURL);
+      return axios
+        .post(`/token/`, {
+          username: username,
+          password: password,
+        })
+        .then((response) => {
+          this.setToken(response.data.access); // Save the access token
+          this.setRefreshToken(response.data.refresh); // Save the refresh token
+          this.setUser({ name: username }); // Update the user state with the username
+          console.log('User set in authStore:', this.user); // Debugging
+          this.invalidLogInAttempt = false;
+          console.log(
+            'Successfully authenticated token: You are now logged in\n',
+            response
+          );
+          this.startSilentRefresh(); // Start the silent refresh timer
+        })
+        .catch((error) => {
+          console.log(
+            'Invalid username and password for authentication, you remain logged out\n',
+            error
+          );
+          this.invalidLogInAttempt = true;
+          throw error;
+        });
     },
     logOut() {
       this.deleteToken();
       this.deleteRefreshToken();
       this.deleteUser();
-      console.log("Successfully deleted token: You are now logged out\n");
+      console.log('Successfully deleted token: You are now logged out\n');
       this.stopSilentRefresh(); // Stop the silent refresh timer
     },
     refreshAccessToken() {
-      return axios.post(`/token/refresh/`, {
-        refresh: this.refreshToken,
-      }).then(response => {
-        this.setToken(response.data.access); // Update the access token
-        this.startSilentRefresh(); // Restart the silent refresh timer
-      }).catch(error => {
-        console.error('Error refreshing token:', error);
+      return axios
+        .post(`/token/refresh/`, {
+          refresh: this.refreshToken,
+        })
+        .then((response) => {
+          this.setToken(response.data.access); // Update the access token
+          this.startSilentRefresh(); // Restart the silent refresh timer
+        })
+        .catch((error) => {
+          console.error('Error refreshing token:', error);
 
-        // Log out if the refresh token is invalid or the request fails
-        if (error.response && error.response.status === 401) {
-          console.warn('Refresh token is invalid or expired. Logging out...');
-          this.logOut(); // Log the user out
-        }
+          // Log out if the refresh token is invalid or the request fails
+          if (error.response && error.response.status === 401) {
+            console.warn('Refresh token is invalid or expired. Logging out...');
+            this.logOut(); // Log the user out
+          }
 
-        throw error; // Rethrow the error to stop further retries
-      });
+          throw error; // Rethrow the error to stop further retries
+        });
     },
     startSilentRefresh() {
       // Clear any existing timer
@@ -117,23 +129,26 @@ export const useAuthStore = defineStore('auth', {
     },
   },
   getters: {
-    isLoggedIn: (state) => !!state.jwt
-  }
+    isLoggedIn: (state) => !!state.jwt,
+  },
 });
 
 // Add Axios interceptor to refresh token automatically
-axios.interceptors.request.use(async (config) => {
-  const authStore = useAuthStore();
-  const token = authStore.jwt;
+axios.interceptors.request.use(
+  async (config) => {
+    const authStore = useAuthStore();
+    const token = authStore.jwt;
 
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
   }
-
-  return config;
-}, (error) => {
-  return Promise.reject(error);
-});
+);
 
 axios.interceptors.response.use(
   (response) => response,
@@ -141,7 +156,12 @@ axios.interceptors.response.use(
     const authStore = useAuthStore();
 
     // Check if the error is due to an expired access token
-    if (error.response && error.response.status === 401 && error.config && !error.config._retry) {
+    if (
+      error.response &&
+      error.response.status === 401 &&
+      error.config &&
+      !error.config._retry
+    ) {
       error.config._retry = true; // Prevent infinite retries
 
       try {

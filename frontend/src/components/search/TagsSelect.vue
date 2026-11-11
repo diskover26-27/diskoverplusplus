@@ -2,8 +2,8 @@
   <!-- selection input with multiple category chips -->
   <div id="tag-select">
     <v-select
-      theme="light"
       v-model="tagsFilter"
+      theme="light"
       :items="tags"
       attach
       label="Tags"

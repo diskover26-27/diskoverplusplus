@@ -10,15 +10,15 @@
           <div style="position: relative">
             <FormMapView
               height="300px"
-              @click="handleMapClick"
-              :defaultFormCoords="defaultCoords"
+              :default-form-coords="defaultCoords"
               :readonly="isReadOnly"
+              @click="handleMapClick"
             />
             <v-btn
-              @click="resetMapView"
               class="text-white reset-map-btn"
               size="small"
               elevation="2"
+              @click="resetMapView"
             >
               Reset Map
             </v-btn>
@@ -27,18 +27,18 @@
           <div class="px-10 pt-5 pa-md-5">
             <label>LatLng (Click on the map to set):</label>
             <v-text-field
-              label="Coordinates"
               v-model="coordsDisplay"
+              label="Coordinates"
               readonly
             />
 
             <!-- Subareas Dropdown -->
             <v-autocomplete
               v-model="subareaIds"
+              v-model:search-input="subareaSearch"
               :items="subareaItems"
               item-title="name"
               item-value="value"
-              :search-input.sync="subareaSearch"
               multiple
               cache-items
               hide-selected
@@ -58,8 +58,8 @@
             <!-- Main Building Dropdown -->
             <v-autocomplete
               v-model="mainBuildingId"
+              v-model:search-input="mainBuildingSearch"
               :items="mainBuildingItems"
-              :search-input.sync="mainBuildingSearch"
               cache-items
               hide-selected
               auto-select-first
@@ -83,9 +83,9 @@
           <div class="px-10 pb-5 pa-md-5">
             <label>Name</label>
             <v-text-field
+              v-model="name"
               placeholder="Name"
               color="maroon"
-              v-model="name"
               :readonly="isReadOnly"
               :error="isReadOnly"
             />
@@ -93,13 +93,13 @@
             <!-- Category Dropdown -->
             <label>Category</label>
             <v-select
+              v-model="categoryId"
               :items="categoryItems"
               item-title="name"
               item-value="id"
               placeholder="Category"
               color="black"
               :menu-props="{ zIndex: '1001' }"
-              v-model="categoryId"
               :readonly="isReadOnly"
               :error="isReadOnly"
             />
@@ -107,6 +107,7 @@
             <!-- Tags Dropdown -->
             <label>Tags</label>
             <v-select
+              v-model="tagIds"
               :items="tagItems"
               item-title="name"
               item-value="value"
@@ -116,7 +117,6 @@
               deletable-chips
               :menu-props="{ zIndex: '1001' }"
               multiple
-              v-model="tagIds"
               :readonly="isReadOnly"
               :error="isReadOnly"
             />
@@ -136,8 +136,8 @@
                 v-if="mode === 'create'"
                 color="maroon"
                 class="mr-2 text-white"
-                @click="handleCreateClick"
                 :disabled="isSubmitting"
+                @click="handleCreateClick"
               >
                 Create Location
               </v-btn>
@@ -145,8 +145,8 @@
                 v-else-if="mode === 'update'"
                 color="success"
                 class="mr-2"
-                @click="handleUpdateClick"
                 :disabled="isSubmitting"
+                @click="handleUpdateClick"
               >
                 Update Location
               </v-btn>
@@ -154,8 +154,8 @@
                 v-else
                 color="error"
                 class="mr-2"
-                @click="handleDeleteClick"
                 :disabled="isSubmitting"
+                @click="handleDeleteClick"
               >
                 Delete Location
               </v-btn>
@@ -169,33 +169,29 @@
 </template>
 
 <script>
-import axios from "axios";
-import AdminVerifierMixin from "@/mixins/AdminVerifierMixin";
-import { useMainStore } from "@/stores/index.js";
-import FormMapView from "@/components/map/FormMapView.vue";
+import axios from 'axios';
+import AdminVerifierMixin from '@/mixins/AdminVerifierMixin';
+import { useMainStore } from '@/stores/index';
+import FormMapView from '@/components/map/FormMapView.vue';
 
 export default {
-  mixins: [AdminVerifierMixin],
   components: {
     FormMapView,
   },
-  mounted() {
-    this.handleRouteChange(); // Initialize the component state
-    this.coords = this.defaultCoords;
-  },
+  mixins: [AdminVerifierMixin],
   data() {
     return {
-      name: "",
-      categoryId: "",
+      name: '',
+      categoryId: '',
       tagIds: [],
-      description: "",
+      description: '',
       coords: [],
       defaultCoords: this.$defaultStartCoords,
       subareaIds: [],
-      subareaSearch: "",
+      subareaSearch: '',
       subareaItems: [],
-      mainBuildingId: "",
-      mainBuildingSearch: "",
+      mainBuildingId: '',
+      mainBuildingSearch: '',
       mainBuildingItems: [],
       isSubmitting: false,
     };
@@ -210,7 +206,7 @@ export default {
       return mainStore.tags;
     },
     isReadOnly() {
-      return this.mode === "delete";
+      return this.mode === 'delete';
     },
     id() {
       return this.$route.params.id;
@@ -220,11 +216,11 @@ export default {
     },
     coordsDisplay: {
       get() {
-        return Array.isArray(this.coords) ? this.coords.join(", ") : "";
+        return Array.isArray(this.coords) ? this.coords.join(', ') : '';
       },
       set(value) {
         const [lat, lng] = value
-          .split(",")
+          .split(',')
           .map((coord) => parseFloat(coord.trim()));
         if (!isNaN(lat) && !isNaN(lng)) {
           this.coords = [lat, lng];
@@ -243,9 +239,13 @@ export default {
       this.apiGetMainBuildingItems(newSearch);
     },
   },
+  mounted() {
+    this.handleRouteChange(); // Initialize the component state
+    this.coords = this.defaultCoords;
+  },
   methods: {
     resetMapView() {
-      this.$eventBus.emit("reset-map-view", 15);
+      this.$eventBus.emit('reset-map-view', 15);
     },
     handleMapClick(newCoords) {
       if (Array.isArray(newCoords)) {
@@ -254,25 +254,25 @@ export default {
     },
     handleRouteChange() {
       // Reset form fields when the route changes
-      this.name = "";
-      this.categoryId = "";
+      this.name = '';
+      this.categoryId = '';
       this.tagIds = [];
-      this.description = "";
+      this.description = '';
       this.coords = [];
       this.defaultCoords = this.$defaultStartCoords;
       this.subareaIds = [];
-      this.subareaSearch = "";
+      this.subareaSearch = '';
       this.subareaItems = [];
-      this.mainBuildingId = "";
-      this.mainBuildingSearch = "";
+      this.mainBuildingId = '';
+      this.mainBuildingSearch = '';
       this.mainBuildingItems = [];
 
       // Re-fetch subareas and main buildings
-      this.apiGetSubareaItems(""); // Fetch all subareas
-      this.apiGetMainBuildingItems(""); // Fetch all main buildings
+      this.apiGetSubareaItems(''); // Fetch all subareas
+      this.apiGetMainBuildingItems(''); // Fetch all main buildings
 
       // Fetch data if in update or delete mode
-      if (this.mode === "update" || this.mode === "delete") {
+      if (this.mode === 'update' || this.mode === 'delete') {
         this.getUpdateData(this.id);
       }
     },
@@ -296,13 +296,13 @@ export default {
         this.defaultCoords = [lat, lng];
         this.coords = [lat, lng];
         this.subareaIds = subareas;
-        console.log("Subareas:", subareas);
+        console.log('Subareas:', subareas);
         if (main_building) {
           this.mainBuildingId = main_building.id;
         }
-        console.log("Main Building:", main_building);
+        console.log('Main Building:', main_building);
       } catch (error) {
-        console.error("Error retrieving location data:", error);
+        console.error('Error retrieving location data:', error);
       }
     },
     async apiGetSubareaItems(searchValue) {
@@ -314,7 +314,7 @@ export default {
           value: sub.id,
         }));
       } catch (error) {
-        console.error("Error retrieving subarea items:", error);
+        console.error('Error retrieving subarea items:', error);
       }
     },
     async apiGetMainBuildingItems(searchValue) {
@@ -326,7 +326,7 @@ export default {
           value: building.id,
         }));
       } catch (error) {
-        console.error("Error retrieving main building items:", error);
+        console.error('Error retrieving main building items:', error);
       }
     },
     handleCancelClick() {
@@ -338,7 +338,7 @@ export default {
         await axios.delete(`/admin/locations/${this.id}/`);
         this.$router.push(`/map/search`);
       } catch (error) {
-        console.error("Error deleting location:", error);
+        console.error('Error deleting location:', error);
       } finally {
         this.isSubmitting = false;
       }
@@ -355,12 +355,12 @@ export default {
         subareas: this.subareaIds,
         main_building: this.mainBuildingId,
       };
-      console.log("Payload for Create:", payload); // Print the payload
+      console.log('Payload for Create:', payload); // Print the payload
       try {
         const response = await axios.post(`/admin/locations/`, payload);
         this.$router.push(`/map/details/${response.data.id}`);
       } catch (error) {
-        console.error("Error creating location:", error);
+        console.error('Error creating location:', error);
       } finally {
         this.isSubmitting = false;
       }
@@ -377,25 +377,25 @@ export default {
         subareas: this.subareaIds,
         main_building: this.mainBuildingId,
       };
-      console.log("Payload for Update:", payload); // Print the payload
+      console.log('Payload for Update:', payload); // Print the payload
       try {
         await axios.patch(`/admin/locations/${this.id}/`, payload);
         this.$router.push(`/map/details/${this.id}`);
       } catch (error) {
-        console.error("Error updating location:", error);
+        console.error('Error updating location:', error);
       } finally {
         this.isSubmitting = false;
       }
     },
     clearSubareaSearch() {
-      this.subareaSearch = ""; // Clear the search input explicitly
+      this.subareaSearch = ''; // Clear the search input explicitly
     },
   },
 };
 </script>
 
 <style scoped>
-@import "@/assets/stylesheets/style.css";
+@import '@/assets/stylesheets/style.css';
 
 .form-container {
   background-color: maroon;

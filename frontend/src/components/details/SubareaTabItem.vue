@@ -15,7 +15,12 @@
       </v-list-item>
     </v-list>
     <!-- Display indicator if no subareas are found -->
-    <v-container v-else color="white" class="pa-0 text-black" style="background-color: white;" >
+    <v-container
+      v-else
+      color="white"
+      class="pa-0 text-black"
+      style="background-color: white"
+    >
       <span class="note">No {{ label }} found.</span>
     </v-container>
   </v-card>
@@ -25,7 +30,7 @@
 defineProps({
   label: {
     type: String,
-    default: "subareas",
+    default: 'subareas',
   },
   subareas: {
     type: Array,
@@ -35,7 +40,7 @@ defineProps({
 </script>
 
 <style scoped>
-.note{
+.note {
   font-size: small;
   color: grey;
 }

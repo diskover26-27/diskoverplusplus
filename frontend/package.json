@@ -3,10 +3,17 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@9.12.3",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "fmt": "prettier --experimental-cli --check .",
+    "fmt:fix": "prettier --experimental-cli --write .",
+    "lint": "pnpm --parallel /^lint:/",
+    "lint:es": "eslint --cache --concurrency auto .",
+    "es:fix": "eslint --cache --fix --concurrency auto .",
+    "lint:vue": "vue-tsc --noEmit"
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
@@ -28,9 +35,16 @@
     "vuex": "^4.0.2"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/qs": "^6.9.18",
-    "@vitejs/plugin-vue": "^5.2.1",
-    "vite": "^6.0.11",
-    "vite-plugin-vue-devtools": "^7.7.0"
+    "@vitejs/plugin-vue": "^6.0.10",
+    "eslint": "^10.14.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-vue": "^10.12.1",
+    "prettier": "^3.9.10",
+    "vite": "^8.3.8",
+    "vite-plugin-inspect": "^12.1.0",
+    "vite-plugin-vue-devtools": "^8.2.1",
+    "vue-tsc": "^3.3.14"
   }
 }

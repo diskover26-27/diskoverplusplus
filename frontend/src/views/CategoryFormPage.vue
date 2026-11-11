@@ -1,6 +1,11 @@
 <template>
   <v-container class="fill-height d-flex align-top justify-center py-8">
-    <v-sheet class="pa-4 pa-sm-8 rounded-xl" elevation="2" width="100%" max-width="600">
+    <v-sheet
+      class="pa-4 pa-sm-8 rounded-xl"
+      elevation="2"
+      width="100%"
+      max-width="600"
+    >
       <div class="text-h5 font-weight-bold mb-6">
         {{ mode === 'create' ? 'Create New Category' : 'Edit Category' }}
       </div>
@@ -8,8 +13,10 @@
       <v-divider class="mb-6"></v-divider>
 
       <v-form @submit.prevent="onSubmitClick">
-        <div class="text-subtitle-1 mb-2 font-weight-medium">Category Details</div>
-        
+        <div class="text-subtitle-1 mb-2 font-weight-medium">
+          Category Details
+        </div>
+
         <v-text-field
           v-model="name"
           label="Category Name"
@@ -32,7 +39,9 @@
           :disabled="isSubmitting"
         />
 
-        <div class="text-subtitle-1 mb-2 mt-4 font-weight-medium">Map Display</div>
+        <div class="text-subtitle-1 mb-2 mt-4 font-weight-medium">
+          Map Display
+        </div>
         <div class="d-flex align-center flex-wrap mb-6">
           <label class="mr-4 text-body-1 mb-2 mb-sm-0">Route Color:</label>
           <div class="d-flex align-center">
@@ -43,19 +52,22 @@
               :disabled="isReadOnly || isSubmitting"
               @change="onColorSelected"
             />
-            <span class="ml-3 text-caption text-medium-emphasis text-uppercase">{{ color }}</span>
+            <span
+              class="ml-3 text-caption text-medium-emphasis text-uppercase"
+              >{{ color }}</span
+            >
           </div>
         </div>
 
         <v-divider class="mb-6"></v-divider>
 
         <v-row class="mt-2" dense>
-          <v-col cols="12" sm="auto" v-if="mode !== 'create'">
-            <v-btn 
-              color="error" 
+          <v-col v-if="mode !== 'create'" cols="12" sm="auto">
+            <v-btn
+              color="error"
               block
-              @click="isDeleteConfirmVisible = true" 
               :disabled="isSubmitting"
+              @click="isDeleteConfirmVisible = true"
             >
               Delete Category
             </v-btn>
@@ -64,19 +76,19 @@
           <v-spacer class="d-none d-sm-block"></v-spacer>
 
           <v-col cols="12" sm="auto">
-            <v-btn 
+            <v-btn
               color="maroon"
               class="text-white"
               block
-              @click="onCancelClick"
               :disabled="isSubmitting"
+              @click="onCancelClick"
             >
               Cancel
             </v-btn>
           </v-col>
 
           <v-col cols="12" sm="auto">
-            <v-btn 
+            <v-btn
               color="maroon"
               class="text-white"
               block
@@ -87,15 +99,14 @@
             </v-btn>
           </v-col>
         </v-row>
-
       </v-form>
     </v-sheet>
 
     <ConfirmDeleteModal
-      :isVisible="isDeleteConfirmVisible"
-      :isSubmitting="isSubmitting"
-      :itemName="name"
-      itemType="Category"
+      :is-visible="isDeleteConfirmVisible"
+      :is-submitting="isSubmitting"
+      :item-name="name"
+      item-type="Category"
       @confirm="onDeleteConfirm"
       @cancel="isDeleteConfirmVisible = false"
     />
@@ -106,7 +117,7 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
-import ConfirmDeleteModal from "@/components/admin/ConfirmDeleteModal.vue";
+import ConfirmDeleteModal from '@/components/admin/ConfirmDeleteModal.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -118,7 +129,7 @@ const isSubmitting = ref(false);
 const isDeleteConfirmVisible = ref(false);
 
 const id = computed(() => route.params.id);
-const mode = computed(() => id.value ? 'update' : 'create'); 
+const mode = computed(() => (id.value ? 'update' : 'create'));
 const isReadOnly = computed(() => mode.value === 'delete');
 
 onMounted(() => {
@@ -133,7 +144,7 @@ const getUpdateData = async (categoryId) => {
     const data = response.data;
     name.value = data.name;
     url.value = data.url;
-    color.value = data.route_color; 
+    color.value = data.route_color;
   } catch (error) {
     console.error(`Failed to get category ${categoryId}:`, error);
   }
@@ -141,12 +152,15 @@ const getUpdateData = async (categoryId) => {
 
 const onSubmitClick = async () => {
   if (!name.value || !url.value) {
-    alert("Please fill in all fields.");
+    alert('Please fill in all fields.');
     return;
   }
 
   isSubmitting.value = true;
-  const endpoint = mode.value === 'create' ? '/admin/categories/' : `/admin/categories/${id.value}/`;
+  const endpoint =
+    mode.value === 'create'
+      ? '/admin/categories/'
+      : `/admin/categories/${id.value}/`;
   const method = mode.value === 'create' ? 'post' : 'patch';
 
   try {
@@ -155,7 +169,7 @@ const onSubmitClick = async () => {
       url: endpoint,
       data: { name: name.value, url: url.value, route_color: color.value },
     });
-    router.push('/admin/browse/categories'); 
+    router.push('/admin/browse/categories');
   } catch (error) {
     console.error('Failed to submit category:', error);
     alert('Failed to save category. Check console for details.');
@@ -168,8 +182,8 @@ const onDeleteConfirm = async () => {
   isSubmitting.value = true;
   try {
     await axios.delete(`/admin/categories/${id.value}/`);
-    isDeleteConfirmVisible.value = false; 
-    router.push('/admin/browse/categories'); 
+    isDeleteConfirmVisible.value = false;
+    router.push('/admin/browse/categories');
   } catch (error) {
     console.error('Failed to delete category:', error);
     alert('Failed to delete category.');
@@ -186,7 +200,7 @@ const onColorSelected = (event) => {
 </script>
 
 <style scoped>
-@import "@/assets/stylesheets/style.css";
+@import '@/assets/stylesheets/style.css';
 
 .color-picker {
   -webkit-appearance: none;

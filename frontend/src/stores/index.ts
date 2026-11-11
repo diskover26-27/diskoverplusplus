@@ -5,7 +5,7 @@ import axios from 'axios';
 export const useMainStore = defineStore('main', {
   state: () => ({
     categoriesState: [], // Array to store category data
-    tagsState: [],       // Array to store tag data
+    tagsState: [], // Array to store tag data
     isSideDrawerVisible: true,
     previousPage: null, // Add previousPage to track the last visited page
   }),
@@ -32,7 +32,8 @@ export const useMainStore = defineStore('main', {
     tags: (state) => state.tagsState,
     categoryNames: (state) => state.categoriesState.map((cat) => cat.name), // Extract the name property
     tagNames: (state) => state.tagsState.map((tag) => tag.name), // Extract the name property
-    hasCategoriesLoaded: (state) => state.categoriesState && state.categoriesState.length !== 0,
+    hasCategoriesLoaded: (state) =>
+      state.categoriesState && state.categoriesState.length !== 0,
   },
 });
 

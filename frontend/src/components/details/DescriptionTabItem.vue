@@ -20,5 +20,4 @@ const props = defineProps({
 const description = toRef(props, 'description');
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

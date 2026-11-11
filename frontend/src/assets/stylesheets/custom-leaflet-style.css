@@ -1,62 +1,62 @@
 .leaflet-control-layers-expanded .leaflet-control-layers-list {
-	display: block;
-	position: relative;
-	}
+  display: block;
+  position: relative;
+}
 
 .leaflet-control-layers-expanded {
-	padding: 0;
-	color: #333;
-    background-color: transparent;
-    border-radius: 0%;
+  padding: 0;
+  color: #333;
+  background-color: transparent;
+  border-radius: 0%;
 }
 
 .leaflet-touch .leaflet-control-layers,
 .leaflet-touch .leaflet-bar {
-    border: none;
+  border: none;
 }
 
 .leaflet-control-layers-overlays {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .leaflet-control-layers-overlays > label:nth-child(1) > span input:checked {
-    accent-color: #CF9205;
+  accent-color: #cf9205;
 }
 .leaflet-control-layers-overlays > label:nth-child(2) > span input:checked {
-    accent-color: #663C97;
+  accent-color: #663c97;
 }
 .leaflet-control-layers-overlays > label:nth-child(3) > span input:checked {
-    accent-color: #973C3C;
+  accent-color: #973c3c;
 }
 .leaflet-control-layers-overlays > label:nth-child(4) > span input:checked {
-    accent-color: #2D8D30;
+  accent-color: #2d8d30;
 }
 
-.leaflet-control-layers-overlays > label > span{
-    background-color: #ffffff;
-    border: none;
-    color: black;
-    padding: 5px 15px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 16px;
-    box-shadow: 0px 0px 5px rgba(51, 49, 49, 0.663);
+.leaflet-control-layers-overlays > label > span {
+  background-color: #ffffff;
+  border: none;
+  color: black;
+  padding: 5px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 16px;
+  box-shadow: 0px 0px 5px rgba(51, 49, 49, 0.663);
 }
 
-.easy-button-button > span{
-    background-color: #ffffff;
-    padding: 5px;
-    border-radius: 50%;
-    display: flex;
-    box-shadow: 0px 0px 5px rgba(51, 49, 49, 0.663);
-    color:#333;
+.easy-button-button > span {
+  background-color: #ffffff;
+  padding: 5px;
+  border-radius: 50%;
+  display: flex;
+  box-shadow: 0px 0px 5px rgba(51, 49, 49, 0.663);
+  color: #333;
 }
 
-.easy-button-button{
-    background-color: transparent;
-    border: none;
+.easy-button-button {
+  background-color: transparent;
+  border: none;
 }

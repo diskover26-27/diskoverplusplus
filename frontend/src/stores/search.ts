@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
-import { getVueApp } from "@/main.js";
+import { getVueApp } from '@/main';
 
 export const useSearchStore = defineStore('search', {
   state: () => ({
@@ -14,7 +14,7 @@ export const useSearchStore = defineStore('search', {
     totalResultCount: 0,
     maxPages: 0,
     categoryNames: [], // To store unique category names
-    tagNames: [] // To store unique tag names
+    tagNames: [], // To store unique tag names
   }),
   actions: {
     async fetchResults(query) {
@@ -104,20 +104,32 @@ export const useSearchStore = defineStore('search', {
   },
   getters: {
     resultIds: (state) => {
-      return state.results ? state.results.map(result => result.id) : [];
+      return state.results ? state.results.map((result) => result.id) : [];
     },
     resultCoords: (state) => {
-      return state.results ? state.results.map(result => {
-        if (result && result.lat !== undefined && result.lng !== undefined) {
-          return [result.lat, result.lng];
-        }
-        return null;
-      }).filter(coord => coord !== null) : [];
+      return state.results
+        ? state.results
+            .map((result) => {
+              if (
+                result &&
+                result.lat !== undefined &&
+                result.lng !== undefined
+              ) {
+                return [result.lat, result.lng];
+              }
+              return null;
+            })
+            .filter((coord) => coord !== null)
+        : [];
     },
     fullIconUrls: (state) => {
-      return state.results ? state.results.map(
-        result => result.marker_icon ? `${getVueApp().config.globalProperties.$backendStaticPath}/images/markers/${result.marker_icon}` : null
-      ) : [];
-    }
-  }
+      return state.results
+        ? state.results.map((result) =>
+            result.marker_icon
+              ? `${getVueApp().config.globalProperties.$backendStaticPath}/images/markers/${result.marker_icon}`
+              : null
+          )
+        : [];
+    },
+  },
 });

@@ -2,7 +2,7 @@
   <!-- Card used in homepage for displaying info -->
   <!-- Has dark red header and light pink body -->
   <!-- Has shadow effect on hover and ripple effect on click -->
-  <v-hover v-slot:default="{ isHovering }">
+  <v-hover v-slot="{ isHovering }">
     <v-card
       :ripple="ripple"
       class="panel-card"
@@ -21,7 +21,12 @@
 <script>
 export default {
   // lets parent component specify if it wants ripple effect or not
-  props: ["ripple"]
+  props: {
+    ripple: {
+      type: Boolean,
+      default: false,
+    },
+  },
 };
 </script>
 

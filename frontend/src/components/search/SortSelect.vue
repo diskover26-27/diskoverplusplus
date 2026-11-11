@@ -1,11 +1,11 @@
 <template>
   <!-- selection field for inputting how results are sorted -->
   <v-select
+    v-model="sortFilter"
     :items="sortItems"
     label="Sort by..."
     clearable
     attach
-    v-model="sortFilter"
     item-title="text"
     item-value="value"
     hide-details
@@ -25,10 +25,10 @@ export default {
     const searchStore = useSearchStore();
 
     const sortItems = [
-      { text: "alphabetically (a-z)", value: "name" },
-      { text: "alphabetically (z-a)", value: "-name" },
-      { text: "least recently added", value: "id" },
-      { text: "most recently added", value: "-id" },
+      { text: 'alphabetically (a-z)', value: 'name' },
+      { text: 'alphabetically (z-a)', value: '-name' },
+      { text: 'least recently added', value: 'id' },
+      { text: 'most recently added', value: '-id' },
     ];
 
     const sortFilter = computed({
@@ -48,6 +48,4 @@ export default {
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

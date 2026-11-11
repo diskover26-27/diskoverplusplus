@@ -1,6 +1,8 @@
 <template>
-  <v-dialog v-model="myVisible" max-width="750px" max-height="750px" persistent> <!-- Set max-width and persistent -->
-    <v-card class="modal" ><v-card-actions>
+  <v-dialog v-model="myVisible" max-width="750px" max-height="750px" persistent>
+    <!-- Set max-width and persistent -->
+    <v-card class="modal"
+      ><v-card-actions>
         <v-btn color="black" text @click="emit('close')">Close</v-btn>
         <v-spacer></v-spacer>
       </v-card-actions>
@@ -13,16 +15,15 @@
 
 <script setup>
 import { computed } from 'vue';
-import { useDisplay } from 'vuetify';
 
 const props = defineProps({
   isVisible: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 });
 
-const emit = defineEmits(['close']);
+const emit = defineEmits(['close', 'update:isVisible']);
 
 const myVisible = computed({
   get() {
@@ -30,12 +31,12 @@ const myVisible = computed({
   },
   set(value) {
     emit('update:isVisible', value);
-  }
+  },
 });
 </script>
 
 <style scoped>
-.modal{
+.modal {
   background-color: white;
 }
 </style>

@@ -1,30 +1,31 @@
 <template>
   <!-- Floating Button used to control sideDrawer visibility -->
-   <v-btn
+  <v-btn
     v-show="checkSideDrawer"
+    v-if="mdAndUp"
     :style="extraStyle"
-    color="#FFFFFF" 
+    color="#FFFFFF"
     class="floating-btn"
-    @click="toggleSideDrawer"
     elevation="7"
     :icon="icon"
-    v-if="mdAndUp"
+    @click="toggleSideDrawer"
   >
-    <v-icon size="large">{{ icon }}</v-icon> <!-- Use mdi-arrow-right for the right-pointing icon -->
+    <v-icon size="large">{{ icon }}</v-icon>
+    <!-- Use mdi-arrow-right for the right-pointing icon -->
   </v-btn>
 
   <v-btn
     v-show="checkSideDrawer"
-    color="#FFFFFF" 
+    v-else
+    color="#FFFFFF"
     class="floating-btn"
-    @click="toggleSideDrawer"
     elevation="7"
     :icon="iconMobile"
-    v-else
+    @click="toggleSideDrawer"
   >
-    <v-icon size="large">{{ iconMobile }}</v-icon> <!-- Use mdi-arrow-right for the right-pointing icon -->
+    <v-icon size="large">{{ iconMobile }}</v-icon>
+    <!-- Use mdi-arrow-right for the right-pointing icon -->
   </v-btn>
-
 </template>
 
 <script>
@@ -37,8 +38,8 @@ export default {
   props: {
     attachedTo: {
       type: String,
-      default: "map"
-    }
+      default: 'map',
+    },
   },
   setup(props) {
     const { mdAndUp } = useDisplay();
@@ -46,7 +47,7 @@ export default {
     const eventBus = inject('eventBus'); // Inject the eventBus
 
     const isOnMap = computed(() => {
-      return props.attachedTo === "map";
+      return props.attachedTo === 'map';
     });
 
     const checkSideDrawer = computed(() => {
@@ -61,22 +62,21 @@ export default {
 
     const extraStyle = computed(() => {
       return {
-        right: isOnMap.value ? "auto" : "-28px",
-        left: isOnMap.value ? "0%" : "auto" // Adjust this value to position the button on the left side
+        right: isOnMap.value ? 'auto' : '-28px',
+        left: isOnMap.value ? '0%' : 'auto', // Adjust this value to position the button on the left side
       };
     });
 
     const icon = computed(() => {
-      return isOnMap.value ? "mdi-arrow-right" : "mdi-arrow-left";
+      return isOnMap.value ? 'mdi-arrow-right' : 'mdi-arrow-left';
     });
 
-     const iconMobile = computed(() => {
-      return isOnMap.value ? "mdi-arrow-up" : "mdi-arrow-down";
+    const iconMobile = computed(() => {
+      return isOnMap.value ? 'mdi-arrow-up' : 'mdi-arrow-down';
     });
-
 
     const toggleSideDrawer = () => {
-      eventBus.emit("toggle-side-drawer");
+      eventBus.emit('toggle-side-drawer');
     };
 
     return {
@@ -88,9 +88,9 @@ export default {
       extraStyle,
       icon,
       iconMobile,
-      toggleSideDrawer
+      toggleSideDrawer,
     };
-  }
+  },
 };
 </script>
 
@@ -102,6 +102,6 @@ export default {
   border-radius: 50%; /* Make the button circular */
   width: 70px; /* Set a fixed width */
   height: 70px; /* Set a fixed height */
-  scale: 0.60;
+  scale: 0.6;
 }
 </style>

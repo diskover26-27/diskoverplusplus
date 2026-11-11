@@ -1,20 +1,23 @@
 <template>
   <div :id="mapId" class="map-container" :style="{ height: height }">
-    <v-progress-circular v-if="!map" :indeterminate="true"></v-progress-circular>
+    <v-progress-circular
+      v-if="!map"
+      :indeterminate="true"
+    ></v-progress-circular>
   </div>
 </template>
 
 <script>
-import L from "leaflet";
-import "leaflet-routing-machine";
-import "leaflet-easybutton";
-import defaultIcon from "@/assets/markers/defaultIcon.png"
+import L from 'leaflet';
+import 'leaflet-routing-machine';
+import 'leaflet-easybutton';
+import defaultIcon from '@/assets/markers/defaultIcon.png';
 
 export default {
   props: {
     mapId: {
       type: String,
-      default: "form-map",
+      default: 'form-map',
     },
     defaultFormCoords: {
       type: Array,
@@ -28,9 +31,10 @@ export default {
     },
     height: {
       type: String,
-      default: "300px",
+      default: '300px',
     },
   },
+  emits: ['click'],
   data() {
     return {
       map: null,
@@ -49,7 +53,7 @@ export default {
 
     this.$nextTick(() => {
       if (this.map) {
-        console.log("Map initialized:", this.map);
+        console.log('Map initialized:', this.map);
         this.map.invalidateSize();
       }
     });
@@ -57,7 +61,7 @@ export default {
     this.handleReadOnly();
 
     // Bind resetMapView function to trigger upon every reset-map-view event
-    this.$eventBus.on("reset-map-view", this.resetMapView);
+    this.$eventBus.on('reset-map-view', this.resetMapView);
   },
   beforeUnmount() {
     if (this.map) {
@@ -83,7 +87,7 @@ export default {
       }).setView(this.defaultFormCoords, 15);
 
       // Add the tile layer
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution:
           '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       }).addTo(this.map);
@@ -96,7 +100,7 @@ export default {
 
       // Handle map click events
       if (!this.readonly) {
-        this.map.on("click", this.setMarkerToClick.bind(this));
+        this.map.on('click', this.setMarkerToClick.bind(this));
       }
 
       this.$nextTick(() => {
@@ -108,25 +112,28 @@ export default {
     handleReadOnly() {
       if (this.readonly) {
         // Remove click listeners if the map is readonly
-        this.map.off("click", this.setMarkerToClick);
+        this.map.off('click', this.setMarkerToClick);
       } else {
         // Add click listeners if the map is editable
-        this.map.on("click", this.setMarkerToClick.bind(this));
+        this.map.on('click', this.setMarkerToClick.bind(this));
       }
     },
     setMarkerToClick(e) {
-      console.log("Map click event:", e); // Debugging
+      console.log('Map click event:', e); // Debugging
       if (e.latlng) {
         const { lat, lng } = e.latlng;
         if (this.marker) {
           this.marker.setLatLng(e.latlng); // Move the existing marker
         } else {
-          this.marker = this.addMarker(e.latlng, { draggable: true, icon: this.originIcon });
+          this.marker = this.addMarker(e.latlng, {
+            draggable: true,
+            icon: this.originIcon,
+          });
         }
-        console.log("Emitting coordinates:", [lat, lng]); // Debugging
-        this.$emit("click", [lat, lng]); // Emit the coordinates to the parent component
+        console.log('Emitting coordinates:', [lat, lng]); // Debugging
+        this.$emit('click', [lat, lng]); // Emit the coordinates to the parent component
       } else {
-        console.error("Invalid map click event:", e); // Debugging
+        console.error('Invalid map click event:', e); // Debugging
       }
     },
     resetMapView() {
@@ -138,14 +145,14 @@ export default {
     addMarker(coords, options = {}) {
       if (this.map) {
         const marker = L.marker(coords, options).addTo(this.map);
-        marker.on("dragend", (e) => {
+        marker.on('dragend', (e) => {
           const { lat, lng } = e.target.getLatLng();
-          console.log("Marker dragged to:", [lat, lng]); // Debugging
-          this.$emit("click", [lat, lng]); // Emit the new coordinates to the parent component
+          console.log('Marker dragged to:', [lat, lng]); // Debugging
+          this.$emit('click', [lat, lng]); // Emit the new coordinates to the parent component
         });
         return marker;
       }
-      console.warn("Map is not initialized. Cannot add marker.");
+      console.warn('Map is not initialized. Cannot add marker.');
       return null;
     },
   },

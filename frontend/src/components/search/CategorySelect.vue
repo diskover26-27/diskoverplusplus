@@ -2,17 +2,17 @@
   <!-- selection input with multiple category chips -->
   <div id="category-select">
     <v-select
+      v-model="selectedCategory"
       :items="categories"
       item-text="name"
       item-value="id"
-      v-model="selectedCategory"
       label="Category"
-      @change="applyCategoryFilter"
       clearable
       hide-details
       density="compact"
       variant="solo"
       theme="light"
+      @change="applyCategoryFilter"
     />
   </div>
 </template>
