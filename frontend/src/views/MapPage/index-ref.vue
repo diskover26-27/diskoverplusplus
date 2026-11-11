@@ -1,19 +1,27 @@
 <template>
   <v-container fluid class="map-page-container">
     <v-row class="map-row">
-      <v-col v-if="mapStore.isSideDrawerVisible" cols="3" class="side-drawer-col">
+      <v-col
+        v-if="mapStore.isSideDrawerVisible"
+        cols="3"
+        class="side-drawer-col"
+      >
         <SideDrawer @toggle-side-drawer="toggleSideDrawer">
           <router-view></router-view>
         </SideDrawer>
       </v-col>
       <v-col :cols="mapStore.isSideDrawerVisible ? 9 : 12" class="map-col">
-        <BigMapView 
-          :height="mapExactHeight" 
-          :isOnDetailsPage="isOnDetailsPage" 
-          :transportMode="detailsStore.transportMode" 
+        <BigMapView
+          :height="mapExactHeight"
+          :is-on-details-page="isOnDetailsPage"
+          :transport-mode="detailsStore.transportMode"
           class="map"
         >
-          <FloatingButton attachedTo="map" @click="toggleSideDrawer" class="btn"/>
+          <FloatingButton
+            attached-to="map"
+            class="btn"
+            @click="toggleSideDrawer"
+          />
         </BigMapView>
       </v-col>
     </v-row>
@@ -36,11 +44,11 @@ const mapStore = useMapStore();
 const detailsStore = useDetailsStore(); // Initialize detailsStore
 
 const mapExactHeight = computed(() => {
-  return mdAndUp.value ? "calc(100vh - 64px)" : "calc(100vh - 48px)";
+  return mdAndUp.value ? 'calc(100vh - 64px)' : 'calc(100vh - 48px)';
 });
 
 const isOnDetailsPage = computed(() => {
-  return route.name === "details";
+  return route.name === 'details';
 });
 
 const toggleSideDrawer = () => {
@@ -49,7 +57,7 @@ const toggleSideDrawer = () => {
 
 // Open the side drawer by default on results or details page
 onMounted(() => {
-  if (route.name === "results" || route.name === "details") {
+  if (route.name === 'results' || route.name === 'details') {
     mapStore.setSideDrawer(true);
   }
 });

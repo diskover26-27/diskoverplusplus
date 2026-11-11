@@ -2,18 +2,18 @@
   <v-app>
     <Background>
       <NavBar />
-  
-        <v-container class="full-vwidth full-vheight no-padding">
-          <router-view></router-view>
-        </v-container>
-  
-      <GpsMapHidden mapId="hidden-map"/>
+
+      <v-container class="full-vwidth full-vheight no-padding">
+        <router-view></router-view>
+      </v-container>
+
+      <GpsMapHidden map-id="hidden-map" />
     </Background>
   </v-app>
 </template>
 
 <script setup>
-import { onMounted, watch, computed } from 'vue';
+import { onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
 import { useMainStore } from '@/stores/index';
@@ -27,37 +27,36 @@ const mainStore = useMainStore();
 const route = useRoute();
 
 onMounted(() => {
-
   // Fetch categories (always fetch regardless of login status)
-  axios.get('/categories')
-    .then(response => {
+  axios
+    .get('/categories')
+    .then((response) => {
       mainStore.setCategories(response.data);
     })
-    .catch(error => {
+    .catch((error) => {
       console.error('Error fetching categories:', error);
     });
 
   // Fetch tags (always fetch regardless of login status)
-  axios.get('/tags')
-    .then(response => {
+  axios
+    .get('/tags')
+    .then((response) => {
       mainStore.setTags(response.data);
     })
-    .catch(error => {
+    .catch((error) => {
       console.error('Error fetching tags:', error);
     });
-
 });
 
 watch(route, (newRoute, oldRoute) => {
   if (oldRoute) {
     mainStore.setPreviousPage(oldRoute.fullPath); // Track the previous page
   }
-  authStore.verifyToken()
-    .then(() => console.log("Route changed, token verified."))
-    .catch(() => console.warn("No token found, continuing as guest."));
+  authStore
+    .verifyToken()
+    .then(() => console.log('Route changed, token verified.'))
+    .catch(() => console.warn('No token found, continuing as guest.'));
 });
-
-const isLoggedIn = computed(() => authStore.isLoggedIn);
 </script>
 
 <style scoped>
@@ -68,7 +67,7 @@ const isLoggedIn = computed(() => authStore.isLoggedIn);
 }
 
 .full-vheight {
-  min-height: 100%; 
+  min-height: 100%;
   height: 100%;
 }
 
@@ -77,6 +76,6 @@ const isLoggedIn = computed(() => authStore.isLoggedIn);
 }
 
 .leaflet-control-container .leaflet-routing-container-hide {
-    display: none !important;
+  display: none !important;
 }
 </style>

@@ -67,6 +67,7 @@ lerna-debug.log*
 output/
 .cache/
 .vite/
+*.eslintcache
 
 # Vue.js
 public/hot

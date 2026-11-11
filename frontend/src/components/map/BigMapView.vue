@@ -10,37 +10,37 @@
 </template>
 
 <script>
-import MapMixin from "@/mixins/MapMixin";
-import JeepMixin from "@/mixins/JeepMixin";
+import MapMixin from '@/mixins/MapMixin';
+import JeepMixin from '@/mixins/JeepMixin';
 import { useMapStore } from '@/stores/map';
 import { useDetailsStore } from '@/stores/details';
 import { useSearchStore } from '@/stores/search';
 import L from 'leaflet';
 import 'leaflet-routing-machine';
 import 'leaflet-easybutton';
-import { inject, watch } from 'vue';
+import { inject } from 'vue';
 
 export default {
   mixins: [MapMixin, JeepMixin],
-  mounted() {
-    this.initializeMap();
-    this.handleMapChange();
-    this.listenForInstructionCircles();
-  },
-  beforeUnmount() {
-    if (this.map) {
-      this.map.remove();
-    }
-  },
   props: {
     isOnDetailsPage: {
       type: Boolean,
-      default: false
+      default: false,
     },
     height: {
       type: String,
-      default: '100%'
+      default: '100%',
+    },
+  },
+  setup() {
+    const eventBus = inject('eventBus'); // Ensure eventBus is injected
+    const mapStore = useMapStore();
+
+    if (!eventBus) {
+      console.error('eventBus is not provided!');
     }
+
+    return { eventBus, mapStore };
   },
   data() {
     return {
@@ -53,8 +53,8 @@ export default {
         iconSize: [25, 41],
         iconAnchor: [12, 41],
         popupAnchor: [1, -34],
-        shadowSize: [41, 41]
-      })
+        shadowSize: [41, 41],
+      }),
     };
   },
   computed: {
@@ -82,7 +82,7 @@ export default {
       set(value) {
         const mapStore = useMapStore();
         mapStore.setOriginCoords(value);
-      }
+      },
     },
     resultIds() {
       const searchStore = useSearchStore();
@@ -118,7 +118,7 @@ export default {
     resultCoords() {
       this.handleMapChange();
     },
-    transportMode(newMode) {
+    transportMode() {
       this.handleMapChange(); // Reinitialize the map when transport mode changes
     },
     osrmServiceUrl() {
@@ -134,23 +134,36 @@ export default {
       immediate: true,
     },
   },
+  mounted() {
+    this.initializeMap();
+    this.handleMapChange();
+    this.listenForInstructionCircles();
+  },
+  beforeUnmount() {
+    if (this.map) {
+      this.map.remove();
+    }
+  },
   methods: {
     switchToDriving() {
-      this.transportMode = "driving";
+      this.transportMode = 'driving';
       this.handleMapChange();
     },
     switchToWalking() {
-      this.transportMode = "foot";
+      this.transportMode = 'foot';
       this.handleMapChange();
     },
     initializeMap() {
       if (this.map) {
         this.map.remove();
       }
-      this.map = L.map('map',{zoomControl: false}).setView([14.5995, 120.9842], 13); // Default to Manila
+      this.map = L.map('map', { zoomControl: false }).setView(
+        [14.5995, 120.9842],
+        13
+      ); // Default to Manila
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors'
+        attribution: '&copy; OpenStreetMap contributors',
       }).addTo(this.map);
 
       this.initJeepRoutes();
@@ -180,20 +193,20 @@ export default {
         this.originCoords,
         {
           draggable: true,
-          icon: this.originIcon
+          icon: this.originIcon,
         },
-        "You are here. Drag me all you like."
+        'You are here. Drag me all you like.'
       );
       this.map.setView(this.originCoords, 15);
       for (let i = 0; i < this.resultCoords.length; i++) {
         let icon = this.getIcon(this.fullIconUrls[i]);
         this.addMarker(this.resultCoords[i], {
           draggable: false,
-          ...(icon && { icon: icon })
-        }).on("click", () => {
+          ...(icon && { icon: icon }),
+        }).on('click', () => {
           this.$router.push({
-            name: "details",
-            params: { id: this.resultIds[i] }
+            name: 'details',
+            params: { id: this.resultIds[i] },
           });
         });
       }
@@ -208,7 +221,7 @@ export default {
     },
     initGpsButton() {
       this.gpsButton = L.easyButton({
-        position: "bottomright",
+        position: 'bottomright',
         states: [
           {
             icon: '<i class="material-icons">gps_fixed</i>',
@@ -216,11 +229,11 @@ export default {
               if (this.hasPermissionToMark) {
                 this.map.locate({ setView: true, maxZoom: 16 });
               } else {
-                this.eventBus.emit("open-gps-bottom-modal");
+                this.eventBus.emit('open-gps-bottom-modal');
               }
-            }
-          }
-        ]
+            },
+          },
+        ],
       }).addTo(this.map);
     },
     initRouting(start, finish) {
@@ -228,12 +241,12 @@ export default {
         this.routing.remove();
       }
 
-      const mode = this.transportMode || "driving";
-      const baseUrl = this.osrmServiceUrl.replace(/\/$/, "");
+      const mode = this.transportMode || 'driving';
+      const baseUrl = this.osrmServiceUrl.replace(/\/$/, '');
       const detailsStore = useDetailsStore();
       const routeColor = detailsStore.routeColor || '#3388ff'; // Default to blue if no color is set
 
-      console.log("Using OSRM Service URL:", baseUrl, "with profile:", mode);
+      console.log('Using OSRM Service URL:', baseUrl, 'with profile:', mode);
 
       this.routing = L.Routing.control({
         router: new L.Routing.OSRMv1({
@@ -246,13 +259,17 @@ export default {
               return L.marker(waypoint.latLng, {
                 draggable: true,
                 icon: this.originIcon,
-              }).bindPopup("You are here. Drag me all you like").openPopup();
+              })
+                .bindPopup('You are here. Drag me all you like')
+                .openPopup();
             } else {
               let icon = this.getIcon(this.detailIconUrl);
               return L.marker(waypoint.latLng, {
                 draggable: false,
                 ...(icon && { icon: icon }),
-              }).bindPopup("You want to go here").openPopup();
+              })
+                .bindPopup('You want to go here')
+                .openPopup();
             }
           },
         }),
@@ -264,20 +281,23 @@ export default {
           styles: [{ color: routeColor, weight: 5 }], // Use the dynamic route color
         },
       })
-        .on("routesfound", (e) => {
+        .on('routesfound', (e) => {
           const route = e.routes[0];
           const instructions = route.instructions.map((inst) => ({
             text: inst.text,
             distance: inst.distance,
           }));
-          const coordinates = route.coordinates.map((coord) => [coord.lat, coord.lng]);
+          const coordinates = route.coordinates.map((coord) => [
+            coord.lat,
+            coord.lng,
+          ]);
 
           this.setInstructions(instructions);
           this.setRouteCoordinates(coordinates);
         })
         .addTo(this.map);
 
-      this.routing._container.style.display = "none";
+      this.routing._container.style.display = 'none';
     },
     listenForInstructionCircles() {
       if (!this.eventBus) {
@@ -285,7 +305,7 @@ export default {
         return;
       }
 
-      this.eventBus.on("toggle-side-drawer", () => {
+      this.eventBus.on('toggle-side-drawer', () => {
         this.mapStore.setSideDrawer(!this.mapStore.isSideDrawerVisible);
       });
     },
@@ -302,23 +322,14 @@ export default {
       const latlng = e.latlng;
       L.marker(latlng, { icon: this.originIcon })
         .addTo(this.map)
-        .bindPopup(`You are within ${radius} meters from this point`).openPopup();
+        .bindPopup(`You are within ${radius} meters from this point`)
+        .openPopup();
       L.circle(latlng, radius).addTo(this.map);
     },
     onLocationError(e) {
       alert(e.message);
-    }
+    },
   },
-  setup() {
-    const eventBus = inject('eventBus'); // Ensure eventBus is injected
-    const mapStore = useMapStore();
-
-    if (!eventBus) {
-      console.error('eventBus is not provided!');
-    }
-
-    return { eventBus, mapStore };
-  }
 };
 </script>
 
@@ -336,6 +347,6 @@ export default {
 }
 
 .leaflet-control-container .leaflet-routing-container-hide {
-    display: none !important;
+  display: none !important;
 }
 </style>

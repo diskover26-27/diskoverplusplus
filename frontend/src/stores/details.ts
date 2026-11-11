@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { getVueApp } from "@/main.js";
+import { getVueApp } from '@/main';
 
 export const useDetailsStore = defineStore('details', {
   state: () => ({
@@ -9,7 +9,7 @@ export const useDetailsStore = defineStore('details', {
     markerIcon: null,
     transportMode: 'driving', // Default to driving
     // serviceUrl: 'https://localhost:5001', // Default to driving service for development
-    serviceUrl: process.env.VITE_BASE_URL, // Use environment variable for service URL
+    serviceUrl: import.meta.env.VITE_BASE_URL, // Use environment variable for service URL
     routeColor: '#3388ff', // Default route color
   }),
   actions: {
@@ -28,19 +28,20 @@ export const useDetailsStore = defineStore('details', {
     setTransportMode(mode) {
       this.transportMode = mode;
       // for development
-      // this.serviceUrl = mode === 'driving' 
-      //   ? 'https://localhost:5001' 
+      // this.serviceUrl = mode === 'driving'
+      //   ? 'https://localhost:5001'
       //   : 'https://localhost:5002';
 
-      console.log('Service URL set to:', this.serviceUrl);        
+      console.log('Service URL set to:', this.serviceUrl);
     },
     setRouteColor(color) {
       this.routeColor = color;
     },
   },
   getters: {
-    fullIconUrl: (state) => state.markerIcon
-      ? `${getVueApp().config.globalProperties.$backendStaticPath}/images/markers/${state.markerIcon}`
-      : null,
+    fullIconUrl: (state) =>
+      state.markerIcon
+        ? `${getVueApp().config.globalProperties.$backendStaticPath}/images/markers/${state.markerIcon}`
+        : null,
   },
 });

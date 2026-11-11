@@ -8,7 +8,7 @@
     mobile-breakpoint="sm"
     hide-default-footer="true"
   >
-    <template v-slot:item.actions="{ item }">
+    <template #item.actions="{ item }">
       <div class="d-flex justify-end justify-sm-center align-center">
         <v-btn
           icon="mdi-pencil"
@@ -38,6 +38,7 @@ export default {
       default: () => [],
     },
   },
+  emits: ['edit-item', 'delete-item'],
   data() {
     return {
       headers: [

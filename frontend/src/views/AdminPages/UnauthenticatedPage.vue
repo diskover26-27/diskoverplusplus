@@ -1,5 +1,7 @@
 <template>
-  <v-container class="fill-height d-flex flex-column align-center justify-center text-center">
+  <v-container
+    class="fill-height d-flex flex-column align-center justify-center text-center"
+  >
     <v-icon size="100" class="mb-4" color="primary">mdi-lock-alert</v-icon>
     <h1 class="text-h4 font-weight-bold">Admin Access Required</h1>
     <p class="text-body-1 mt-2 mb-6">

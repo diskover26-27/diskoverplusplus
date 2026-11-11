@@ -6,9 +6,9 @@ import '@mdi/font/css/materialdesignicons.css';
 import { aliases, mdi } from 'vuetify/iconsets/mdi';
 import * as components from 'vuetify/components';
 import * as directives from 'vuetify/directives';
-import router from '@/router/index.js';
+import router from '@/router/index';
 import { createPinia } from 'pinia';
-import { setupVuePrototypes } from '@/vuePrototypes.js';
+import { setupVuePrototypes } from '@/vuePrototypes';
 import { eventBus } from '@/eventBus'; // Use named import
 import axios from './plugins/axios';
 import '@/plugins/clamp.min.js'; // Import clamp.min.js

@@ -13,8 +13,8 @@
     "lint": "pnpm --parallel /^lint:/",
     "lint:es": "eslint --cache --concurrency auto .",
     "es:fix": "eslint --cache --fix --concurrency auto .",
-    "lint:vue": "vue-tsc --noEmit"  
-},
+    "lint:vue": "vue-tsc --noEmit"
+  },
   "dependencies": {
     "@mdi/font": "^7.4.47",
     "axios": "^1.7.9",

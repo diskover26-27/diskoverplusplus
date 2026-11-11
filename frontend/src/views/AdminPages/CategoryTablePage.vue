@@ -1,10 +1,16 @@
 <template>
   <v-container class="mt-16 fill-height d-flex align-top justify-center py-8">
-    <v-sheet class="pa-4 pa-sm-8 rounded-xl" elevation="2" width="100%" max-width="1000">
-      
-      <div class="d-flex flex-column flex-sm-row justify-space-between align-sm-center mb-6">
+    <v-sheet
+      class="pa-4 pa-sm-8 rounded-xl"
+      elevation="2"
+      width="100%"
+      max-width="1000"
+    >
+      <div
+        class="d-flex flex-column flex-sm-row justify-space-between align-sm-center mb-6"
+      >
         <div class="text-h5 font-weight-bold mb-4 mb-sm-0">Categories</div>
-        
+
         <v-btn
           color="maroon"
           class="text-white px-4"
@@ -17,18 +23,18 @@
 
       <v-divider class="mb-6"></v-divider>
 
-      <CategoryTable 
-        @edit-item="onEditItem" 
-        @delete-item="prepareDelete" 
-        :categories="categories" 
+      <CategoryTable
+        :categories="categories"
+        @edit-item="onEditItem"
+        @delete-item="prepareDelete"
       />
     </v-sheet>
 
     <ConfirmDeleteModal
-      :isVisible="isDeleteModalVisible"
-      :isSubmitting="isSubmitting"
-      :itemName="categoryToDelete?.name"
-      itemType="Category"
+      :is-visible="isDeleteModalVisible"
+      :is-submitting="isSubmitting"
+      :item-name="categoryToDelete?.name"
+      item-type="Category"
       @confirm="handleDeleteConfirm"
       @cancel="isDeleteModalVisible = false"
     />
@@ -37,14 +43,14 @@
 
 <script>
 import axios from 'axios';
-import AdminVerifierMixin from "@/mixins/AdminVerifierMixin";
-import CategoryTable from "@/components/admin/CategoryTable.vue"; 
-import ConfirmDeleteModal from "@/components/admin/ConfirmDeleteModal.vue";
-import { useMainStore } from "@/stores/index";
+import AdminVerifierMixin from '@/mixins/AdminVerifierMixin';
+import CategoryTable from '@/components/admin/CategoryTable.vue';
+import ConfirmDeleteModal from '@/components/admin/ConfirmDeleteModal.vue';
+import { useMainStore } from '@/stores/index';
 
 export default {
-  mixins: [AdminVerifierMixin],
   components: { CategoryTable, ConfirmDeleteModal },
+  mixins: [AdminVerifierMixin],
   data() {
     return {
       isDeleteModalVisible: false,
@@ -68,7 +74,7 @@ export default {
         const response = await axios.get('/admin/categories/');
         mainStore.setCategories(response.data);
       } catch (error) {
-        console.error("Error fetching categories:", error);
+        console.error('Error fetching categories:', error);
       }
     },
     onClickNewCategory() {
@@ -79,8 +85,8 @@ export default {
     },
     // The table emits 'delete-item', which we catch here
     prepareDelete(id) {
-      console.log("Preparing to delete ID:", id);
-      this.categoryToDelete = this.categories.find(c => c.id === id);
+      console.log('Preparing to delete ID:', id);
+      this.categoryToDelete = this.categories.find((c) => c.id === id);
       this.isDeleteModalVisible = true;
     },
     async handleDeleteConfirm() {
@@ -93,8 +99,8 @@ export default {
         this.isDeleteModalVisible = false;
         this.categoryToDelete = null;
       } catch (error) {
-        console.error("Delete failed:", error);
-        alert("Delete failed. Check console.");
+        console.error('Delete failed:', error);
+        alert('Delete failed. Check console.');
       } finally {
         this.isSubmitting = false;
       }
@@ -104,5 +110,5 @@ export default {
 </script>
 
 <style scoped>
-@import "@/assets/stylesheets/style.css";
+@import '@/assets/stylesheets/style.css';
 </style>

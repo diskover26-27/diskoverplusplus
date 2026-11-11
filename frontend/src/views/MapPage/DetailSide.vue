@@ -2,19 +2,35 @@
   <v-container class="mt-3">
     <!-- Thumbnail/Cover Image -->
     <v-col cols="12">
-        <v-img :src="thumbnailUrl" /> 
-        <v-card theme="light" flat class="pt-2">
-          <v-card-title class="text-wrap">{{ locationName }}</v-card-title>
-          <v-card-text>{{ locationDescription }}</v-card-text>
-        </v-card>
-        <v-divider class="mt-2 divider" :thickness="2"></v-divider>
+      <v-img :src="thumbnailUrl" />
+      <v-card theme="light" flat class="pt-2">
+        <v-card-title class="text-wrap">{{ locationName }}</v-card-title>
+        <v-card-text>{{ locationDescription }}</v-card-text>
+      </v-card>
+      <v-divider class="mt-2 divider" :thickness="2"></v-divider>
     </v-col>
 
     <!-- Transport Mode Buttons -->
     <v-col class="mt-3">
       <v-row justify="center">
-        <v-col cols="6"> <v-btn prepend-icon="mdi-car" block @click="switchToDriving" :color="transportMode === 'driving' ? '#7b1113' : 'grey'">Drive</v-btn> </v-col>
-        <v-col cols="6"> <v-btn prepend-icon="mdi-walk" block @click="switchToWalking" :color="transportMode === 'foot' ? '#7b1113' : 'grey'">Walk</v-btn> </v-col>
+        <v-col cols="6">
+          <v-btn
+            prepend-icon="mdi-car"
+            block
+            :color="transportMode === 'driving' ? '#7b1113' : 'grey'"
+            @click="switchToDriving"
+            >Drive</v-btn
+          >
+        </v-col>
+        <v-col cols="6">
+          <v-btn
+            prepend-icon="mdi-walk"
+            block
+            :color="transportMode === 'foot' ? '#7b1113' : 'grey'"
+            @click="switchToWalking"
+            >Walk</v-btn
+          >
+        </v-col>
       </v-row>
     </v-col>
 
@@ -43,9 +59,9 @@
     <v-col class="mt-3">
       <v-tabs v-model="primaryTabIndex" grow center-active>
         <v-tab
-          class="text-black"
           v-for="(tab, i) in tabList1"
           :key="i"
+          class="text-black"
           :value="i"
         >
           <v-icon>{{ tab.icon }}</v-icon>
@@ -54,15 +70,11 @@
       </v-tabs>
 
       <v-window v-model="primaryTabIndex">
-        <v-window-item
-          v-for="(tab, i) in tabList1"
-          :key="i"
-          :value="i"
-        >
+        <v-window-item v-for="(tab, i) in tabList1" :key="i" :value="i">
           <component
             :is="tab.component"
             v-bind="tab.props"
-            :imageUrls="imageUrls"
+            :image-urls="imageUrls"
             :description="description"
           />
         </v-window-item>
@@ -71,21 +83,21 @@
 
     <!-- Subareas -->
     <v-col v-if="hasSubareas" class="my-3">
-      <v-expansion-panels theme="light" v-model="subareaTabIndex" multiple>
+      <v-expansion-panels v-model="subareaTabIndex" theme="light" multiple>
         <v-expansion-panel
-          v-for="(subs, category, i) in subareas"
+          v-for="(subs, categoryName, i) in subareas"
           :key="i"
           color="#7b1113"
         >
-          <v-expansion-panel-title>{{ category }}</v-expansion-panel-title>
+          <v-expansion-panel-title>{{ categoryName }}</v-expansion-panel-title>
           <v-expansion-panel-text>
-            <SubareaTabItem :subareas="subs" :label="category" />
+            <SubareaTabItem :subareas="subs" :label="categoryName" />
           </v-expansion-panel-text>
         </v-expansion-panel>
       </v-expansion-panels>
     </v-col>
 
-     <v-divider class="mt-2 divider" :thickness="2"></v-divider>
+    <v-divider class="mt-2 divider" :thickness="2"></v-divider>
 
     <!-- Main Building -->
     <v-col v-if="hasMainBuilding" class="mt-2">
@@ -102,8 +114,6 @@
       </v-window>
     </v-col>
 
-  
-
     <!-- Nearby Locations -->
     <v-col class="mt-2">
       <v-tabs grow center-active>
@@ -114,7 +124,7 @@
       </v-tabs>
       <v-window>
         <v-window-item theme="light">
-          <NearbyLocationsTabItem :nearbyLocations="nearbyLocations" />
+          <NearbyLocationsTabItem :nearby-locations="nearbyLocations" />
         </v-window-item>
       </v-window>
     </v-col>
@@ -122,20 +132,35 @@
     <!-- Admin Buttons -->
     <v-col v-if="isLoggedIn" class="mt-4">
       <v-row class="mb-2">
-        <v-btn color="blue" :to="{ name: 'location_crud_form', params: { mode: 'update', id: locationId } }">
+        <v-btn
+          color="blue"
+          :to="{
+            name: 'location_crud_form',
+            params: { mode: 'update', id: locationId },
+          }"
+        >
           Update Info
         </v-btn>
       </v-row>
       <v-row class="mb-2">
-        <v-btn color="blue" :to="{ name: 'location_images_form', params: { id: locationId } }">
+        <v-btn
+          color="blue"
+          :to="{ name: 'location_images_form', params: { id: locationId } }"
+        >
           Update Images
         </v-btn>
       </v-row>
       <v-row class="mb-2">
-        <v-btn color="error" :to="{ name: 'location_crud_form', params: { mode: 'delete', id: locationId } }">
+        <v-btn
+          color="error"
+          :to="{
+            name: 'location_crud_form',
+            params: { mode: 'delete', id: locationId },
+          }"
+        >
           Delete
         </v-btn>
-    </v-row>
+      </v-row>
     </v-col>
   </v-container>
 </template>
@@ -149,7 +174,6 @@ import { useMainStore } from '@/stores/index';
 import axios from 'axios'; // Import axios
 import DirectionsTabItem from '@/components/details/DirectionsTabItem.vue';
 import ImagesTabItem from '@/components/details/ImagesTabItem.vue';
-import DescriptionTabItem from '@/components/details/DescriptionTabItem.vue';
 import SubareaTabItem from '@/components/details/SubareaTabItem.vue';
 import MainBuildingTabItem from '@/components/details/MainBuildingTabItem.vue';
 import NearbyLocationsTabItem from '@/components/details/NearbyLocationsTabItem.vue';
@@ -203,7 +227,7 @@ const tabList1 = computed(() => [
 ]);
 
 const hasSubareas = computed(() => {
-  return Object.values(subareas.value).some(val => val && val.length);
+  return Object.values(subareas.value).some((val) => val && val.length);
 });
 
 const hasMainBuilding = computed(() => mainBuilding.value !== null);
@@ -278,11 +302,14 @@ const updateRouting = () => {
 // Watch for changes in transport mode and update routing
 watch(transportMode, updateRouting);
 
-watch(() => route.params.id, () => {
-  fetchLocationData();
-  primaryTabIndex.value = 0;
-  subareaTabIndex.value = [];
-});
+watch(
+  () => route.params.id,
+  () => {
+    fetchLocationData();
+    primaryTabIndex.value = 0;
+    subareaTabIndex.value = [];
+  }
+);
 </script>
 
 <style scoped>
@@ -294,10 +321,12 @@ watch(() => route.params.id, () => {
   background-color: var(--v-primary-base);
   color: white;
 }
-.v-container, .v-card-title, .v-card-text{
-  padding:0;
+.v-container,
+.v-card-title,
+.v-card-text {
+  padding: 0;
 }
-.divider{
+.divider {
   border-color: black;
 }
 </style>

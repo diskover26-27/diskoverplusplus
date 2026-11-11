@@ -1,6 +1,6 @@
 <template>
   <!-- Home page category card with huge icon picture and link to filtered search -->
-  <v-hover v-slot:default="{ isHovering }">
+  <v-hover>
     <v-btn
       color="maroon"
       class="ma-2 text-white"
@@ -22,7 +22,7 @@ export default {
   },
   data() {
     return {
-      imageUrl: this.defaultUrl, // Start with the default URL
+      imageUrl: '', // Start with an empty URL, set once loaded
     };
   },
   computed: {
@@ -30,7 +30,7 @@ export default {
       return `${this.$backendStaticPath}/images/categories/defaultCategoryImage.jpg`;
     },
     expectedImgUrl() {
-      let imgName = this.category.name || "defaultCategoryImage";
+      let imgName = this.category.name || 'defaultCategoryImage';
       return `${this.$backendStaticPath}/images/categories/${imgName}.jpg`;
     },
   },
@@ -41,6 +41,9 @@ export default {
         this.loadImage();
       },
     },
+  },
+  mounted() {
+    this.loadImage(); // Load the image when the component is mounted
   },
   methods: {
     loadImage() {
@@ -56,14 +59,11 @@ export default {
       };
     },
   },
-  mounted() {
-    this.loadImage(); // Load the image when the component is mounted
-  },
 };
 </script>
 
 <style scoped>
-@import "@/assets/stylesheets/style.css";
+@import '@/assets/stylesheets/style.css';
 
 .text-white {
   color: white !important;

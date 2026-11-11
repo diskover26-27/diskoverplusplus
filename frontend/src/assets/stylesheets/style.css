@@ -3,83 +3,96 @@
   --v-font-family: 'Inter', sans-serif !important;
 }
 
-html, body, .v-application {
+html,
+body,
+.v-application {
   font-family: 'Inter', sans-serif !important;
 }
 
-.text-h1, .text-h2, .text-h3, .text-h4, .text-h5, .text-h6, 
-.text-subtitle-1, .text-subtitle-2, .text-body-1, .text-body-2, 
-.text-button, .text-caption, .text-overline, .v-btn {
+.text-h1,
+.text-h2,
+.text-h3,
+.text-h4,
+.text-h5,
+.text-h6,
+.text-subtitle-1,
+.text-subtitle-2,
+.text-body-1,
+.text-body-2,
+.text-button,
+.text-caption,
+.text-overline,
+.v-btn {
   font-family: 'Inter', sans-serif !important;
 }
 
 .primary-bg {
-	background-color: var(--v-primary-base) !important;
+  background-color: var(--v-primary-base) !important;
 }
 
 .secondary-bg {
-	background-color: var(--v-secondary-base) !important;
+  background-color: var(--v-secondary-base) !important;
 }
 
 .accent-bg {
-	background-color: var(--v-accent-base) !important;
+  background-color: var(--v-accent-base) !important;
 }
 
 .error-bg {
-	background-color: var(--v-error-base) !important;
+  background-color: var(--v-error-base) !important;
 }
 
 .info-bg {
-	background-color: var(--v-info-base) !important;
+  background-color: var(--v-info-base) !important;
 }
 
 .success-bg {
-	background-color: var(--v-info-base) !important;
+  background-color: var(--v-info-base) !important;
 }
 
 .warning-bg {
-	background-color: var(--v-info-base) !important;
+  background-color: var(--v-info-base) !important;
 }
 
-
 .v-overlay--active {
-	z-index: 1003 !important;
+  z-index: 1003 !important;
 }
 
 .v-dialog__content--active {
-	z-index: 1004 !important;
+  z-index: 1004 !important;
 }
 
 .full-pwidth {
-	width: 100%;
+  width: 100%;
 }
 
 .full-vwidth {
-	max-width: 100% !important; /* Override Vuetify's default max-width */
-	width: 100% !important;
-	padding: 0 !important; /* Remove default padding if necessary */
-  }
+  max-width: 100% !important; /* Override Vuetify's default max-width */
+  width: 100% !important;
+  padding: 0 !important; /* Remove default padding if necessary */
+}
 
 .text-white {
-color: white !important;
+  color: white !important;
 }
 
 .text-black {
-color: black !important;
+  color: black !important;
 }
 
 .text-maroon {
-color: #7b1113 !important;
+  color: #7b1113 !important;
 }
 
 .text-yellow {
-color: #f3aa2c
+  color: #f3aa2c;
 }
 
 .text-green {
-color: #014421
+  color: #014421;
 }
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   overflow-x: hidden; /* Prevent horizontal overflow */
@@ -95,5 +108,5 @@ html, body {
 
 .bg-maroon {
   background-color: #7b1113 !important; /* Set the background color to maroon */
-  color: #7b1113
+  color: #7b1113;
 }

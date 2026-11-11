@@ -14,23 +14,24 @@
 
 <script>
 export default {
+  emits: ['change'],
   computed: {
     // reference categories from Vuex store
     categories() {
-      return this.$store.getters["categoryNames"];
+      return this.$store.getters['categoryNames'];
     },
     // reference active category filters from Vuex store
-    categoryFilter: {  
+    categoryFilter: {
       get() {
         return this.$store.state.admin.locations.categoryFilter;
       },
       // set category filter in Vuex and trigger a change event when chip is selected
       set(value) {
-        this.$store.commit("admin/locations/setCategoryFilter", value);
-        this.$emit("change");
-      }
-    }
-  }
+        this.$store.commit('admin/locations/setCategoryFilter', value);
+        this.$emit('change');
+      },
+    },
+  },
 };
 </script>
 

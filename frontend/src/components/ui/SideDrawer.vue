@@ -1,21 +1,17 @@
 <template>
-  
   <!-- Side Drawer for showing results and details alongside map anchored left -->
-  <div
-    v-show="isSideDrawerVisible" 
-    v-if="mdAndUp"
-    >
+  <div v-show="isSideDrawerVisible" v-if="mdAndUp">
     <FloatingButton
       v-if="isVisible"
-      attachedTo="drawer"
-      @click="handleToggleSideDrawer"
+      attached-to="drawer"
       color="white"
       class="floating-button"
+      @click="handleToggleSideDrawer"
     />
-    <div class="search-drawer" v-show="isVisible">
+    <div v-show="isVisible" class="search-drawer">
       <div class="px-2 pt-3 pl-5 pr-5 scrollable-content">
         <div class="search-bar-container">
-          <SearchBar/>
+          <SearchBar />
         </div>
         <slot></slot>
       </div>
@@ -25,15 +21,15 @@
   <div v-else>
     <FloatingButton
       v-if="isVisible"
-      attachedTo="drawer"
-      @click="handleToggleSideDrawer"
+      attached-to="drawer"
       color="white"
       class="floating-button-mobile"
+      @click="handleToggleSideDrawer"
     />
-     <div class="search-drawer-mobile" v-show="isVisible">
+    <div v-show="isVisible" class="search-drawer-mobile">
       <div class="px-2 pt-3 pl-5 pr-5 scrollable-content">
         <div class="search-bar-container">
-          <SearchBar/>
+          <SearchBar />
         </div>
         <slot></slot>
       </div>
@@ -51,7 +47,7 @@ import SearchBar from '@/components/search/SearchBar.vue';
 export default {
   components: {
     FloatingButton,
-    SearchBar
+    SearchBar,
   },
   setup() {
     const { mdAndUp } = useDisplay();
@@ -64,7 +60,7 @@ export default {
       },
       set(value) {
         mapStore.setSideDrawer(value);
-      }
+      },
     });
 
     const isSideDrawerVisible = computed(() => mapStore.isSideDrawerVisible);
@@ -83,27 +79,26 @@ export default {
     };
 
     onMounted(() => {
-      eventBus.on("toggle-side-drawer", handleEventBusToggle);
+      eventBus.on('toggle-side-drawer', handleEventBusToggle);
     });
 
     onBeforeUnmount(() => {
-      eventBus.off("toggle-side-drawer", handleEventBusToggle);
+      eventBus.off('toggle-side-drawer', handleEventBusToggle);
     });
 
     return {
       mdAndUp,
       isVisible,
       handleToggleSideDrawer,
-      isSideDrawerVisible
+      isSideDrawerVisible,
     };
-  }
+  },
 };
 </script>
 
 <style scoped>
-
-
-.search-drawer, .search-drawer-mobile{
+.search-drawer,
+.search-drawer-mobile {
   height: 100%;
   width: 100%;
   background-color: white;
@@ -112,7 +107,7 @@ export default {
   box-shadow: 5px 0px 5px 0px rgba(106, 96, 96, 0.53);
 }
 
-.search-drawer-mobile{
+.search-drawer-mobile {
   border-radius: 5% 5% 0 0;
   box-shadow: 0px -2px 10px 0px rgba(106, 96, 96, 0.53);
 }
@@ -133,10 +128,10 @@ export default {
   right: 0%; /* Adjust this value to position the button slightly outside the drawer */
   top: 50%; /* Center the button vertically */
 }
-.floating-button-mobile{
+.floating-button-mobile {
   position: absolute;
   top: -10%;
   left: 50%;
-  transform: translate(-50%, -50%)
+  transform: translate(-50%, -50%);
 }
 </style>

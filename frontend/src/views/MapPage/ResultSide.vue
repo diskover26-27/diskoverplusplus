@@ -5,28 +5,26 @@
     <!-- <p class="title">{{headlineText}}</p> -->
     <v-expansion-panels variant="accordion" class="text-caption">
       <v-expansion-panel>
-        <v-expansion-panel-title>
-            Refine your search
-        </v-expansion-panel-title>
+        <v-expansion-panel-title> Refine your search </v-expansion-panel-title>
         <v-expansion-panel-text>
-          <CategorySelect class="selector"/> 
-          <SortSelect @change="applyRouteQueries" class="selector"/>
-          <TagsSelect class="selector"/>
+          <CategorySelect class="selector" />
+          <SortSelect class="selector" @change="applyRouteQueries" />
+          <TagsSelect class="selector" />
         </v-expansion-panel-text>
       </v-expansion-panel>
     </v-expansion-panels>
 
     <v-divider></v-divider>
 
-    <p class="subheading">{{resultCount}} results found</p>
+    <p class="subheading">{{ resultCount }} results found</p>
     <!-- show 10 results a result cards in a column -->
     <v-row>
-      <v-col cols="12" v-for="result in results" :key="result.id">
-        <ResultCard :result="result"/>
+      <v-col v-for="result in results" :key="result.id" cols="12">
+        <ResultCard :result="result" />
       </v-col>
     </v-row>
     <!-- paginator for controlling page of results -->
-    <ResultPaginator @change="applyRouteQueries"/>
+    <ResultPaginator @change="applyRouteQueries" />
   </div>
 </template>
 
@@ -47,7 +45,7 @@ export default {
     SortSelect,
     TagsSelect,
     ResultCard,
-    ResultPaginator
+    ResultPaginator,
   },
   setup() {
     const searchStore = useSearchStore();
@@ -57,22 +55,23 @@ export default {
 
     const applyApiQueries = () => {
       // HTTP GET Request with appropriate querystring
-      searchStore.fetchResults(route.query)
-        .then(response => {
+      searchStore
+        .fetchResults(route.query)
+        .then((response) => {
           searchStore.setResults(response.data.results);
           searchStore.setMaxPages(response.data.total_pages);
           searchStore.setTotalResultCount(response.data.count);
         })
-        .catch(error => {
-          alert("error receiving queried results from API: ");
+        .catch((error) => {
+          alert('error receiving queried results from API: ');
           console.log(error);
         });
     };
 
     const applyRouteQueries = () => {
       router.push({
-        name: "search",
-        query: searchStore.apiQuery
+        name: 'search',
+        query: searchStore.apiQuery,
       });
     };
 
@@ -82,10 +81,10 @@ export default {
     };
 
     const handleDefaultPagination = () => {
-      if (!("page" in route.query)) {
+      if (!('page' in route.query)) {
         let pagedQuery = {
           ...route.query,
-          page: 1
+          page: 1,
         };
         router.replace({ name: route.name, query: pagedQuery });
       }
@@ -108,15 +107,15 @@ export default {
         if (searchStore.searchFilter) {
           return `Showing filtered results for "${searchStore.searchFilter}"`;
         } else {
-          return "Showing all filtered results";
+          return 'Showing all filtered results';
         }
       }),
       categories: computed(() => searchStore.categoryNames),
       searchText: computed(() => searchStore.searchFilter),
       apiQuery: computed(() => searchStore.apiQuery),
-      applyRouteQueries
+      applyRouteQueries,
     };
-  }
+  },
 };
 </script>
 
@@ -171,27 +170,28 @@ v-col {
   margin: 0 auto; /* Center the selector */
 }
 
-.title, .subheading {
+.title,
+.subheading {
   margin: 0; /* Remove unnecessary margins */
   padding: 0; /* Remove unnecessary padding */
   text-align: center; /* Optional: Center-align text */
 }
 
-.v-expansion-panel{
+.v-expansion-panel {
   background-color: white;
   color: black;
   padding: 0px 10px;
 }
-.v-expansion-panel-title{
+.v-expansion-panel-title {
   min-height: 32px;
   padding: 0px;
   color: #737373;
 }
-.v-expansion-panel--active > .v-expansion-panel-title:not(.v-expansion-panel-title--static){
+.v-expansion-panel--active
+  > .v-expansion-panel-title:not(.v-expansion-panel-title--static) {
   min-height: 32px;
 }
-.v-expansion-panel-content>>> .v-expansion-panel-content__wrap {
+.v-expansion-panel-content >>> .v-expansion-panel-content__wrap {
   padding: 0 !important;
 }
-
 </style>

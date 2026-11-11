@@ -1,9 +1,14 @@
 <template>
   <v-container class="mt-16 fill-height d-flex align-top justify-center py-8">
-    
-    <v-sheet class="pa-4 pa-sm-8 rounded-xl" elevation="2" width="100%" max-width="1000">
-      
-      <div class="d-flex flex-column flex-sm-row justify-space-between align-sm-center mb-6">
+    <v-sheet
+      class="pa-4 pa-sm-8 rounded-xl"
+      elevation="2"
+      width="100%"
+      max-width="1000"
+    >
+      <div
+        class="d-flex flex-column flex-sm-row justify-space-between align-sm-center mb-6"
+      >
         <div class="text-h5 font-weight-bold mb-4 mb-sm-0">Tags</div>
         <v-btn
           color="maroon"
@@ -17,37 +22,35 @@
 
       <v-divider class="mb-6"></v-divider>
 
-      <TagTable 
-        @edit-item="onEditItem" 
-        @delete-item="prepareDelete" 
-        :tags="tags" 
+      <TagTable
+        :tags="tags"
+        @edit-item="onEditItem"
+        @delete-item="prepareDelete"
       />
-      
     </v-sheet>
 
     <ConfirmDeleteModal
-      :isVisible="isDeleteModalVisible"
-      :isSubmitting="isSubmitting"
-      :itemName="tagToDelete?.name"
-      itemType="Tag"
+      :is-visible="isDeleteModalVisible"
+      :is-submitting="isSubmitting"
+      :item-name="tagToDelete?.name"
+      item-type="Tag"
       @confirm="handleDeleteConfirm"
       @cancel="isDeleteModalVisible = false"
     />
-
   </v-container>
 </template>
 
 <script>
-import axios from "axios";
-import AdminVerifierMixin from "@/mixins/AdminVerifierMixin";
-import TagTable from "@/components/admin/TagTable.vue";
-import ConfirmDeleteModal from "@/components/admin/ConfirmDeleteModal.vue";
+import axios from 'axios';
+import AdminVerifierMixin from '@/mixins/AdminVerifierMixin';
+import TagTable from '@/components/admin/TagTable.vue';
+import ConfirmDeleteModal from '@/components/admin/ConfirmDeleteModal.vue';
 export default {
-  mixins: [AdminVerifierMixin],
   components: {
     TagTable,
     ConfirmDeleteModal,
   },
+  mixins: [AdminVerifierMixin],
   data() {
     return {
       tags: [],
@@ -62,11 +65,11 @@ export default {
   methods: {
     async getTags() {
       try {
-        const response = await axios.get("/admin/tags/");
+        const response = await axios.get('/admin/tags/');
         this.tags = response.data;
-        console.log("Tags successfully retrieved");
+        console.log('Tags successfully retrieved');
       } catch (error) {
-        console.error("Failed to GET tags", error);
+        console.error('Failed to GET tags', error);
       }
     },
     onClickNewTag() {
@@ -76,7 +79,7 @@ export default {
       this.$router.push(`/tagform/update/${id}`);
     },
     prepareDelete(id) {
-      this.tagToDelete = this.tags.find(t => t.id === id);
+      this.tagToDelete = this.tags.find((t) => t.id === id);
       this.isDeleteModalVisible = true;
     },
     async handleDeleteConfirm() {
@@ -89,8 +92,8 @@ export default {
         this.isDeleteModalVisible = false;
         this.tagToDelete = null;
       } catch (error) {
-        console.error("Failed to delete item", error);
-        alert("Error deleting tag. Please try again.");
+        console.error('Failed to delete item', error);
+        alert('Error deleting tag. Please try again.');
       } finally {
         this.isSubmitting = false;
       }
@@ -99,5 +102,5 @@ export default {
 };
 </script>
 <style scoped>
-@import "@/assets/stylesheets/style.css";
+@import '@/assets/stylesheets/style.css';
 </style>

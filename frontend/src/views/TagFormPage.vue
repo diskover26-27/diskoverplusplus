@@ -1,7 +1,11 @@
 <template>
   <v-container class="fill-height d-flex align-top justify-center py-8">
-    <v-sheet class="pa-4 pa-sm-8 rounded-xl" elevation="2" width="100%" max-width="600">
-      
+    <v-sheet
+      class="pa-4 pa-sm-8 rounded-xl"
+      elevation="2"
+      width="100%"
+      max-width="600"
+    >
       <div class="text-h5 font-weight-bold mb-6">
         {{ mode === 'create' ? 'Create New Tag' : 'Edit Tag' }}
       </div>
@@ -10,7 +14,7 @@
 
       <v-form @submit.prevent="onSubmitClick">
         <div class="text-subtitle-1 mb-2 font-weight-medium">Tag Details</div>
-        
+
         <v-text-field
           v-model="name"
           label="Tag Name"
@@ -25,12 +29,12 @@
         <v-divider class="mb-6 mt-4"></v-divider>
 
         <v-row class="mt-2" dense>
-          <v-col cols="12" sm="auto" v-if="mode !== 'create'">
-            <v-btn 
-              color="error" 
+          <v-col v-if="mode !== 'create'" cols="12" sm="auto">
+            <v-btn
+              color="error"
               block
-              @click="isDeleteConfirmVisible = true" 
               :disabled="isSubmitting"
+              @click="isDeleteConfirmVisible = true"
             >
               Delete Tag
             </v-btn>
@@ -39,18 +43,18 @@
           <v-spacer class="d-none d-sm-block"></v-spacer>
 
           <v-col cols="12" sm="auto">
-            <v-btn 
-              variant="text" 
+            <v-btn
+              variant="text"
               block
-              @click="onCancelClick"
               :disabled="isSubmitting"
+              @click="onCancelClick"
             >
               Cancel
             </v-btn>
           </v-col>
 
           <v-col cols="12" sm="auto">
-            <v-btn 
+            <v-btn
               color="maroon"
               class="text-white"
               block
@@ -65,10 +69,10 @@
     </v-sheet>
 
     <ConfirmDeleteModal
-      :isVisible="isDeleteConfirmVisible"
-      :isSubmitting="isSubmitting"
-      :itemName="name"
-      itemType="Tag"
+      :is-visible="isDeleteConfirmVisible"
+      :is-submitting="isSubmitting"
+      :item-name="name"
+      item-type="Tag"
       @confirm="onDeleteConfirm"
       @cancel="isDeleteConfirmVisible = false"
     />
@@ -79,7 +83,7 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
-import ConfirmDeleteModal from "@/components/admin/ConfirmDeleteModal.vue";
+import ConfirmDeleteModal from '@/components/admin/ConfirmDeleteModal.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -89,7 +93,7 @@ const isSubmitting = ref(false);
 const isDeleteConfirmVisible = ref(false);
 
 const id = computed(() => route.params.id);
-const mode = computed(() => id.value ? 'update' : 'create'); 
+const mode = computed(() => (id.value ? 'update' : 'create'));
 const isReadOnly = computed(() => mode.value === 'delete');
 
 onMounted(() => {
@@ -109,12 +113,13 @@ const getUpdateData = async (tagId) => {
 
 const onSubmitClick = async () => {
   if (!name.value) {
-    alert("Please enter a tag name.");
+    alert('Please enter a tag name.');
     return;
   }
 
   isSubmitting.value = true;
-  const endpoint = mode.value === 'create' ? '/admin/tags/' : `/admin/tags/${id.value}/`;
+  const endpoint =
+    mode.value === 'create' ? '/admin/tags/' : `/admin/tags/${id.value}/`;
   const method = mode.value === 'create' ? 'post' : 'patch';
 
   try {
@@ -123,7 +128,7 @@ const onSubmitClick = async () => {
       url: endpoint,
       data: { name: name.value },
     });
-    router.push('/admin/browse/tags'); 
+    router.push('/admin/browse/tags');
   } catch (error) {
     console.error('Failed to submit tag:', error);
     alert('Failed to save tag. Check console for details.');
@@ -137,7 +142,7 @@ const onDeleteConfirm = async () => {
   try {
     await axios.delete(`/admin/tags/${id.value}/`);
     isDeleteConfirmVisible.value = false;
-    router.push('/admin/browse/tags'); 
+    router.push('/admin/browse/tags');
   } catch (error) {
     console.error('Failed to delete tag:', error);
     alert('Failed to delete tag.');
@@ -150,5 +155,5 @@ const onCancelClick = () => router.push('/admin/browse/tags');
 </script>
 
 <style scoped>
-@import "@/assets/stylesheets/style.css";
+@import '@/assets/stylesheets/style.css';
 </style>

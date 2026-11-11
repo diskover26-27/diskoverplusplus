@@ -1,7 +1,6 @@
 import { reactive } from 'vue';
 import qs from 'qs';
 
-
 export function setupVuePrototypes(app) {
   // Ensure window object is available before assigning the app to it
   if (typeof window !== 'undefined') {
@@ -15,10 +14,12 @@ export function setupVuePrototypes(app) {
   app.config.globalProperties.$publicPath = import.meta.env.VITE_BASE_URL;
 
   // backend api path that this.$http will send requests to
-  app.config.globalProperties.$backendApiPath = import.meta.env.VITE_APP_API_URL;
-  
+  app.config.globalProperties.$backendApiPath =
+    import.meta.env.VITE_APP_API_URL;
+
   // static api path that will prepend image urls to gain access to image in server
-  app.config.globalProperties.$backendStaticPath = import.meta.env.VITE_APP_STATIC_URL;
+  app.config.globalProperties.$backendStaticPath =
+    import.meta.env.VITE_APP_STATIC_URL;
 
   // Creating an event bus using reactive state
   const eventBus = reactive({
@@ -31,30 +32,32 @@ export function setupVuePrototypes(app) {
     },
     emit(event, data) {
       if (this.events[event]) {
-        this.events[event].forEach(callback => callback(data));
+        this.events[event].forEach((callback) => callback(data));
       }
     },
     off(event, callback) {
       if (this.events[event]) {
-        this.events[event] = this.events[event].filter(cb => cb !== callback);
+        this.events[event] = this.events[event].filter((cb) => cb !== callback);
       }
-    }
+    },
   });
 
   // Assign eventBus to global properties
   app.config.globalProperties.$eventBus = eventBus;
 
   // default coordinates of UP Oblation used for resetting the map
-  app.config.globalProperties.$defaultStartCoords = [14.655004131234529, 121.06428197779681];
+  app.config.globalProperties.$defaultStartCoords = [
+    14.655004131234529, 121.06428197779681,
+  ];
   // default bounding box containing UP Diliman used for resetting the map
   app.config.globalProperties.$defaultUpBoundingBox = [
     [14.646712309301837, 121.07661789894301],
-    [14.665232770030423, 121.05537526614295]
+    [14.665232770030423, 121.05537526614295],
   ];
 
   // jeepney routes (not changed in this example)
   app.config.globalProperties.$jeepPoints = {
-    'ikot': [
+    ikot: [
       [14.654406015097008, 121.07303202152251],
       [14.65463437102577, 121.07312858104706],
       [14.65504437311872, 121.07314467430115],
@@ -97,9 +100,9 @@ export function setupVuePrototypes(app) {
       [14.652470170050163, 121.07053220272063],
       [14.652527259559035, 121.0728442668915],
       [14.653938922683318, 121.07277989387512],
-      [14.654406015097008, 121.07303202152251]
+      [14.654406015097008, 121.07303202152251],
     ],
-    'toki': [
+    toki: [
       [14.648411586857891, 121.07383757832396],
       [14.65064329791438, 121.0737892985617],
       [14.650612157916418, 121.07282906773436],
@@ -190,9 +193,9 @@ export function setupVuePrototypes(app) {
       [14.650492787883282, 121.07251793148863],
       [14.650570637912269, 121.07333332302916],
       [14.650565447911205, 121.07374638321745],
-      [14.648416776909958, 121.0737732053076]
+      [14.648416776909958, 121.0737732053076],
     ],
-    'katip': [
+    katip: [
       [14.657551078089833, 121.07426226144528],
       [14.657571837431542, 121.07273876672483],
       [14.6594194109642, 121.07270658021665],
@@ -215,9 +218,9 @@ export function setupVuePrototypes(app) {
       [14.653918162997398, 121.07167661195493],
       [14.653907783153688, 121.07278168206906],
       [14.653575627895403, 121.0728245974133],
-      [14.653565248035472, 121.07431590562555]
+      [14.653565248035472, 121.07431590562555],
     ],
-    'green': [
+    green: [
       [14.654717409486306, 121.05857670312616],
       [14.654800447915369, 121.0623425245831],
       [14.65297359520645, 121.06233179574704],
@@ -246,7 +249,7 @@ export function setupVuePrototypes(app) {
       [14.656710323097498, 121.06236308815825],
       [14.656009691472395, 121.06235235932219],
       [14.65496133478211, 121.06235235932219],
-      [14.65488867621177, 121.05848997834076]
-    ]
+      [14.65488867621177, 121.05848997834076],
+    ],
   };
 }

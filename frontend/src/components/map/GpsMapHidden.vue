@@ -2,22 +2,32 @@
   <!-- GPS permission modals and hidden map for making GPS queries -->
   <div>
     <!-- Bottom modal for asking for GPS permission -->
-    <BottomModal :isVisible="isBottomModalVisible" @close="setBottomModal(false)">
+    <BottomModal
+      :is-visible="isBottomModalVisible"
+      @close="setBottomModal(false)"
+    >
       <v-layout column align-center class="red lighten-4">
         <div class="display-1 pt-3">{{ gpsQuestionText }}</div>
         <v-layout>
           <!-- call for geolocation when Yes is clicked -->
           <v-btn color="blue ml-4" dark @click="callGeolocation">Yes</v-btn>
           <!-- forefeit geolocation permissions when No is clicked -->
-          <v-btn color="red ml-2" dark @click="forfeitPermissionToMark">No</v-btn>
+          <v-btn color="red ml-2" dark @click="forfeitPermissionToMark"
+            >No</v-btn
+          >
         </v-layout>
       </v-layout>
     </BottomModal>
     <!-- hidden GPS map -->
     <div id="hidden-map" :style="{ display: 'none' }"></div>
     <!-- Center modal for confirming GPS permission despite proximity from UP Diliman -->
-    <CenterModal :isVisible="isCenterModalVisible" @close="setCenterModal(false)">
-      <v-container class="red lighten-4 text-center d-flex flex-column align-center justify-center">
+    <CenterModal
+      :is-visible="isCenterModalVisible"
+      @close="setCenterModal(false)"
+    >
+      <v-container
+        class="red lighten-4 text-center d-flex flex-column align-center justify-center"
+      >
         <v-card-title class="headline">Confirmation</v-card-title>
         <v-col class="headline amber lighten-4 py-3">
           Your current location doesn't appear to be in UP Diliman
@@ -25,7 +35,9 @@
         <v-col class="title pt-2">Continue GPS anyway?</v-col>
         <v-row class="justify-center mt-4">
           <!-- confirm geolocation marking permissions when Yes is clicked -->
-          <v-btn color="blue mr-1" dark @click="grantPermissionToMark">Yes</v-btn>
+          <v-btn color="blue mr-1" dark @click="grantPermissionToMark"
+            >Yes</v-btn
+          >
           <!-- abstain from granting geolocation marking permissions if No is clicked -->
           <v-btn color="red ml-1" dark @click="setCenterModal(false)">No</v-btn>
         </v-row>
@@ -35,18 +47,18 @@
 </template>
 
 <script>
-import { inject } from "vue"; // Import inject from Vue
-import { useMapStore } from "@/stores/map"; // Import the Pinia store
-import MapMixin from "@/mixins/MapMixin";
-import BottomModal from "@/components/ui/BottomModal.vue"; // Adjust the path as needed
-import CenterModal from "@/components/ui/CenterModal.vue"; // Import CenterModal if needed
+import { inject } from 'vue'; // Import inject from Vue
+import { useMapStore } from '@/stores/map'; // Import the Pinia store
+import MapMixin from '@/mixins/MapMixin';
+import BottomModal from '@/components/ui/BottomModal.vue'; // Adjust the path as needed
+import CenterModal from '@/components/ui/CenterModal.vue'; // Import CenterModal if needed
 
 export default {
-  mixins: [MapMixin],
   components: {
     BottomModal, // Register BottomModal
     CenterModal, // Register CenterModal
   },
+  mixins: [MapMixin],
   data() {
     const mapStore = useMapStore(); // Use the Pinia store
     return {
@@ -69,24 +81,24 @@ export default {
     },
     gpsQuestionText() {
       return this.hasPermissionToMark
-        ? "Would you like to continue using GPS marker?"
-        : "Would you like to use GPS to mark your location?";
+        ? 'Would you like to continue using GPS marker?'
+        : 'Would you like to use GPS to mark your location?';
     },
   },
   mounted() {
     this.initGeolocationCallbacks();
-    const eventBus = inject("eventBus"); // Inject the eventBus
+    const eventBus = inject('eventBus'); // Inject the eventBus
     if (eventBus) {
-      eventBus.on("open-gps-bottom-modal", () => {
+      eventBus.on('open-gps-bottom-modal', () => {
         this.setBottomModal(true);
       });
-      eventBus.on("call-geolocation", this.callGeolocation);
+      eventBus.on('call-geolocation', this.callGeolocation);
     } else {
-      console.error("EventBus is not available");
+      console.error('EventBus is not available');
     }
 
     // Load GPS location from localStorage
-    const savedGpsLocation = JSON.parse(localStorage.getItem("gpsLocation"));
+    const savedGpsLocation = JSON.parse(localStorage.getItem('gpsLocation'));
     if (savedGpsLocation) {
       const mapStore = useMapStore(); // Access the Pinia store
       mapStore.setOriginCoords(savedGpsLocation); // Restore the GPS location
@@ -101,11 +113,11 @@ export default {
     },
     initGeolocationCallbacks() {
       if (!this.map) {
-        console.error("Map is not initialized");
+        console.error('Map is not initialized');
         return;
       }
 
-      this.map.on("locationfound", (e) => {
+      this.map.on('locationfound', (e) => {
         let { lat, lng } = e.latlng;
         this.pendingCoords = [lat, lng];
         const mapStore = useMapStore(); // Access the Pinia store
@@ -116,11 +128,11 @@ export default {
         } else {
           this.setCenterModal(true);
         }
-        console.log("Geolocation pendingCoords found: ", this.pendingCoords);
+        console.log('Geolocation pendingCoords found: ', this.pendingCoords);
       });
 
-      this.map.on("locationerror", (e) => {
-        console.log("Geolocation error: ", e.message);
+      this.map.on('locationerror', (e) => {
+        console.log('Geolocation error: ', e.message);
       });
     },
     callGeolocation() {
@@ -136,8 +148,11 @@ export default {
       mapStore.setOriginCoords(this.pendingCoords); // Call the action
 
       // Save the GPS location to localStorage
-      localStorage.setItem("gpsLocation", JSON.stringify(this.pendingCoords));
-      console.log("Permission to mark granted, GPS location saved:", this.pendingCoords);
+      localStorage.setItem('gpsLocation', JSON.stringify(this.pendingCoords));
+      console.log(
+        'Permission to mark granted, GPS location saved:',
+        this.pendingCoords
+      );
     },
     forfeitPermissionToMark() {
       this.setBottomModal(false);
@@ -146,12 +161,17 @@ export default {
       mapStore.setOriginCoords(this.$defaultStartCoords); // Call the action
 
       // Save the default GPS location to localStorage
-      localStorage.setItem("gpsLocation", JSON.stringify(this.$defaultStartCoords));
-      console.log("Permission to mark forfeited, GPS location reset to default:", this.$defaultStartCoords);
+      localStorage.setItem(
+        'gpsLocation',
+        JSON.stringify(this.$defaultStartCoords)
+      );
+      console.log(
+        'Permission to mark forfeited, GPS location reset to default:',
+        this.$defaultStartCoords
+      );
     },
   },
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

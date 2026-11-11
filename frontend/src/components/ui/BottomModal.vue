@@ -2,12 +2,16 @@
   <!-- renders a modal anchored to the bottom, visibility controlled by myVisible -->
   <div class="text-xs-center">
     <v-bottom-sheet
-      inset
       v-model="myVisible"
+      inset
       class="bottom-sheet-custom"
       elevation="0"
     >
-      <v-sheet class="pa-4 d-flex flex-column align-center" max-width="600px" max-height="50vh">
+      <v-sheet
+        class="pa-4 d-flex flex-column align-center"
+        max-width="600px"
+        max-height="50vh"
+      >
         <slot></slot>
       </v-sheet>
     </v-bottom-sheet>
@@ -20,9 +24,10 @@ export default {
   props: {
     isVisible: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
+  emits: ['update:isVisible'],
   computed: {
     myVisible: {
       get() {
@@ -30,9 +35,9 @@ export default {
       },
       set(value) {
         this.$emit('update:isVisible', value);
-      }
-    }
-  }
+      },
+    },
+  },
 };
 </script>
 

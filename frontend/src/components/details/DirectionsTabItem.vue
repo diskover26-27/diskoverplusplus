@@ -8,8 +8,12 @@
         :class="bgClass(index)"
         @click="toggleActivation(index)"
       >
-        <v-list-item-title class="direction-text">{{ inst.text }}</v-list-item-title>
-        <v-list-item-subtitle class="direction-text">{{ inst.distance }} m</v-list-item-subtitle>
+        <v-list-item-title class="direction-text">{{
+          inst.text
+        }}</v-list-item-title>
+        <v-list-item-subtitle class="direction-text"
+          >{{ inst.distance }} m</v-list-item-subtitle
+        >
       </v-list-item>
     </v-list>
 

@@ -1,7 +1,7 @@
-import axios from "axios";
-import { useAuthStore } from "@/stores/auth";
+import axios from 'axios';
+import { useAuthStore } from '@/stores/auth';
 
-axios.defaults.baseURL = process.env.VITE_APP_API_URL;
+axios.defaults.baseURL = import.meta.env.VITE_APP_API_URL;
 
 axios.interceptors.response.use(
   (response) => response,

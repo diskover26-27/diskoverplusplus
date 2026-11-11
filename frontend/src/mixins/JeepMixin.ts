@@ -11,76 +11,82 @@ export default {
           name: 'Ikot',
           color: 'orange',
           popup: '<b> Ikot Jeepney Route </b>',
-          pointsKey: 'ikot'
+          pointsKey: 'ikot',
         },
         {
           layer: L.layerGroup(),
           name: 'Toki',
           color: 'mediumorchid',
           popup: '<b> Toki Jeepney Route </b>',
-          pointsKey: 'toki'
+          pointsKey: 'toki',
         },
         {
           layer: L.layerGroup(),
           name: 'Katipunan',
           color: 'firebrick',
           popup: '<b> Katipunan Jeepney Route </b>',
-          pointsKey: 'katip'
+          pointsKey: 'katip',
         },
         {
           layer: L.layerGroup(),
           name: 'PHILCOA/Pantranco/SM North EDSA',
           color: 'green',
           popup: '<b> PHILCOA/Pantranco/SM North EDSA/<br> Jeepney Route </b>',
-          pointsKey: 'green'
-        }
+          pointsKey: 'green',
+        },
       ],
-    }
+    };
   },
   mounted() {
     if (this.map) {
       this.initJeepRoutes();
       this.initJeepRoutesControl();
     } else {
-      console.log("No map to place jeepneys on");
+      console.log('No map to place jeepneys on');
     }
   },
   methods: {
     initJeepRoutesControl() {
-      let overlays = {};
-      for (let jeep of this.jeepList) {
+      const overlays: Record<string, LeafletLayer> = {};
+      for (const jeep of this.jeepList) {
         overlays[jeep.name] = jeep.layer;
       }
-      let control = L.control.layers({}, overlays, {
-        position: 'bottomright',
-        collapsed: false
-      }).addTo(this.map);
+      const control = L.control
+        .layers({}, overlays, {
+          position: 'bottomright',
+          collapsed: false,
+        })
+        .addTo(this.map);
 
-      this.map.on("click", () => {
+      this.map.on('click', () => {
         control.collapse();
       });
     },
 
     initJeepRoutes() {
-      for (let jeep of this.jeepList) {
-        let jeepRoute = new L.Polyline(this.$jeepPoints[jeep.pointsKey], {
+      for (const jeep of this.jeepList) {
+        const jeepRoute = new L.Polyline(this.$jeepPoints[jeep.pointsKey], {
           color: jeep.color,
           weight: 2,
           opacity: 1,
-          smoothFactor: 1
+          smoothFactor: 1,
         });
 
         jeepRoute.bindPopup(jeep.popup);
         jeepRoute.addTo(jeep.layer);
 
-        let jeepDecor = L.polylineDecorator(jeepRoute, {
+        const jeepDecor = L.polylineDecorator(jeepRoute, {
           patterns: [
             {
               offset: 0,
               repeat: 50,
-              symbol: L.Symbol.arrowHead({ pixelSize: 8, polygon: false, pathOptions: { stroke: true, color: jeep.color } })
-            }
-          ]
+              symbol: L.Symbol.arrowHead({
+                pixelSize: 8,
+                polygon: false,
+                pathOptions: { stroke: true, color: jeep.color },
+              }),
+            },
+          ],
         });
 
         jeepDecor.bindPopup(jeep.popup);
@@ -88,5 +94,5 @@ export default {
         jeep.layer.addTo(this.map);
       }
     },
-  }
+  },
 };

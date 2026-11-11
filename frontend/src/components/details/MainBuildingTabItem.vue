@@ -4,7 +4,9 @@
     <!-- Display outer building if current location has an outer building -->
     <v-list v-if="building">
       <v-list-item :to="`/map/details/${building.id}`" link>
-          <v-list-item-title class="text-small">{{ building.name }}</v-list-item-title>
+        <v-list-item-title class="text-small">{{
+          building.name
+        }}</v-list-item-title>
       </v-list-item>
     </v-list>
     <!-- Else display indicator that no outer building found -->
@@ -24,7 +26,7 @@ defineProps({
 </script>
 
 <style scoped>
-.text-small{
-	font-size: small;
+.text-small {
+  font-size: small;
 }
 </style>

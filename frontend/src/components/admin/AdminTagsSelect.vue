@@ -15,23 +15,24 @@
 
 <script>
 export default {
+  emits: ['change'],
   computed: {
     // reference tags from Vuex store
     tags() {
-      return this.$store.getters["tagNames"];
+      return this.$store.getters['tagNames'];
     },
     // reference active category filters from Vuex store
-    tagsFilter: {  
+    tagsFilter: {
       get() {
         return this.$store.state.admin.locations.tagsFilter;
       },
       // set active filters in Vuex store and trigger a change event when chip is selected
       set(value) {
-        this.$store.commit("admin/locations/setTagsFilter", value);
-        this.$emit("change");
-      }
-    }
-  }
+        this.$store.commit('admin/locations/setTagsFilter', value);
+        this.$emit('change');
+      },
+    },
+  },
 };
 </script>
 

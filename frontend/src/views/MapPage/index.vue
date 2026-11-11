@@ -1,26 +1,44 @@
 <template>
   <v-container fluid class="map-page-container">
-    
-        <div v-if="mapStore.isSideDrawerVisible">
-          <SideDrawer v-if="mdAndUp" @toggle-side-drawer="toggleSideDrawer" class="side-drawer">
-            <router-view></router-view>
-          </SideDrawer>
+    <div v-if="mapStore.isSideDrawerVisible">
+      <SideDrawer
+        v-if="mdAndUp"
+        class="side-drawer"
+        @toggle-side-drawer="toggleSideDrawer"
+      >
+        <router-view></router-view>
+      </SideDrawer>
 
-          <SideDrawer v-else @toggle-side-drawer="toggleSideDrawer" class="side-drawer-mobile">
-            <router-view></router-view>
-          </SideDrawer>
-        </div>
+      <SideDrawer
+        v-else
+        class="side-drawer-mobile"
+        @toggle-side-drawer="toggleSideDrawer"
+      >
+        <router-view></router-view>
+      </SideDrawer>
+    </div>
 
-        <BigMapView 
-          :height="mapExactHeight" 
-          :isOnDetailsPage="isOnDetailsPage" 
-          :transportMode="detailsStore.transportMode" 
-          class="map"
-        >
-          <FloatingButton  v-if="mdAndUp" attachedTo="map" @click="toggleSideDrawer" color="white" class="search-btn-mdAndUp"/>
-          <FloatingButton  v-else attachedTo="map" @click="toggleSideDrawer" color="white" class="search-btn"/>
-        </BigMapView>
-
+    <BigMapView
+      :height="mapExactHeight"
+      :is-on-details-page="isOnDetailsPage"
+      :transport-mode="detailsStore.transportMode"
+      class="map"
+    >
+      <FloatingButton
+        v-if="mdAndUp"
+        attached-to="map"
+        color="white"
+        class="search-btn-mdAndUp"
+        @click="toggleSideDrawer"
+      />
+      <FloatingButton
+        v-else
+        attached-to="map"
+        color="white"
+        class="search-btn"
+        @click="toggleSideDrawer"
+      />
+    </BigMapView>
   </v-container>
 </template>
 
@@ -40,21 +58,20 @@ const mapStore = useMapStore();
 const detailsStore = useDetailsStore(); // Initialize detailsStore
 
 const mapExactHeight = computed(() => {
-  return mdAndUp.value ? "calc(100vh - 64px)" : "calc(100vh - 48px)";
+  return mdAndUp.value ? 'calc(100vh - 64px)' : 'calc(100vh - 48px)';
 });
 
 const isOnDetailsPage = computed(() => {
-  return route.name === "details";
+  return route.name === 'details';
 });
 
 const toggleSideDrawer = () => {
   mapStore.setSideDrawer(!mapStore.isSideDrawerVisible);
-
 };
 
 // Open the side drawer by default on results or details page
 onMounted(() => {
-  if (route.name === "results" || route.name === "details") {
+  if (route.name === 'results' || route.name === 'details') {
     mapStore.setSideDrawer(true);
   }
 });
@@ -69,15 +86,15 @@ onMounted(() => {
   overflow: hidden;
   padding: 0;
 }
-.side-drawer, .side-drawer-mobile{
+.side-drawer,
+.side-drawer-mobile {
   z-index: 1002 !important;
   position: absolute;
   left: 0;
   height: 100%;
   width: 25%;
-
 }
-.side-drawer-mobile{
+.side-drawer-mobile {
   height: 50%;
   width: 100%;
   bottom: 0;
@@ -91,13 +108,13 @@ onMounted(() => {
   width: 100%;
 }
 
-.search-btn-mdAndUp{
+.search-btn-mdAndUp {
   position: absolute;
   top: 50%;
   left: 5%; /* Adjust this value to position the button on the left side */
   transform: translateY(-50%);
 }
-.search-btn{
+.search-btn {
   position: absolute;
   z-index: 1002;
   top: 95%;
