@@ -1,0 +1,14 @@
+{
+  "name": "diskoverplusplus",
+  "private": true,
+  "packageManager": "pnpm@9.12.3",
+  "scripts": {
+    "dev": "bash scripts/dev.sh",
+    "docker:dev": "bash scripts/dev.sh",
+    "db:seed": "bash scripts/seed-db.sh",
+    "db:up": "docker compose up -d db",
+    "db:down": "docker compose down",
+    "db:logs": "docker compose logs -f db",
+    "createsuperuser": "cd backend && .venv/bin/python manage.py createsuperuser"
+  }
+}
