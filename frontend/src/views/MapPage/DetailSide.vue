@@ -129,6 +129,11 @@
       </v-window>
     </v-col>
 
+    <!-- Review submission -->
+    <v-col class="mt-4">
+      <ReviewForm :location-id="locationId" :location-name="locationName" />
+    </v-col>
+
     <!-- Admin Buttons -->
     <v-col v-if="isLoggedIn" class="mt-4">
       <v-row class="mb-2">
@@ -177,7 +182,7 @@ import ImagesTabItem from '@/components/details/ImagesTabItem.vue';
 import SubareaTabItem from '@/components/details/SubareaTabItem.vue';
 import MainBuildingTabItem from '@/components/details/MainBuildingTabItem.vue';
 import NearbyLocationsTabItem from '@/components/details/NearbyLocationsTabItem.vue';
-import ReviewsTabItem from '@/components/details/ReviewsTabItem.vue';
+import ReviewForm from '@/components/details/ReviewForm.vue';
 
 const route = useRoute();
 const detailsStore = useDetailsStore();
@@ -218,15 +223,6 @@ const tabList1 = computed(() => [
     icon: 'mdi-image',
     component: ImagesTabItem,
     props: { imageUrls: imageUrls.value },
-  },
-  {
-    label: 'Reviews',
-    icon: 'mdi-star',
-    component: ReviewsTabItem,
-    props: {
-      locationId: locationId.value,
-      locationName: locationName.value,
-    },
   },
   // {
   //   label: 'Description',

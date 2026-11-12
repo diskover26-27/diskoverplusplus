@@ -1,7 +1,9 @@
 <template>
   <v-card theme="light" class="review-form pa-4" variant="outlined">
-    <v-card-title class="px-0 pt-0">Share your experience</v-card-title>
-    <v-card-subtitle class="px-0">
+    <v-card-title class="review-heading px-0 pt-0">
+      Share your experience
+    </v-card-title>
+    <v-card-subtitle class="review-subtitle px-0">
       Add a review for {{ locationName || 'this location' }}.
     </v-card-subtitle>
 
@@ -13,9 +15,10 @@
         :rules="[requiredRule]"
         maxlength="80"
         required
+        class="review-field"
       />
 
-      <div class="text-subtitle-2 mb-1">Rating</div>
+      <div class="review-label text-subtitle-2 mb-1">Rating</div>
       <v-rating
         v-model="rating"
         color="#f3aa2c"
@@ -23,7 +26,7 @@
         hover
         density="compact"
       />
-      <div v-if="showRatingError" class="text-caption text-error">
+      <div v-if="showRatingError" class="review-error text-caption">
         Please select a rating.
       </div>
 
@@ -31,7 +34,7 @@
         v-model="title"
         label="Review title (optional)"
         maxlength="100"
-        class="mt-3"
+        class="review-field mt-3"
       />
 
       <v-textarea
@@ -42,6 +45,7 @@
         counter
         :rules="[requiredRule]"
         required
+        class="review-field"
       />
 
       <v-alert v-if="errorMessage" type="error" variant="tonal" class="mb-3">
@@ -128,6 +132,50 @@ const onSubmit = async () => {
 
 <style scoped>
 .review-form {
-  border-color: rgba(123, 17, 19, 0.25);
+  background: #ffffff !important;
+  border: 1px solid rgba(123, 17, 19, 0.3);
+  color: #202124;
+  margin-bottom: 24px;
+}
+
+.review-heading {
+  color: #7b1113;
+  font-weight: 700;
+}
+
+.review-subtitle,
+.review-label {
+  color: #3f3f46 !important;
+}
+
+.review-error {
+  color: #b42318;
+  font-weight: 600;
+}
+
+.review-field :deep(.v-field) {
+  background: #ffffff;
+  color: #202124;
+}
+
+.review-field :deep(.v-label),
+.review-field :deep(input),
+.review-field :deep(textarea),
+.review-field :deep(.v-icon),
+.review-field :deep(.v-counter) {
+  color: #202124 !important;
+  opacity: 1;
+}
+
+.review-field :deep(.v-label) {
+  color: #4b5563 !important;
+}
+
+.review-field :deep(.v-field__outline) {
+  color: #6b7280;
+}
+
+.review-field :deep(.v-messages__message) {
+  color: #b42318;
 }
 </style>

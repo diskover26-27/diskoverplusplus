@@ -30,8 +30,10 @@ pnpm run build
 
 ## Reviews demo
 
-Location reviews are available in the Reviews tab of the location details panel.
+The location details panel includes a standalone review submission form.
 The frontend uses seeded mock reviews and saves submitted reviews in the browser's
 `localStorage` under `diskover-reviews`, so the flow can be demonstrated without
-the backend running. The storage service in `src/services/reviews.ts` is the
-integration boundary for replacing the local implementation with an API later.
+the backend running. The `Review` type and service functions in
+`src/services/reviews.ts` are the integration boundary for replacing the local
+implementation with an API later. Read-only review display components are not
+included in this feature.

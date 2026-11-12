@@ -25,7 +25,8 @@ const mockReviews: Review[] = [
     author: 'Mika',
     rating: 5,
     title: 'Easy to find',
-    comment: 'The map directions were accurate and the place was easy to locate.',
+    comment:
+      'The map directions were accurate and the place was easy to locate.',
     createdAt: '2026-02-14T09:30:00.000Z',
   },
   {
