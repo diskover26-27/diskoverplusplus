@@ -177,6 +177,7 @@ import ImagesTabItem from '@/components/details/ImagesTabItem.vue';
 import SubareaTabItem from '@/components/details/SubareaTabItem.vue';
 import MainBuildingTabItem from '@/components/details/MainBuildingTabItem.vue';
 import NearbyLocationsTabItem from '@/components/details/NearbyLocationsTabItem.vue';
+import ReviewsTabItem from '@/components/details/ReviewsTabItem.vue';
 
 const route = useRoute();
 const detailsStore = useDetailsStore();
@@ -217,6 +218,15 @@ const tabList1 = computed(() => [
     icon: 'mdi-image',
     component: ImagesTabItem,
     props: { imageUrls: imageUrls.value },
+  },
+  {
+    label: 'Reviews',
+    icon: 'mdi-star',
+    component: ReviewsTabItem,
+    props: {
+      locationId: locationId.value,
+      locationName: locationName.value,
+    },
   },
   // {
   //   label: 'Description',
