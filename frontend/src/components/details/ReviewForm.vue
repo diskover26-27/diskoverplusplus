@@ -106,7 +106,7 @@ const onSubmit = async () => {
   isSubmitting.value = true;
 
   try {
-    createReview({
+    await createReview({
       locationId: props.locationId,
       author: author.value.trim(),
       rating: rating.value,
