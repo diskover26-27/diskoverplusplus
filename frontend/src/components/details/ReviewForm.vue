@@ -80,9 +80,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits<{
-  submitted: [];
-}>();
+const emit = defineEmits(['submitted']);
 
 const form = ref();
 const author = ref('');
@@ -93,7 +91,7 @@ const isSubmitting = ref(false);
 const showRatingError = ref(false);
 const errorMessage = ref('');
 
-const requiredRule = (value: string) =>
+const requiredRule = (value) =>
   Boolean(value?.trim()) || 'This field is required.';
 
 const onSubmit = async () => {
