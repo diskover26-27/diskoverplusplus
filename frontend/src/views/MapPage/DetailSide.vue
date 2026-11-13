@@ -129,9 +129,18 @@
       </v-window>
     </v-col>
 
+    <!-- Reviews (read-only) -->
+    <v-col class="mt-4">
+      <ReviewList :location-id="locationId" :refresh-key="reviewRefreshKey" />
+    </v-col>
+
     <!-- Review submission -->
     <v-col class="mt-4">
-      <ReviewForm :location-id="locationId" :location-name="locationName" />
+      <ReviewForm
+        :location-id="locationId"
+        :location-name="locationName"
+        @submitted="reviewRefreshKey += 1"
+      />
     </v-col>
 
     <!-- Admin Buttons -->
@@ -183,6 +192,7 @@ import SubareaTabItem from '@/components/details/SubareaTabItem.vue';
 import MainBuildingTabItem from '@/components/details/MainBuildingTabItem.vue';
 import NearbyLocationsTabItem from '@/components/details/NearbyLocationsTabItem.vue';
 import ReviewForm from '@/components/details/ReviewForm.vue';
+import ReviewList from '@/components/details/ReviewList.vue';
 
 const route = useRoute();
 const detailsStore = useDetailsStore();
@@ -202,6 +212,8 @@ const nearbyLocations = ref([]);
 
 const primaryTabIndex = ref(0);
 const subareaTabIndex = ref([]);
+
+const reviewRefreshKey = ref(0);
 
 const thumbnailUrl = computed(() => {
   if (imageUrls.value.length > 0 && imageUrls.value[0]) {
