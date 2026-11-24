@@ -23,7 +23,7 @@
                   :error-messages="
                     invalidLogInAttempt ? 'Invalid Username' : null
                   "
-                  class="mb-4 w-100"
+                  class="login-field mb-4 w-100"
                 />
                 <v-text-field
                   v-model="password"
@@ -34,7 +34,7 @@
                   :error-messages="
                     invalidLogInAttempt ? 'Invalid Password' : null
                   "
-                  class="mb-4 w-100"
+                  class="login-field mb-4 w-100"
                 />
                 <v-btn
                   rounded="xl"
@@ -141,6 +141,25 @@ const loggedInUser = computed(() => authStore.user);
 
 .text-white {
   color: white !important;
+}
+
+.login-field :deep(.v-field) {
+  background-color: #fff5f5;
+  color: #2b0a0a;
+}
+
+.login-field :deep(.v-field__input),
+.login-field :deep(input) {
+  color: #2b0a0a;
+}
+
+.login-field :deep(.v-label) {
+  color: #6b1f1f;
+  opacity: 1;
+}
+
+.login-field :deep(.v-field--focused .v-label) {
+  color: #7b1113;
 }
 
 .v-btn:hover {
